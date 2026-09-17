@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e_tehon | e_手本 — a digital practice book for Japanese art history</title>
+<meta name="description" content="Six modules that teach working with Japanese visual materials digitally: what the method does, why you would choose it, and what it cannot tell you.">
+<style>
+/* ============================================================
+   Reading Against the Record — digitalarthistory.theprintlab
+   
+   Palette sampled from Utamaro, Ehon mushi erabi (1788):
+   the tsuyukusa opening with snake and lizard. Paper, sap green,
+   dayflower blue, the lizard's ochre, sumi. The blue is pushed
+   a little for screen legibility; the hue is the print's.
+   
+   No JavaScript anywhere on this site. Every page is HTML and
+   this file.
+   ============================================================ */
+
+:root {
+    --paper:      #F4EEDA;
+    --paper-deep: #ECE5CC;
+    --sumi:       #211E18;
+    --sumi-soft:  #57513F;
+    --ai:         #2F4A85;   /* dayflower — the computational operation */
+    --ai-deep:    #22375F;
+    --sap:        #5F6B36;   /* leaf — the Japanese material */
+    --ochre:      #75531B;   /* lizard — a decision you have to make */
+    --rule:       #D6CDAF;
+
+    /* System fonts only: nothing is fetched from another server. */
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+               "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+    --serif:   Georgia, Cambria,
+               "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+    --sans:    system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+               "Hiragino Sans", "Yu Gothic", Meiryo, "Noto Sans CJK JP", sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --s--1: 0.875rem;
+    --s-0:  1.1875rem;
+    --s-1:  1.375rem;
+    --s-2:  1.625rem;
+    --s-3:  2.15rem;
+
+    --measure: 66ch;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--serif);
+    font-size: var(--s-0);
+    line-height: 1.75;
+    background: var(--paper);
+    color: var(--sumi);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+a {
+    color: var(--sumi);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+a:hover { text-decoration-color: var(--sumi); }
+
+a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--ai);
+    outline-offset: 2px;
+}
+
+
+/* --- shell -------------------------------------------------- */
+
+.container { width: min(92vw, 720px); margin: 0 auto; padding: 0 1.25rem; }
+
+nav {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.1rem 0;
+    margin-bottom: 3rem;
+}
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem 1.5rem;
+    flex-wrap: wrap;
+}
+nav .logo {
+    font-family: var(--display);
+    font-size: var(--s-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--sumi);
+    text-decoration: none;
+}
+nav .logo .ja { color: var(--sumi-soft); font-weight: 400; }
+nav ul { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+nav ul a {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    text-decoration: none;
+}
+nav ul a:hover { color: var(--sumi); }
+nav ul a[aria-current] { color: var(--sumi); border-bottom: 1px solid var(--sumi); padding-bottom: 2px; }
+
+footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 5rem;
+    padding: 2rem 0 3rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    line-height: 1.9;
+}
+footer a { color: var(--sumi-soft); }
+footer a:hover { color: var(--sumi); }
+footer p + p { margin-top: 0.25rem; }
+
+/* --- type --------------------------------------------------- */
+
+h1 {
+    font-family: var(--display);
+    font-size: var(--s-3);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+}
+h2 {
+    font-family: var(--display);
+    font-size: var(--s-2);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 3.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: var(--measure);
+}
+h3 { font-size: var(--s-1); font-weight: 600; margin: 2rem 0 0.6rem; }
+h4 { font-size: var(--s-0); font-weight: 600; margin-bottom: 0.4rem; }
+
+p  { margin-bottom: 1.15rem; max-width: var(--measure); }
+ul, ol { margin: 0 0 1.5rem 1.4rem; max-width: var(--measure); }
+li { margin-bottom: 0.45rem; }
+
+em { font-style: italic; }
+
+.lede { font-size: var(--s-1); line-height: 1.6; margin-bottom: 1.5rem; }
+.meta {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    line-height: 1.7;
+    max-width: var(--measure);
+}
+.eyebrow {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.5rem;
+}
+.ja { font-family: "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif; }
+
+code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    padding: 0.1em 0.35em;
+    word-break: break-word;
+}
+
+/* --- masthead ----------------------------------------------- */
+
+.masthead { margin-bottom: 3.5rem; }
+.masthead h1 { max-width: 20ch; }
+.masthead .lede { max-width: 48ch; color: var(--sumi-soft); }
+
+/* --- the one box -------------------------------------------- */
+/* Every aside on the site is this. The label says what it is;
+   the styling never varies. Two exceptions below. */
+
+.box {
+    border-left: 2px solid var(--sap);
+    padding: 0.35rem 0 0.35rem 1.25rem;
+    margin: 2rem 0;
+    max-width: var(--measure);
+}
+.box > *:last-child { margin-bottom: 0; }
+.box-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.6rem;
+}
+.box p, .box ul, .box ol { max-width: none; }
+.box ul, .box ol { margin-bottom: 0.9rem; }
+
+/* Exception 1: the question, whose answer folds away */
+.box details { margin-top: 0.75rem; }
+.box summary {
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.box summary::-webkit-details-marker { display: none; }
+.box summary::marker { content: ""; }
+.box summary::before { content: "▸ "; }
+.box details[open] summary::before { content: "▾ "; }
+.box details[open] summary { margin-bottom: 0.75rem; }
+
+/* Exception 2: the closing summary, set on the ground colour */
+.box-close {
+    border-left-color: var(--ai);
+    background: var(--paper-deep);
+    padding: 1.25rem 1.25rem 1.25rem 1.15rem;
+}
+
+/* Two columns for questions and objectives */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.split h4 {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+.split ul { font-size: var(--s--1); line-height: 1.6; margin-left: 1.1rem; }
+
+/* --- hairline lists ----------------------------------------- */
+/* Replaces the card. A rule between items, nothing around them. */
+
+.rows { list-style: none; margin: 2rem 0; max-width: var(--measure); }
+.rows > li {
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+}
+.rows > li:last-child { border-bottom: 1px solid var(--rule); }
+.rows h3 { margin: 0 0 0.35rem; }
+.rows p { margin-bottom: 0.6rem; }
+.rows .num {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    margin-right: 0.6rem;
+}
+.rows .note { font-family: var(--sans); font-size: var(--s--1); color: var(--sumi-soft); }
+
+/* Numbered sequence: the three things you do, in order */
+.numbered { list-style: none; margin: 2rem 0; max-width: var(--measure); counter-reset: n; }
+.numbered > li {
+    counter-increment: n;
+    padding: 0.9rem 0 0.9rem 2.5rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    margin: 0;
+}
+.numbered > li:last-child { border-bottom: 1px solid var(--rule); }
+.numbered > li::before {
+    content: counter(n);
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.numbered strong { display: block; }
+.numbered p { margin: 0.2rem 0 0; font-size: var(--s--1); color: var(--sumi-soft); }
+
+/* --- tables -------------------------------------------------- */
+
+table {
+    width: 100%;
+    max-width: var(--measure);
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: var(--s--1);
+}
+th, td { text-align: left; padding: 0.6rem 0.75rem 0.6rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--sans); font-weight: 600; }
+td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
+
+/* --- code and output ----------------------------------------- */
+/* The frame echoes the printed image field: a single thin rule
+   with the ground showing through. */
+
+.code, .output { margin: 1.5rem 0; max-width: var(--measure); }
+.code-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.4rem;
+}
+.code pre, .output pre {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    tab-size: 4;
+}
+.code pre { border: 1px solid var(--sumi); background: var(--paper-deep); }
+.output { margin-top: -0.5rem; }
+.output pre { border: 1px dashed var(--rule); background: none; color: var(--sumi-soft); }
+.code pre code, .output pre code { font: inherit; background: none; padding: 0; }
+
+/* --- the run bar and badges ---------------------------------- */
+
+.run {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 0 2.5rem;
+    max-width: var(--measure);
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.run img { display: block; height: 20px; width: auto; }
+
+/* --- module page ---------------------------------------------- */
+
+.toc { list-style: none; margin: 0 0 3rem; max-width: var(--measure); font-family: var(--sans); font-size: var(--s--1); }
+.toc li { padding: 0.35rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+.toc a { color: var(--sumi); text-decoration: none; }
+.toc a:hover { color: var(--sumi); }
+.toc .num { color: var(--sumi-soft); margin-right: 0.7rem; }
+
+.pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    max-width: var(--measure);
+    font-family: var(--sans);
+    font-size: var(--s--1);
+}
+.pager a { text-decoration: none; }
+.pager a:hover { text-decoration: underline; }
+.pager .nav-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+
+/* --- provenance stamp ----------------------------------------- */
+
+.provenance {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--sumi-soft);
+    max-width: var(--measure);
+}
+
+/* --- small screens -------------------------------------------- */
+
+@media (max-width: 640px) {
+    :root { --s-3: 1.8rem; --s-2: 1.45rem; }
+    .container { padding: 0 1rem; }
+    p, ul, ol, h2, table, .box, .code, .output, .run, .toc, .pager,
+    .rows, .numbered, .meta, .provenance { max-width: 100%; }
+    .split { grid-template-columns: 1fr; gap: 1.25rem; }
+    nav { margin-bottom: 2rem; }
+    nav ul { gap: 1rem; }
+    h2 { margin-top: 2.5rem; }
+}
+
+/* --- glossed terms -------------------------------------------- */
+/* A term marked in prose is a link to its glossary entry. Dotted
+   underline, no colour change, so the sentence still reads as a
+   sentence. No JavaScript: the reader clicks, reads, comes back. */
+
+.term {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--sumi-soft);
+}
+.term:hover { border-bottom-style: solid; }
+
+/* The short list at the head of a recipe: the words that recipe needs */
+.terms { margin: 0; }
+.terms dt {
+    font-weight: 600;
+    font-size: var(--s--1);
+    margin-top: 0.6rem;
+}
+.terms dt:first-child { margin-top: 0; }
+.terms dd {
+    margin: 0;
+    font-size: var(--s--1);
+    line-height: 1.6;
+    color: var(--sumi-soft);
+}
+
+/* --- glossary page --------------------------------------------- */
+
+.glossary { margin: 0 0 3rem; max-width: var(--measure); }
+.glossary dt {
+    font-family: var(--serif);
+    font-size: var(--s-1);
+    font-weight: 600;
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 1.5rem;
+}
+.glossary dt:first-of-type { margin-top: 0; }
+.glossary dt .ja { font-weight: 400; color: var(--sumi-soft); font-size: var(--s-0); margin-left: 0.5rem; }
+.glossary dd { margin: 0.5rem 0 0; }
+.glossary dd p { margin-bottom: 0.7rem; }
+.glossary dd p:last-child { margin-bottom: 0; }
+.glossary dd .seealso {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+
+/* Highlight the entry the reader arrived at */
+.glossary dt:target,
+.glossary dt:target + dd {
+    background: var(--paper-deep);
+    box-shadow: -0.75rem 0 0 var(--paper-deep), 0.75rem 0 0 var(--paper-deep);
+}
+
+/* Jump bar */
+.alphabet {
+    font-family: var(--mono);
+    font-size: var(--s--1);
+    letter-spacing: 0.15em;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 0 2.5rem;
+    max-width: var(--measure);
+}
+.alphabet a { text-decoration: none; }
+.alphabet span { color: var(--rule); }
+
+/* ==============================================================
+   e_tehon — module layer
+   
+   A module page is one wide column with a margin column beside it.
+   The margin column carries the two side-panels: one for readers
+   who know computers and not Japan, one for readers who know Japan
+   and not computers. Below 1080px they fall inline, in place.
+   ============================================================== */
+
+.wide { width: min(94vw, 1080px); margin: 0 auto; padding: 0 1.25rem; }
+.wide p, .wide ul, .wide ol, .wide h2, .wide table,
+.wide .box, .wide .code, .wide .output, .wide .run,
+.wide .toc, .wide .pager, .wide .meta, .wide .provenance,
+.wide .steps { max-width: 66ch; }
+.wide h1 { max-width: 24ch; }
+
+/* --- the two side-panels --------------------------------------- */
+/* Folded shut by default: a tab in the margin the reader opens when
+   they want it. <details> does this with no JavaScript, and stays
+   keyboard-operable and legible to a screen reader. */
+
+.side {
+    float: right;
+    clear: right;
+    width: 17rem;
+    margin: 0.5rem 0 1.75rem 2.5rem;
+    padding: 0 0 0 1.1rem;
+    border-left: 3px solid currentColor;
+    font-size: var(--s--1);
+    line-height: 1.6;
+    color: var(--sumi-soft);
+}
+.side[open] { padding-bottom: 0.4rem; }
+.side > summary {
+    cursor: pointer;
+    list-style: none;
+    display: block;
+    position: relative;
+    padding: 0.3rem 1.6rem 0.3rem 0;
+}
+.side > summary::-webkit-details-marker { display: none; }
+.side > summary::marker { content: ""; }
+.side > summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    line-height: 1.2;
+}
+.side[open] > summary::after { content: "\2212"; }
+.side[open] > summary { margin-bottom: 0.7rem; }
+.side > summary:hover .side-label { text-decoration: underline; text-underline-offset: 3px; }
+.side p { margin-bottom: 0.7rem; max-width: none; }
+.side p:last-child { margin-bottom: 0; }
+.side ul { margin: 0 0 0.7rem 1.1rem; max-width: none; }
+.side li { margin-bottom: 0.3rem; }
+.side-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+/* Sap green for what the material requires, dayflower blue for what the
+   operation decides. The two pigments from the print, each doing one job. */
+.side-japan  { color: var(--sap); }
+.side-machine { color: var(--ai); }
+.side-japan .side-label,  .side-japan > summary::after  { color: var(--sap); }
+.side-machine .side-label, .side-machine > summary::after { color: var(--ai); }
+/* Open, the panel gets a ground of its own colour at low strength, so the
+   margin reads as a second voice rather than a footnote. */
+.side-japan[open]  { background: rgba(95, 107, 54, 0.07); }
+.side-machine[open] { background: rgba(47, 74, 133, 0.06); }
+.side[open] > summary, .side[open] p, .side[open] ul { padding-right: 0.9rem; }
+.side[open] > summary { padding-top: 0.5rem; }
+.side p, .side li { color: var(--sumi-soft); }
+
+@media (max-width: 1080px) {
+    .side {
+        float: none;
+        width: auto;
+        max-width: 66ch;
+        margin: 1.5rem 0;
+    }
+}
+
+/* --- module header --------------------------------------------- */
+
+.crumb {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    margin-bottom: 0.75rem;
+}
+.crumb a { color: var(--sumi-soft); }
+
+.chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    color: var(--sumi-soft);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: var(--s-1);
+    line-height: 1.5;
+    color: var(--sumi-soft);
+    margin-bottom: 1.25rem;
+    max-width: 46ch;
+}
+
+/* The facts strip: duration, prerequisite, sources, licence */
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+    list-style: none;
+    margin: 0 0 2.5rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    max-width: 66ch;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.facts li { margin: 0; }
+
+/* --- the starting point ----------------------------------------- */
+/* Every module opens with a research question in the first person,
+   because that is how it arrives in real work. */
+
+.starting {
+    border-left: 2px solid var(--ai);
+    background: var(--paper-deep);
+    padding: 1.15rem 1.25rem;
+    margin: 1.5rem 0 2rem;
+    max-width: 66ch;
+}
+.starting .box-label { color: var(--ai); }
+.starting p {
+    margin-bottom: 0;
+    max-width: none;
+    font-size: var(--s-1);
+    line-height: 1.55;
+}
+
+/* --- steps ------------------------------------------------------- */
+
+.step-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin: 3rem 0 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: 66ch;
+}
+
+/* --- the choice point -------------------------------------------- */
+/* Not a recipe: at each fork the module names the options and says
+   what each one costs. */
+
+.choice {
+    border-left: 2px solid var(--ochre);
+    padding: 0.35rem 0 0.35rem 1.25rem;
+    margin: 2rem 0;
+    max-width: 66ch;
+}
+.choice .box-label { color: var(--ochre); }
+.choice dt { font-weight: 600; margin-top: 0.8rem; }
+.choice dt:first-of-type { margin-top: 0; }
+.choice dd { margin: 0.15rem 0 0; color: var(--sumi-soft); font-size: var(--s--1); line-height: 1.6; }
+
+/* --- module list on the front page -------------------------------- */
+
+.modules { list-style: none; margin: 2rem 0; max-width: var(--measure); }
+.modules > li { padding: 1.5rem 0; border-top: 1px solid var(--rule); margin: 0; }
+.modules > li:last-child { border-bottom: 1px solid var(--rule); }
+.modules h3 { margin: 0.3rem 0 0.4rem; }
+.modules .num { font-family: var(--mono); font-size: var(--s--1); color: var(--sumi-soft); }
+.modules .thread {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    display: block;
+    margin-top: 0.5rem;
+}
+.modules .thread strong { color: var(--sap); font-weight: 600; }
+
+/* --- masthead wordmark -------------------------------------------- */
+
+.wordmark { font-family: var(--display); font-size: var(--s-3); font-weight: 600; letter-spacing: -0.02em; }
+.wordmark .ja { font-weight: 400; color: var(--sumi-soft); margin-left: 0.4rem; }
+
+/* --- glossary in two parts ------------------------------------- */
+/* The reference layer mirrors the side-panels: one part for readers
+   who know computers, one for readers who know Japan. */
+
+.gloss-part {
+    margin: 3.5rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--rule);
+    max-width: var(--measure);
+}
+.gloss-part:first-of-type { margin-top: 2rem; }
+.gloss-part h2 { margin: 0 0 0.3rem; border-bottom: none; padding-bottom: 0; }
+.gloss-part p {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.gloss-japan { border-bottom-color: var(--sap); }
+.gloss-japan h2 { color: var(--sap); }
+.gloss-machine { border-bottom-color: var(--ai); }
+.gloss-machine h2 { color: var(--ai); }
+
+/* --- per-step run links ---------------------------------------- */
+/* Each code block links to the matching cell in the notebook, using
+   Colab's #scrollTo=<cell id>. If an id ever stops matching, Colab
+   opens the notebook at the top, which is a graceful failure. */
+
+.code-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+.code-run {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ai);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    white-space: nowrap;
+}
+.code-run:hover { color: var(--sumi); }
+
+/* --- figures ---------------------------------------------------- */
+/* The credit block is a teaching device, not a caption. Every field
+   an image record should carry is present and legible, including the
+   licence, which is not the site's licence. */
+
+figure { margin: 2.5rem 0; }
+figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--paper-deep);
+}
+figcaption {
+    margin-top: 0.85rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    line-height: 1.65;
+    color: var(--sumi-soft);
+    max-width: 66ch;
+}
+figcaption .fig-title { color: var(--sumi); }
+figcaption .fig-title em { font-style: italic; }
+
+/* Source, capture date, licence — the row the register also holds */
+.fig-record {
+    display: block;
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.7;
+}
+.fig-record span { display: block; }
+.fig-record b { font-weight: 400; color: var(--sumi); }
+
+/* A figure that runs the full width of a module page, margin column included */
+.figure-wide { max-width: none; }
+.figure-wide figcaption { max-width: 66ch; }
+
+/* The opening on the front page: edge to edge of the reading column */
+.figure-lead { margin: 0 0 3rem; }
+
+
+/* --- colour legend ---------------------------------------------- */
+/* Three colours, one meaning each. Said once, on the front page. */
+
+.legend { list-style: none; margin: 1.25rem 0 0; }
+.legend li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--s--1);
+    line-height: 1.6;
+}
+.legend .swatch {
+    flex: 0 0 auto;
+    width: 1.6rem;
+    height: 0.2rem;
+    border-radius: 1px;
+    transform: translateY(-0.2em);
+}
+.legend .sw-japan   { background: var(--sap); }
+.legend .sw-machine { background: var(--ai); }
+.legend .sw-choice  { background: var(--ochre); }
+.legend b { font-weight: 600; color: var(--sumi); }
+
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📖%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://digitalarthistory.theprintlab.org">
+<meta property="og:title" content="e_tehon | e_手本">
+<meta property="og:description" content="A digital practice book for Japanese art history: six modules on working with Japanese visual materials digitally.">
+<meta property="og:image" content="https://digitalarthistory.theprintlab.org/og-image.jpg">
+<meta property="og:locale" content="en">
+<meta property="og:locale:alternate" content="ja">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="logo" href="preview-index.html">e_tehon <span class="ja">e_手本</span></a>
+    <ul>
+      <li><a href="preview-start.html">Start</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#asking">Asking</a></li>
+      <li><a href="#modules">Modules</a></li>
+      <li><a href="#cases">Cases</a></li>
+      <li><a href="preview-glossary.html">Glossary</a></li>
+      <li><a href="#ja" class="ja">日本語</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container">
+
+  <header class="masthead">
+    <h1 class="wordmark">e_tehon <span class="ja">e_手本</span></h1>
+    <p class="lede">A digital practice book for Japanese art history: six modules on working with Japanese visual materials digitally, each one naming what the method does, why you would choose it, and what it cannot tell you.</p>
+    <p class="meta">
+      Dr. Stephanie Santschi &middot; Chair of East Asian Art History, University of Zurich<br>
+      In development &middot; modules 1&ndash;3 in classroom test, autumn 2026
+    </p>
+  </header>
+
+  <figure class="figure-lead">
+    <img src="images/utamaro-ehon-mushi-erabi-snake-lizard.jpg"
+         width="1200" height="872"
+         alt="An open woodblock-printed book. On the left page a snake coils through dayflower plants with blue petals; on the right a lizard approaches from the lower edge beneath two cursive kyōka, one on the snake and one on the lizard, each headed and signed.">
+    <figcaption>
+      <span class="fig-title">Kitagawa Utamaro, <em>Ehon mushi erabi</em> (Picture Book of Selected Insects), compiled by Yadoya no Meshimori, snake and lizard among <em>tsuyukusa</em>. Edo: Tsutaya Jūzaburō, 1788. Lower volume, leaf 2 (marked <span class="ja" lang="ja">下ノ二</span>).</span>
+      <span class="fig-record">
+        <span><b>held by</b> The British Museum</span>
+        <span><b>licence</b> <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> — not the licence of this site</span>
+        <span><b>credit</b> © The Trustees of the British Museum</span>
+        <span><b>captured</b> 2026-08-22</span>
+      </span>
+    </figcaption>
+  </figure>
+
+  <p>Early modern <em>tehon</em> taught learners to make things: how to hold the brush, how a form is built up, what to try next. They assumed you would work through them with materials in front of you. This is a practice book in that sense, for people whose materials are Japanese visual sources and whose workbench is a computer.</p>
+
+  <p>Japanese art history teaches close looking at objects, and rarely teaches building or changing the digital environments that increasingly stand between the researcher and those objects. The two are treated as different kinds of work, with different recognition. The result is digital projects that handle the technology well and the Japanese material poorly, and art-historical work that adopts digital tools without seeing what those tools do to the argument.</p>
+
+  <p>Each module takes a real research question, works a method end to end on open data, names the choice points, and says plainly where the method stops. You can swap the example data for your own at any step.</p>
+
+  <div class="box">
+    <span class="box-label">Where to begin</span>
+    <p>The modules run in a curricular order and almost nobody arrives with a curricular question. <a href="preview-start.html">Start where your question is</a> arranges them by what you are trying to do, and says plainly what is not here yet.</p>
+  </div>
+
+
+  <h2 id="about">Who it is for</h2>
+
+  <p>Three readers, arriving from different directions, and the modules are built to serve all three without asking anyone to start from nothing.</p>
+
+  <ul>
+    <li><strong>Students in Japanese art history</strong> who need practical instruction in working with their sources digitally.</li>
+    <li><strong>Early-career researchers and curators</strong> working with Japanese visual materials, in Japan and elsewhere.</li>
+    <li><strong>Digital humanities instructors outside Japan</strong> who teach these methods and lack the Japan-specific expertise to transfer them to Japanese materials.</li>
+  </ul>
+
+  <div class="box">
+    <span class="box-label">The two side-panels</span>
+    <p>Every module carries tabs in the margin, folded shut. Click one open when you want it.</p>
+    <p><strong>The Japanese material</strong> covers what the sources require: that a designer signed under several names across a career, that Hokusai appears in a list as 北斎, ホクサイ or Hokousaï depending on who typed the record, that a print has four makers and the cataloguing convention names one.</p>
+    <p><strong>The computational operation</strong> covers what each step decides. The assumption is not that computers are unfamiliar. It is that formal analysis conducted by machine makes commitments an art historian would otherwise make explicitly — what counts as the same thing, which differences are meaningless, what enters the corpus — and makes them silently, inside a line of code.</p>
+    <p>Open the one you need and leave the other shut. Nothing in the main text depends on either.</p>
+  </div>
+
+
+
+  <h2 id="asking">Asking the question</h2>
+
+  <p>Every module opens with a question in the first person, before any method appears. That order is deliberate, and it is the thing this practice book most wants you to take away.</p>
+
+  <p>A computational method will answer whatever you ask it. It will also answer questions you did not mean to ask, in the same format, with the same confidence, and nothing in the output distinguishes the two. So the phrasing of the question is not a preliminary to the work. It decides what the work can find.</p>
+
+  <p>Watch what changes across three versions of one question.</p>
+
+  <ul class="rows">
+    <li>
+      <h3>What can I learn about this print?</h3>
+      <p>Answerable by anything, which means it selects no method and rejects no result. Whatever comes back will look like an answer.</p>
+    </li>
+    <li>
+      <h3>Who made this print?</h3>
+      <p>Now a method is implied: look it up. But <em>made</em> is unexamined, and a print has four makers. The question will return the designer, because that is the field the databases fill, and the other three will vanish without a trace in the output.</p>
+    </li>
+    <li>
+      <h3>Which institutions name a designer for this print, on what basis, and where do they disagree?</h3>
+      <p>This one names its own method, its own evidence, and its own failure condition. It can come back empty, which is what makes it worth asking.</p>
+    </li>
+  </ul>
+
+  <p>The third question is longer and less comfortable. It also cannot be satisfied by a plausible-looking result, because it says in advance what would count as an answer and what would count as nothing. A question you can fail is the only kind worth putting to a machine.</p>
+
+  <p>This is why the modules are slow at the start. Naming what you want to know, in terms specific enough to be disappointed, is most of the method. The code is the easy part, and it comes after.</p>
+
+
+  <h2 id="reading-the-site">Reading this site</h2>
+
+  <p>Three colours, one meaning each.</p>
+
+  <ul class="legend">
+    <li><span class="swatch sw-japan"></span><span><b>The Japanese material.</b> Margin tabs and glossary entries covering what the sources require: names, formats, the conventions that govern how this material was made and described.</span></li>
+    <li><span class="swatch sw-machine"></span><span><b>The computational operation.</b> Margin tabs, glossary entries, and the links that run a step. What each operation commits you to.</span></li>
+    <li><span class="swatch sw-choice"></span><span><b>A decision you have to make.</b> The choice points, where a fork is named and each option's cost is stated. These are the places a recipe would have decided for you.</span></li>
+  </ul>
+
+  <p class="meta">Everything else is ink on paper. Margin tabs are folded shut; open the one you need.</p>
+
+
+  <h2 id="modules">The modules</h2>
+
+  <p>A curriculum, foundational to advanced. Each follows one thread of a design arc: observe the material, define the problem, work out an approach, build and test it, connect it to what exists, and publish it.</p>
+
+  <ol class="modules">
+    <li>
+      <span class="num">module 01 · foundational</span>
+      <h3><a href="preview-01-data-literacy.html">Data literacy for Japanese datasets</a></h3>
+      <p>Names and lists: how to make a computer understand a list of Japanese terms — place names, artist names — when they are written three different ways.</p>
+      <span class="thread"><strong>Empathise with the data.</strong> What does it actually contain, and what has already been decided for you?</span>
+      <span class="thread"><a href="preview-01-data-literacy.html">Open the module</a> &middot; about 60 minutes</span>
+    </li>
+    <li>
+      <span class="num">module 02 · intermediate</span>
+      <h3><a href="preview-02-images-and-metadata.html">Japanese images and metadata in art-historical research</a></h3>
+      <p>Museum and library records: how Japanese institutions describe their images, how to find that information, and what to make of it when four institutions disagree.</p>
+      <span class="thread"><strong>Define the problem.</strong> What are you trying to find, and which database can answer it?</span>
+      <span class="thread"><a href="preview-02-images-and-metadata.html">Open the module</a> &middot; about 75 minutes</span>
+    </li>
+    <li>
+      <span class="num">module 03 · intermediate</span>
+      <h3><a href="preview-03-spatial-research-design.html">Spatial research design</a></h3>
+      <p>Maps and patterns: how placing Japanese works of art on a map reveals patterns, and what you can do with them. Ends on the harder question — where a print was seen <em>from</em> — using the participatory georeferencing built for Drawing from the Crowd.</p>
+      <span class="thread"><strong>Ideate.</strong> From research question to pipeline, with the choice points named.</span>
+      <span class="thread"><a href="preview-03-spatial-research-design.html">Open the module</a> &middot; about 75 minutes</span>
+    </li>
+    <li>
+      <span class="num">module 04 · advanced</span>
+      <h3><a href="preview-04-critical-computer-vision.html">Critical computer vision</a></h3>
+      <p>Distant viewing: how to teach a computer to look at images of Japanese artworks, what patterns this reveals, and how to read the model's blind spots as evidence. Draws on computer vision work in Drawing from the Crowd.</p>
+      <span class="thread"><strong>Prototype and test.</strong> Try the method on your corpus and read the outputs as evidence, knowing of what.</span>
+      <span class="thread"><a href="preview-04-critical-computer-vision.html">Open the module</a> &middot; draft &middot; about 90 minutes</span>
+    </li>
+    <li>
+      <span class="num">module 05 · advanced</span>
+      <h3><a href="preview-05-linked-data.html">Linked data</a></h3>
+      <p>How to connect your research to other people's, so that both can be reused. Worked on the RDF that Japanese institutions publish themselves — Japan Search and Web NDL Authorities — on Wikidata and what its rules will let you add, and on the vocabularies that can carry a contested claim.</p>
+      <span class="thread"><strong>Integrate and iterate.</strong> Connect what you have built to what already exists, and refine.</span>
+      <span class="thread"><a href="preview-05-linked-data.html">Open the module</a> &middot; draft &middot; about 110 minutes</span>
+    </li>
+    <li>
+      <span class="num">module 06 · intermediate</span>
+      <h3><a href="preview-06-display-and-the-book.html">Display and the book</a></h3>
+      <p>What a book demands of a display tool, what viewers actually honour, and how to publish a small exhibition from a spreadsheet using open-source templates.</p>
+      <span class="thread"><strong>Communicate.</strong> Publish what you built, and say what the arrangement decided.</span>
+      <span class="thread"><a href="preview-06-display-and-the-book.html">Open the module</a> &middot; draft &middot; about 90 minutes</span>
+    </li>
+  </ol>
+
+  <p class="meta">Modules run in a browser. There is nothing to install and no prior programming experience assumed. Each ships with cached example data, so it works when an institution's service does not.</p>
+
+
+  <h2 id="guides">Guides</h2>
+
+  <p>Shorter pieces for a specific difficulty, outside the curricular sequence.</p>
+
+  <ul class="rows">
+    <li>
+      <h3><a href="preview-identifying-a-book-you-cannot-read.html">Identifying a book you cannot read</a></h3>
+      <p>Four routes that do not depend on reading — looking, image matching, union catalogues, machine transcription — and what each one lets you claim afterwards.</p>
+      <p class="note">About 30 minutes &middot; no prerequisite</p>
+    </li>
+  </ul>
+
+
+  <h2 id="cases">Cases</h2>
+
+  <p>Worked examples that carry the argument further than a module can, using material where the record and the object disagree.</p>
+
+  <h3>Japanese institutional RDF</h3>
+  <p>Japan Search publishes its aggregated holdings as RDF and answers SPARQL queries; the National Diet Library publishes its authority file the same way. Both are built by institutions describing their own material on their own terms, which makes them the right place to see what a data model decides.</p>
+  <p>Module 5 works two of them: how Japan Search normalises who, when and where before you ever see a record, and what the coverage of an authority file tells you about the field it serves. It closes on ResearchSpace, built at the British Museum around the question these modules keep arriving at — how to publish a claim together with who asserted it and on what grounds.</p>
+
+  <h3>The Great Picture Book of Everything</h3>
+  <p>103 Hokusai drawings, made for an encyclopaedia that was never published, sold in Paris in 1948 and not publicly recorded again for seventy years. In June 2019 they reappeared at a Paris sale catalogued as the work of a pupil; a dealer bought them convinced otherwise, a curator agreed, and the British Museum acquired them in 2020.</p>
+  <p>The maker field therefore has a date on which it changed, an agent who changed it, and a basis — and the dating has moved since, from 1829 in the acquisition announcement to the 1820s–1840s on the exhibition page. The same institution, revising in public as research proceeded.</p>
+  <p>Module 2 runs the four checks against it. Module 5 asks what a data model can carry of any of it, and what happens to a seventy-year gap that has no field — working against <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a>, a research instance holding this material across three institutions.</p>
+
+  <h3>A date with no visible source</h3>
+  <p>The recurring pattern behind these modules: a date recorded in many catalogues, descending from a single printed source, appearing on no surviving sheet, with dissent published in the literature that never reached the records.</p>
+  <p>The pattern is general. Worked cases from current research are held for publication and will be added here, with citations, once they appear.</p>
+
+  <h3>Four checks on a catalogue record</h3>
+  <p><strong>Where did this field come from?</strong> A date in a museum record has a history. It was entered by someone, from something. Ask what that something was.</p>
+  <p><strong>Does the object carry it?</strong> Printed books carry colophons, seals, censor marks, publisher's addresses. Check whether the claim appears on any surviving sheet.</p>
+  <p><strong>Who else says it, and independently?</strong> Four catalogues agreeing means little when three copied the fourth.</p>
+  <p><strong>Has anyone dissented?</strong> Published disagreement often sits in the literature without ever reaching the records.</p>
+  <p class="meta">Module 2 works the field audit that makes such divergences visible; module 5 shows why publishing the dissent alongside the date is harder than it should be.</p>
+
+
+  <h2 id="reading">Reading</h2>
+  <ul>
+    <li>Wasielewski, Amanda and N&auml;slund, Anna, &lsquo;Critical Digital Art History: An Introduction&rsquo;, in Amanda Wasielewski and Anna N&auml;slund (eds), <em>Critical Digital Art History: Interface and Data Politics in the Post-Digital Era</em> (Bristol: Intellect, 2024), pp.&nbsp;1&ndash;19. <a href="https://intellectdiscover.com/content/books/9781789389760.c01">Open access</a> (CC BY-NC-ND 4.0).</li>
+    <li>Ginzburg, Carlo, &lsquo;Clues: Roots of an Evidential Paradigm&rsquo;, in <em>Clues, Myths, and the Historical Method</em>, trans. John and Anne C. Tedeschi (Baltimore: Johns Hopkins University Press, 1989), pp.&nbsp;96&ndash;125. First published in Italian as &lsquo;Spie. Radici di un paradigma indiziario&rsquo; (1979).</li>
+    <li>Drucker, Johanna, &lsquo;Humanities Approaches to Graphical Display&rsquo;, <em>Digital Humanities Quarterly</em> 5:1 (2011).</li>
+    <li>Suzuki, Jun and Tinios, Ellis (eds), <em>Understanding Japanese Woodblock-Printed Illustrated Books</em> (Brill, 2013).</li>
+    <li>Library of Congress, <em>Descriptive Cataloging Guidelines for Pre-Meiji Japanese Books</em>.</li>
+  </ul>
+
+
+  <h2 id="cite">About &amp; citation</h2>
+
+  <p>Dr. Stephanie Santschi is a Japanese art historian at the Chair of East Asian Art History, University of Zurich, working on early modern illustrated books and on the digital infrastructures through which they now reach readers.</p>
+
+  <p>e_tehon is developed openly. Modules 1&ndash;3 are tested in the classroom with the inaugural Ishibashi Foundation Graduate Programme at UZH in autumn 2026, and the platform is published in versions rather than maintained as a service: each release is fixed, dated and citable.</p>
+
+  <h3>How to cite this</h3>
+  <div class="code">
+<pre><code>Santschi, Stephanie. e_tehon: A Digital Practice Book for
+Japanese Art History. Version 0.1. Zurich: ThePrintLab, 2026.
+https://digitalarthistory.theprintlab.org</code></pre>
+  </div>
+  <p class="meta">A DOI is issued for each released version through Zenodo. Cite the version you used.</p>
+
+  <h3>Licence</h3>
+  <ul>
+    <li><strong>Prose and teaching material:</strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Reuse it, adapt it, translate it, teach from it, with attribution.</li>
+    <li><strong>Code:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a>.</li>
+    <li><strong>Example data:</strong> governed by the holding institution in each case, recorded per file in <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/blob/main/data/README.md">data/README.md</a>.</li>
+    <li><strong>Images:</strong> each carries its own licence, stated in full beneath it and registered in <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/blob/main/images/CREDITS.md">images/CREDITS.md</a>. They are excluded from the CC BY 4.0 licence above.</li>
+  </ul>
+  <p>The exclusion matters in practice. The Utamaro opening on this page is CC BY-NC-SA 4.0, which permits neither commercial reuse nor relicensing. Anyone reusing this site commercially, as CC BY 4.0 otherwise allows, has to remove it. That constraint is stated here rather than left for someone to discover, which is the whole of what module 2 asks of a record.</p>
+
+  <h3 id="ja" class="ja">日本語要旨</h3>
+  <p class="ja">e_手本は、日本美術史をデジタル環境で研究するための実践的な手引きです。近世の手本が制作の手順を教えたように、ここでは資料をコンピュータで扱う手順を、五つのモジュールに分けて示します。各モジュールは実際の研究上の問いから始まり、公開データを用いて手法を最初から最後までたどり、選択の分かれ目を明示し、その手法に何ができないかを率直に述べます。</p>
+  <p class="ja">各モジュールには二種類の傍注があります。ひとつは日本の資料に不慣れな読者に向けて、絵師の複数の号や表記の揺れといった事柄を説明します。もうひとつはコンピュータに不慣れな読者に向けて、機械がその時点で何をしているのか、どこにその限界があるのかを説明します。</p>
+  <p class="ja">著者：ステファニー・サンチ（チューリッヒ大学東アジア美術史講座）。テキストはCC BY 4.0、コードはMITライセンス。日本語版は準備中です。</p>
+
+  <h3>Elsewhere</h3>
+  <p>Corrections and suggested terms are welcome through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a>.</p>
+  <p><a href="https://landscapes.theprintlab.org">Drawing from the Crowd: Mapping Japan's Historical Landscapes</a> is the sibling project, a participatory georeferencing platform for <em>ukiyo-e</em> research.</p>
+
+  <p class="meta">The colours of this site are sampled from the opening above: the paper, the sap green of the leaves, the dayflower blue of the <em>tsuyukusa</em>, and the ochre of the lizard.</p>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>e_tehon &middot; ThePrintLab 2026 &middot; version 0.1, in development</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; code <a href="https://opensource.org/licenses/MIT">MIT</a> &middot; <a href="#cite">cite this</a> &middot; <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a> &middot; <a href="https://landscapes.theprintlab.org">landscapes.theprintlab.org</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
