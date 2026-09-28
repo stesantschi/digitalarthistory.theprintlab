@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 06: Display and the book — e_tehon</title>
+<meta name="description" content="What a book demands of a display tool, what viewers actually honour, and how to publish a small exhibition from a spreadsheet.">
+<style>
+/* ============================================================
+   Reading Against the Record — digitalarthistory.theprintlab
+   
+   Palette sampled from Utamaro, Ehon mushi erabi (1788):
+   the tsuyukusa opening with snake and lizard. Paper, sap green,
+   dayflower blue, the lizard's ochre, sumi. The blue is pushed
+   a little for screen legibility; the hue is the print's.
+   
+   No JavaScript anywhere on this site. Every page is HTML and
+   this file.
+   ============================================================ */
+
+:root {
+    --paper:      #F4EEDA;
+    --paper-deep: #ECE5CC;
+    --sumi:       #211E18;
+    --sumi-soft:  #57513F;
+    --ai:         #2F4A85;   /* dayflower — the computational operation */
+    --ai-deep:    #22375F;
+    --sap:        #5F6B36;   /* leaf — the Japanese material */
+    --ochre:      #75531B;   /* lizard — a decision you have to make */
+    --rule:       #D6CDAF;
+
+    /* System fonts only: nothing is fetched from another server. */
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+               "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+    --serif:   Georgia, Cambria,
+               "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+    --sans:    system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+               "Hiragino Sans", "Yu Gothic", Meiryo, "Noto Sans CJK JP", sans-serif;
+    --mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --s--1: 0.875rem;
+    --s-0:  1.1875rem;
+    --s-1:  1.375rem;
+    --s-2:  1.625rem;
+    --s-3:  2.15rem;
+
+    --measure: 66ch;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--serif);
+    font-size: var(--s-0);
+    line-height: 1.75;
+    background: var(--paper);
+    color: var(--sumi);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+a {
+    color: var(--sumi);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+a:hover { text-decoration-color: var(--sumi); }
+
+a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--ai);
+    outline-offset: 2px;
+}
+
+
+/* --- shell -------------------------------------------------- */
+
+.container { width: min(92vw, 720px); margin: 0 auto; padding: 0 1.25rem; }
+
+nav {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.1rem 0;
+    margin-bottom: 3rem;
+}
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem 1.5rem;
+    flex-wrap: wrap;
+}
+nav .logo {
+    font-family: var(--display);
+    font-size: var(--s-1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--sumi);
+    text-decoration: none;
+}
+nav .logo .ja { color: var(--sumi-soft); font-weight: 400; }
+nav ul { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+nav ul a {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    text-decoration: none;
+}
+nav ul a:hover { color: var(--sumi); }
+nav ul a[aria-current] { color: var(--sumi); border-bottom: 1px solid var(--sumi); padding-bottom: 2px; }
+
+footer {
+    border-top: 1px solid var(--rule);
+    margin-top: 5rem;
+    padding: 2rem 0 3rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    line-height: 1.9;
+}
+footer a { color: var(--sumi-soft); }
+footer a:hover { color: var(--sumi); }
+footer p + p { margin-top: 0.25rem; }
+
+/* --- type --------------------------------------------------- */
+
+h1 {
+    font-family: var(--display);
+    font-size: var(--s-3);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+}
+h2 {
+    font-family: var(--display);
+    font-size: var(--s-2);
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 3.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: var(--measure);
+}
+h3 { font-size: var(--s-1); font-weight: 600; margin: 2rem 0 0.6rem; }
+h4 { font-size: var(--s-0); font-weight: 600; margin-bottom: 0.4rem; }
+
+p  { margin-bottom: 1.15rem; max-width: var(--measure); }
+ul, ol { margin: 0 0 1.5rem 1.4rem; max-width: var(--measure); }
+li { margin-bottom: 0.45rem; }
+
+em { font-style: italic; }
+
+.lede { font-size: var(--s-1); line-height: 1.6; margin-bottom: 1.5rem; }
+.meta {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    line-height: 1.7;
+    max-width: var(--measure);
+}
+.eyebrow {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.5rem;
+}
+.ja { font-family: "MS Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif; }
+
+code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--paper-deep);
+    padding: 0.1em 0.35em;
+    word-break: break-word;
+}
+
+/* --- masthead ----------------------------------------------- */
+
+.masthead { margin-bottom: 3.5rem; }
+.masthead h1 { max-width: 20ch; }
+.masthead .lede { max-width: 48ch; color: var(--sumi-soft); }
+
+/* --- the one box -------------------------------------------- */
+/* Every aside on the site is this. The label says what it is;
+   the styling never varies. Two exceptions below. */
+
+.box {
+    border-left: 2px solid var(--sap);
+    padding: 0.35rem 0 0.35rem 1.25rem;
+    margin: 2rem 0;
+    max-width: var(--measure);
+}
+.box > *:last-child { margin-bottom: 0; }
+.box-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.6rem;
+}
+.box p, .box ul, .box ol { max-width: none; }
+.box ul, .box ol { margin-bottom: 0.9rem; }
+
+/* Exception 1: the question, whose answer folds away */
+.box details { margin-top: 0.75rem; }
+.box summary {
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.box summary::-webkit-details-marker { display: none; }
+.box summary::marker { content: ""; }
+.box summary::before { content: "▸ "; }
+.box details[open] summary::before { content: "▾ "; }
+.box details[open] summary { margin-bottom: 0.75rem; }
+
+/* Exception 2: the closing summary, set on the ground colour */
+.box-close {
+    border-left-color: var(--ai);
+    background: var(--paper-deep);
+    padding: 1.25rem 1.25rem 1.25rem 1.15rem;
+}
+
+/* Two columns for questions and objectives */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.split h4 {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+.split ul { font-size: var(--s--1); line-height: 1.6; margin-left: 1.1rem; }
+
+/* --- hairline lists ----------------------------------------- */
+/* Replaces the card. A rule between items, nothing around them. */
+
+.rows { list-style: none; margin: 2rem 0; max-width: var(--measure); }
+.rows > li {
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+}
+.rows > li:last-child { border-bottom: 1px solid var(--rule); }
+.rows h3 { margin: 0 0 0.35rem; }
+.rows p { margin-bottom: 0.6rem; }
+.rows .num {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    margin-right: 0.6rem;
+}
+.rows .note { font-family: var(--sans); font-size: var(--s--1); color: var(--sumi-soft); }
+
+/* Numbered sequence: the three things you do, in order */
+.numbered { list-style: none; margin: 2rem 0; max-width: var(--measure); counter-reset: n; }
+.numbered > li {
+    counter-increment: n;
+    padding: 0.9rem 0 0.9rem 2.5rem;
+    border-top: 1px solid var(--rule);
+    position: relative;
+    margin: 0;
+}
+.numbered > li:last-child { border-bottom: 1px solid var(--rule); }
+.numbered > li::before {
+    content: counter(n);
+    position: absolute;
+    left: 0;
+    top: 0.9rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.numbered strong { display: block; }
+.numbered p { margin: 0.2rem 0 0; font-size: var(--s--1); color: var(--sumi-soft); }
+
+/* --- tables -------------------------------------------------- */
+
+table {
+    width: 100%;
+    max-width: var(--measure);
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: var(--s--1);
+}
+th, td { text-align: left; padding: 0.6rem 0.75rem 0.6rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--sans); font-weight: 600; }
+td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
+
+/* --- code and output ----------------------------------------- */
+/* The frame echoes the printed image field: a single thin rule
+   with the ground showing through. */
+
+.code, .output { margin: 1.5rem 0; max-width: var(--measure); }
+.code-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin-bottom: 0.4rem;
+}
+.code pre, .output pre {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+    tab-size: 4;
+}
+.code pre { border: 1px solid var(--sumi); background: var(--paper-deep); }
+.output { margin-top: -0.5rem; }
+.output pre { border: 1px dashed var(--rule); background: none; color: var(--sumi-soft); }
+.code pre code, .output pre code { font: inherit; background: none; padding: 0; }
+
+/* --- the run bar and badges ---------------------------------- */
+
+.run {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 0 2.5rem;
+    max-width: var(--measure);
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.run img { display: block; height: 20px; width: auto; }
+
+/* --- module page ---------------------------------------------- */
+
+.toc { list-style: none; margin: 0 0 3rem; max-width: var(--measure); font-family: var(--sans); font-size: var(--s--1); }
+.toc li { padding: 0.35rem 0; border-bottom: 1px solid var(--rule); margin: 0; }
+.toc a { color: var(--sumi); text-decoration: none; }
+.toc a:hover { color: var(--sumi); }
+.toc .num { color: var(--sumi-soft); margin-right: 0.7rem; }
+
+.pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    max-width: var(--measure);
+    font-family: var(--sans);
+    font-size: var(--s--1);
+}
+.pager a { text-decoration: none; }
+.pager a:hover { text-decoration: underline; }
+.pager .nav-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+}
+
+/* --- provenance stamp ----------------------------------------- */
+
+.provenance {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--sumi-soft);
+    max-width: var(--measure);
+}
+
+/* --- small screens -------------------------------------------- */
+
+@media (max-width: 640px) {
+    :root { --s-3: 1.8rem; --s-2: 1.45rem; }
+    .container { padding: 0 1rem; }
+    p, ul, ol, h2, table, .box, .code, .output, .run, .toc, .pager,
+    .rows, .numbered, .meta, .provenance { max-width: 100%; }
+    .split { grid-template-columns: 1fr; gap: 1.25rem; }
+    nav { margin-bottom: 2rem; }
+    nav ul { gap: 1rem; }
+    h2 { margin-top: 2.5rem; }
+}
+
+/* --- glossed terms -------------------------------------------- */
+/* A term marked in prose is a link to its glossary entry. Dotted
+   underline, no colour change, so the sentence still reads as a
+   sentence. No JavaScript: the reader clicks, reads, comes back. */
+
+.term {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--sumi-soft);
+}
+.term:hover { border-bottom-style: solid; }
+
+/* The short list at the head of a recipe: the words that recipe needs */
+.terms { margin: 0; }
+.terms dt {
+    font-weight: 600;
+    font-size: var(--s--1);
+    margin-top: 0.6rem;
+}
+.terms dt:first-child { margin-top: 0; }
+.terms dd {
+    margin: 0;
+    font-size: var(--s--1);
+    line-height: 1.6;
+    color: var(--sumi-soft);
+}
+
+/* --- glossary page --------------------------------------------- */
+
+.glossary { margin: 0 0 3rem; max-width: var(--measure); }
+.glossary dt {
+    font-family: var(--serif);
+    font-size: var(--s-1);
+    font-weight: 600;
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 1.5rem;
+}
+.glossary dt:first-of-type { margin-top: 0; }
+.glossary dt .ja { font-weight: 400; color: var(--sumi-soft); font-size: var(--s-0); margin-left: 0.5rem; }
+.glossary dd { margin: 0.5rem 0 0; }
+.glossary dd p { margin-bottom: 0.7rem; }
+.glossary dd p:last-child { margin-bottom: 0; }
+.glossary dd .seealso {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+
+/* Highlight the entry the reader arrived at */
+.glossary dt:target,
+.glossary dt:target + dd {
+    background: var(--paper-deep);
+    box-shadow: -0.75rem 0 0 var(--paper-deep), 0.75rem 0 0 var(--paper-deep);
+}
+
+/* Jump bar */
+.alphabet {
+    font-family: var(--mono);
+    font-size: var(--s--1);
+    letter-spacing: 0.15em;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 0 2.5rem;
+    max-width: var(--measure);
+}
+.alphabet a { text-decoration: none; }
+.alphabet span { color: var(--rule); }
+
+/* ==============================================================
+   e_tehon — module layer
+   
+   A module page is one wide column with a margin column beside it.
+   The margin column carries the two side-panels: one for readers
+   who know computers and not Japan, one for readers who know Japan
+   and not computers. Below 1080px they fall inline, in place.
+   ============================================================== */
+
+.wide { width: min(94vw, 1080px); margin: 0 auto; padding: 0 1.25rem; }
+.wide p, .wide ul, .wide ol, .wide h2, .wide table,
+.wide .box, .wide .code, .wide .output, .wide .run,
+.wide .toc, .wide .pager, .wide .meta, .wide .provenance,
+.wide .steps { max-width: 66ch; }
+.wide h1 { max-width: 24ch; }
+
+/* --- the two side-panels --------------------------------------- */
+/* Folded shut by default: a tab in the margin the reader opens when
+   they want it. <details> does this with no JavaScript, and stays
+   keyboard-operable and legible to a screen reader. */
+
+.side {
+    float: right;
+    clear: right;
+    width: 17rem;
+    margin: 0.5rem 0 1.75rem 2.5rem;
+    padding: 0 0 0 1.1rem;
+    border-left: 3px solid currentColor;
+    font-size: var(--s--1);
+    line-height: 1.6;
+    color: var(--sumi-soft);
+}
+.side[open] { padding-bottom: 0.4rem; }
+.side > summary {
+    cursor: pointer;
+    list-style: none;
+    display: block;
+    position: relative;
+    padding: 0.3rem 1.6rem 0.3rem 0;
+}
+.side > summary::-webkit-details-marker { display: none; }
+.side > summary::marker { content: ""; }
+.side > summary::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    line-height: 1.2;
+}
+.side[open] > summary::after { content: "\2212"; }
+.side[open] > summary { margin-bottom: 0.7rem; }
+.side > summary:hover .side-label { text-decoration: underline; text-underline-offset: 3px; }
+.side p { margin-bottom: 0.7rem; max-width: none; }
+.side p:last-child { margin-bottom: 0; }
+.side ul { margin: 0 0 0.7rem 1.1rem; max-width: none; }
+.side li { margin-bottom: 0.3rem; }
+.side-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+/* Sap green for what the material requires, dayflower blue for what the
+   operation decides. The two pigments from the print, each doing one job. */
+.side-japan  { color: var(--sap); }
+.side-machine { color: var(--ai); }
+.side-japan .side-label,  .side-japan > summary::after  { color: var(--sap); }
+.side-machine .side-label, .side-machine > summary::after { color: var(--ai); }
+/* Open, the panel gets a ground of its own colour at low strength, so the
+   margin reads as a second voice rather than a footnote. */
+.side-japan[open]  { background: rgba(95, 107, 54, 0.07); }
+.side-machine[open] { background: rgba(47, 74, 133, 0.06); }
+.side[open] > summary, .side[open] p, .side[open] ul { padding-right: 0.9rem; }
+.side[open] > summary { padding-top: 0.5rem; }
+.side p, .side li { color: var(--sumi-soft); }
+
+@media (max-width: 1080px) {
+    .side {
+        float: none;
+        width: auto;
+        max-width: 66ch;
+        margin: 1.5rem 0;
+    }
+}
+
+/* --- module header --------------------------------------------- */
+
+.crumb {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    margin-bottom: 0.75rem;
+}
+.crumb a { color: var(--sumi-soft); }
+
+.chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    color: var(--sumi-soft);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: var(--s-1);
+    line-height: 1.5;
+    color: var(--sumi-soft);
+    margin-bottom: 1.25rem;
+    max-width: 46ch;
+}
+
+/* The facts strip: duration, prerequisite, sources, licence */
+.facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.75rem;
+    list-style: none;
+    margin: 0 0 2.5rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    max-width: 66ch;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.facts li { margin: 0; }
+
+/* --- the starting point ----------------------------------------- */
+/* Every module opens with a research question in the first person,
+   because that is how it arrives in real work. */
+
+.starting {
+    border-left: 2px solid var(--ai);
+    background: var(--paper-deep);
+    padding: 1.15rem 1.25rem;
+    margin: 1.5rem 0 2rem;
+    max-width: 66ch;
+}
+.starting .box-label { color: var(--ai); }
+.starting p {
+    margin-bottom: 0;
+    max-width: none;
+    font-size: var(--s-1);
+    line-height: 1.55;
+}
+
+/* --- steps ------------------------------------------------------- */
+
+.step-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--sumi-soft);
+    margin: 3rem 0 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+    max-width: 66ch;
+}
+
+/* --- the choice point -------------------------------------------- */
+/* Not a recipe: at each fork the module names the options and says
+   what each one costs. */
+
+.choice {
+    border-left: 2px solid var(--ochre);
+    padding: 0.35rem 0 0.35rem 1.25rem;
+    margin: 2rem 0;
+    max-width: 66ch;
+}
+.choice .box-label { color: var(--ochre); }
+.choice dt { font-weight: 600; margin-top: 0.8rem; }
+.choice dt:first-of-type { margin-top: 0; }
+.choice dd { margin: 0.15rem 0 0; color: var(--sumi-soft); font-size: var(--s--1); line-height: 1.6; }
+
+/* --- module list on the front page -------------------------------- */
+
+.modules { list-style: none; margin: 2rem 0; max-width: var(--measure); }
+.modules > li { padding: 1.5rem 0; border-top: 1px solid var(--rule); margin: 0; }
+.modules > li:last-child { border-bottom: 1px solid var(--rule); }
+.modules h3 { margin: 0.3rem 0 0.4rem; }
+.modules .num { font-family: var(--mono); font-size: var(--s--1); color: var(--sumi-soft); }
+.modules .thread {
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+    display: block;
+    margin-top: 0.5rem;
+}
+.modules .thread strong { color: var(--sap); font-weight: 600; }
+
+/* --- masthead wordmark -------------------------------------------- */
+
+.wordmark { font-family: var(--display); font-size: var(--s-3); font-weight: 600; letter-spacing: -0.02em; }
+.wordmark .ja { font-weight: 400; color: var(--sumi-soft); margin-left: 0.4rem; }
+
+/* --- glossary in two parts ------------------------------------- */
+/* The reference layer mirrors the side-panels: one part for readers
+   who know computers, one for readers who know Japan. */
+
+.gloss-part {
+    margin: 3.5rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--rule);
+    max-width: var(--measure);
+}
+.gloss-part:first-of-type { margin-top: 2rem; }
+.gloss-part h2 { margin: 0 0 0.3rem; border-bottom: none; padding-bottom: 0; }
+.gloss-part p {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    color: var(--sumi-soft);
+}
+.gloss-japan { border-bottom-color: var(--sap); }
+.gloss-japan h2 { color: var(--sap); }
+.gloss-machine { border-bottom-color: var(--ai); }
+.gloss-machine h2 { color: var(--ai); }
+
+/* --- per-step run links ---------------------------------------- */
+/* Each code block links to the matching cell in the notebook, using
+   Colab's #scrollTo=<cell id>. If an id ever stops matching, Colab
+   opens the notebook at the top, which is a graceful failure. */
+
+.code-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+.code-run {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ai);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    white-space: nowrap;
+}
+.code-run:hover { color: var(--sumi); }
+
+/* --- figures ---------------------------------------------------- */
+/* The credit block is a teaching device, not a caption. Every field
+   an image record should carry is present and legible, including the
+   licence, which is not the site's licence. */
+
+figure { margin: 2.5rem 0; }
+figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--paper-deep);
+}
+figcaption {
+    margin-top: 0.85rem;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    line-height: 1.65;
+    color: var(--sumi-soft);
+    max-width: 66ch;
+}
+figcaption .fig-title { color: var(--sumi); }
+figcaption .fig-title em { font-style: italic; }
+
+/* Source, capture date, licence — the row the register also holds */
+.fig-record {
+    display: block;
+    margin-top: 0.55rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    line-height: 1.7;
+}
+.fig-record span { display: block; }
+.fig-record b { font-weight: 400; color: var(--sumi); }
+
+/* A figure that runs the full width of a module page, margin column included */
+.figure-wide { max-width: none; }
+.figure-wide figcaption { max-width: 66ch; }
+
+/* The opening on the front page: edge to edge of the reading column */
+.figure-lead { margin: 0 0 3rem; }
+
+
+/* --- colour legend ---------------------------------------------- */
+/* Three colours, one meaning each. Said once, on the front page. */
+
+.legend { list-style: none; margin: 1.25rem 0 0; }
+.legend li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--s--1);
+    line-height: 1.6;
+}
+.legend .swatch {
+    flex: 0 0 auto;
+    width: 1.6rem;
+    height: 0.2rem;
+    border-radius: 1px;
+    transform: translateY(-0.2em);
+}
+.legend .sw-japan   { background: var(--sap); }
+.legend .sw-machine { background: var(--ai); }
+.legend .sw-choice  { background: var(--ochre); }
+.legend b { font-weight: 600; color: var(--sumi); }
+
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📖%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/06-display-and-the-book.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://digitalarthistory.theprintlab.org/modules/06-display-and-the-book.html">
+<meta property="og:title" content="Module 06: Display and the book">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="logo" href="/">e_tehon <span class="ja">e_手本</span></a>
+    <ul>
+      <li><a href="/start.html">Start</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#asking">Asking</a></li>
+      <li><a href="/#modules" aria-current="true">Modules</a></li>
+      <li><a href="/#cases">Cases</a></li>
+      <li><a href="/glossary.html">Glossary</a></li>
+      <li><a href="/#ja" class="ja">日本語</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wide">
+
+  <header class="masthead">
+    <p class="crumb"><a href="/#modules">Modules</a> &middot; Module 6</p>
+    <p class="chip">module 06 · intermediate · draft</p>
+    <h1>Display and the book</h1>
+    <p class="subtitle">What a book demands of a display tool, and what the tool decides in return.</p>
+    <ul class="facts">
+      <li>~110 min</li>
+      <li>requires modules 1 and 2</li>
+      <li>IIIF viewers · storytelling tools · CollectionBuilder</li>
+      <li>CC BY 4.0</li>
+    </ul>
+  </header>
+
+  <div class="run">
+    <a class="code-run" href="https://colab.research.google.com/github/stesantschi/digitalarthistory.theprintlab/blob/main/notebooks/06-display-and-the-book.ipynb">Open this module in Colab &#8599;</a>
+    <span>Opens in a new tab. First thing you do there: <strong>File &rarr; Save a copy in Drive</strong>.</span>
+  </div>
+
+
+  <h2 id="question">The research question</h2>
+
+  <div class="starting">
+    <span class="box-label">Starting point</span>
+    <p>I want to put a book online so people can read it. Which viewer do I use, and what will it do to the book?</p>
+  </div>
+
+  <p>The first half of that question has easy answers and the second half decides whether they are the right ones. A display tool is not a window. It is a set of assumptions about what a book is, built by people who mostly had a different kind of book in mind, and every one of those assumptions arrives with the software rather than being chosen.</p>
+
+  <p>This module works in the other direction. State what the object requires, then hold each tool against that list, then build something and say plainly what it cost.</p>
+
+  <details class="side side-japan">
+    <summary><span class="side-label">The Japanese material</span></summary>
+    <p>Most viewers were designed for codices read left to right, in which the page is the unit and the image sits inside a text block.</p>
+    <p>An early modern Japanese illustrated book meets almost none of that. It reads right to left, its images routinely run across the gutter so that the opening is the composed surface, it comes in multi-volume sets that are one work, and its text and image share the sheet rather than occupying separate zones.</p>
+  </details>
+
+
+  <h2 id="conditions">What this book demands</h2>
+
+  <p>Six conditions, stated before any tool is opened. They are the list a viewer gets held against.</p>
+
+  <ol class="rows">
+    <li><h3><span class="num">01</span>The opening is the unit</h3>
+      <p>Two facing leaves form one composed surface. A viewer that shows single pages by default has already broken the composition, and it will look tidy while doing so.</p></li>
+    <li><h3><span class="num">02</span>The order runs right to left</h3>
+      <p>Including the direction of paging, the position of the first leaf, and which way an arrow should point.</p></li>
+    <li><h3><span class="num">03</span>Images cross the gutter</h3>
+      <p>So the join matters. Where the two leaves were photographed separately, the seam is a digitisation artefact sitting in the middle of the picture.</p></li>
+    <li><h3><span class="num">04</span>A set is one work</h3>
+      <p>Three volumes catalogued as three items are three items in most systems, and one book on the shelf.</p></li>
+    <li><h3><span class="num">05</span>Text and image share the surface</h3>
+      <p>There is no separate caption zone to put a transcription in, and treating the text as metadata about the image mistakes what the sheet is doing.</p></li>
+    <li><h3><span class="num">06</span>The book is turned, not scanned</h3>
+      <p>Sequence carries meaning. A grid of thumbnails is a good finding aid and a poor account of a book.</p></li>
+  </ol>
+
+  <p class="meta">This list is a draft to argue with. Replacing it with your own, for your own material, is the first exercise of the module.</p>
+
+
+  <p class="step-label">Step 1 — Ask what the manifest already asserts</p>
+
+  <p>Two fields in a IIIF manifest carry most of what a viewer needs in order to get conditions 1 and 2 right. They are frequently absent.</p>
+
+  <div class="code">
+    <span class="code-label">Python<a class="code-run" href="https://colab.research.google.com/github/stesantschi/digitalarthistory.theprintlab/blob/main/notebooks/06-display-and-the-book.ipynb#scrollTo=m06s1assert">Run this step &#8599;</a></span>
+<pre><code>import json, requests
+
+USE_LIVE = False
+manifest = (requests.get(MANIFEST_URL).json() if USE_LIVE
+            else json.load(open("data/manifests/example.json")))
+
+print("viewingDirection:", manifest.get("viewingDirection", "— not stated —"))
+print("behavior/viewingHint:",
+      manifest.get("behavior", manifest.get("viewingHint", "— not stated —")))
+
+# and per canvas, which leaves the institution treats as non-paged
+for c in manifest["sequences"][0]["canvases"][:6]:
+    print(f"  {c['label']:20} {c.get('viewingHint', '')}")</code></pre>
+  </div>
+
+  <details class="side side-machine">
+    <summary><span class="side-label">The computational operation</span></summary>
+    <p><code>viewingDirection</code> takes one of four values and tells a viewer which way the sequence runs. <code>right-to-left</code> is the one this material needs.</p>
+    <p>The behaviour field says how to group: <em>paged</em> for a book shown as openings, <em>continuous</em> for a scroll, <em>individuals</em> for unrelated sheets. Individual canvases can be marked <em>non-paged</em>, which is how covers and colour targets are kept out of the pairing.</p>
+    <p>Where these are absent a viewer applies its own defaults, which are almost always left to right and single pages. Nothing errors. The book is simply displayed backwards.</p>
+  </details>
+
+  <div class="box">
+    <span class="box-label">How to read this</span>
+    <p>An absent <code>viewingDirection</code> is the commonest finding, and it is not a small one. It means the institution has published a book without saying which way it reads, and every viewer that renders it will guess the same wrong way.</p>
+    <p>Note also what a stated value does not do. Declaring <code>paged</code> asks a viewer to pair leaves; it does not say <em>which</em> leaves pair, and an odd canvas near the front — a cover, a title slip — offsets every opening after it. Condition 1 fails silently from a single unmarked sheet.</p>
+  </div>
+
+
+  <p class="step-label">Step 2 — Place the tools on two axes</p>
+
+  <p>Tools come and go, so a list of them dates within a year. Two questions do not date, and every display tool answers both whether or not its makers noticed.</p>
+
+  <h3>Who decides the order?</h3>
+
+  <p>At one end the author does: a sequence is composed, and the reader follows it. At the other the reader does: everything is available, and the arrangement offers routes rather than a path.</p>
+
+  <p>Neither end is better and both are arguments. A composed sequence is a claim about how the material should be understood, and it can be checked against the material — which makes it scholarship. An open arrangement declines to make that claim, which is honest about the limits of your authority and leaves a visitor to construct a reading you will never see, from an arrangement you nonetheless built.</p>
+
+  <details class="side side-machine">
+    <summary><span class="side-label">The computational operation</span></summary>
+    <p>Reader agency is rarely a setting. It follows from the data model.</p>
+    <p>A tool that stores a list of scenes in order can only be walked in order. A tool that stores items with properties can be sorted, filtered and entered anywhere, and cannot easily be made to insist on a sequence.</p>
+    <p>So the choice of tool has usually already decided this question by the time anyone asks it.</p>
+  </details>
+
+  <h3>How does the text meet the image?</h3>
+
+  <p>Three arrangements, in increasing order of difficulty and of usefulness.</p>
+
+  <p><strong>Beside.</strong> A caption, a metadata panel, a paragraph next to a picture. The commonest, and the reader does the joining, which for an unfamiliar script or an iconography they do not know means the joining does not happen.</p>
+
+  <p><strong>Over.</strong> The text moves the view: a narrative step pans and zooms to the part being discussed. The reader is shown where to look.</p>
+
+  <p><strong>Attached.</strong> A note is bound to a region of the image and travels with it. This is what the IIIF annotation model is for, and it is the only one of the three that survives being exported, cited, or read by something other than the interface it was made in.</p>
+
+  <details class="side side-japan">
+    <summary><span class="side-label">The Japanese material</span></summary>
+    <p>This axis matters more here than for most material, because so much of what a reader needs is <em>positional</em>: a seal in a corner, a signature at a particular edge, a publisher's mark, a cartouche, a line of verse on the facing leaf that comments on the image.</p>
+    <p>A caption beside the picture asks a reader who cannot yet read the script to locate the thing being described. Attaching the note to the region does that work for them, and leaves the object visible while doing it.</p>
+  </details>
+
+  <table>
+    <thead><tr><th>Tool</th><th>Order decided by</th><th>Text meets image</th></tr></thead>
+    <tbody>
+      <tr><td>Mirador</td><td>Reader — several windows, copies side by side</td><td>Attached — annotation on a region</td></tr>
+      <tr><td>Universal Viewer</td><td>Reader — paging through one object</td><td>Beside — a metadata panel</td></tr>
+      <tr><td>Storiiies</td><td>Author — a guided sequence of regions</td><td>Over, and attached underneath</td></tr>
+      <tr><td>StoryMap JS</td><td>Author — a scripted walk, including through one large image</td><td>Over</td></tr>
+      <tr><td>ArcGIS StoryMaps</td><td>Author — a scrolling narrative</td><td>Beside, occasionally over</td></tr>
+      <tr><td>Juncture</td><td>Author — an essay in plain text, with IIIF</td><td>Over, written in Markdown</td></tr>
+      <tr><td>Kunstmatrix, Artsteps</td><td>Reader spatially — you walk the room</td><td>Beside — a wall label</td></tr>
+      <tr><td>CollectionBuilder</td><td>Reader — browse, filter, search</td><td>Beside — a record</td></tr>
+    </tbody>
+  </table>
+
+  <p class="meta">Verified October 2026. Check before relying on any row: these products change, and two of them are commercial.</p>
+
+  <div class="box">
+    <span class="box-label">How to read this</span>
+    <p>Look at the bottom rows. A 3D exhibition space gives a visitor real agency — walk, turn, approach, choose what to look at next — and it does so by putting the work on a wall.</p>
+    <p>For a hanging scroll or a print that is a reasonable metaphor. For a book it is a category error performed convincingly. The object becomes a picture, frozen at one opening; the thing a reader would actually do with it, which is turn it, is the one action the room does not offer. Spatial agency has replaced bibliographic agency, and the trade is invisible because the room looks like a place where art is properly shown.</p>
+    <p>That is worth knowing rather than avoiding. A virtual room communicates <em>exhibition</em> to an audience that would not open a IIIF viewer, and Kunstmatrix runs an education tier with role-based collaboration, which suits a group of students building something together. Use it for what it does. Say what it cost.</p>
+  </div>
+
+  <div class="choice">
+    <span class="box-label">Choice point</span>
+    <p>How much do you decide for the reader?</p>
+    <dl>
+      <dt>Compose the sequence</dt>
+      <dd>You make an argument, in order, and it can be evaluated. The reader sees what you chose and nothing else, and cannot check you against the rest.</dd>
+      <dt>Arrange and let them browse</dt>
+      <dd>The reader finds their own way, and finds things you did not think to say. Nothing is argued, and an arrangement that argues nothing still arranges.</dd>
+      <dt>Both, marked as different</dt>
+      <dd>A guided path through eight objects, with the whole collection reachable beside it. More work, and the only version that is honest about which parts are your claim.</dd>
+    </dl>
+    <p class="meta">The third is what a good exhibition catalogue has always been: an essay, and a checklist, bound together and distinguishable.</p>
+  </div>
+
+  <p class="step-label">Step 3 — Hold your candidates against the six conditions</p>
+
+  <p>Now take the two or three tools that survived step 2 and test them on the actual object. Twenty minutes, filled in by looking.</p>
+
+  <table>
+    <thead><tr><th>Condition</th><th>What to check</th></tr></thead>
+    <tbody>
+      <tr><td>Opening as unit</td><td>Does it pair leaves at all, and does the pairing land correctly?</td></tr>
+      <tr><td>Right to left</td><td>Does paging honour the manifest, or does the interface always run one way?</td></tr>
+      <tr><td>The gutter</td><td>Can two leaves be shown as one surface without a visible seam or a gap?</td></tr>
+      <tr><td>Set as work</td><td>Can several volumes be presented as one thing, or only side by side?</td></tr>
+      <tr><td>Text with image</td><td>Can a transcription attach to a region, or only to the item?</td></tr>
+      <tr><td>Turning</td><td>Does moving through it feel like a sequence, or like a gallery?</td></tr>
+    </tbody>
+  </table>
+
+  <p>Keep the completed table. A comparison of display tools against a stated list of conditions, for a specific kind of object, is publishable in its own right — and almost nobody writes them, because it requires knowing the object well enough to state the conditions first.</p>
+
+  <p class="step-label">Step 4 — Build a small exhibition from a spreadsheet</p>
+
+  <p>The route that works on any machine with a browser, including a locked one, uses an open-source template that builds itself on GitHub.</p>
+
+  <p><strong>CollectionBuilder</strong> generates a collection site from a metadata spreadsheet and a folder of files. Two of its templates need nothing installed. <em>CollectionBuilder-Sheets</em> reads a published Google Sheet directly, so a group can prototype together and see the effect of a metadata change immediately. <em>CollectionBuilder-GH</em> is copied with a single button, takes a CSV, and publishes through GitHub Pages — no software installation, and small collections only, since a repository caps at 1&nbsp;GB.</p>
+
+  <div class="box">
+    <span class="box-label">How this maps onto the modules</span>
+    <p>The spreadsheet the template asks for is the output of module 1. Its columns are decisions of the kind module 2 examined. If your material has coordinates, they come from module 3; if it has identifiers, from module 5.</p>
+    <p>Which is the point of putting this module last. An exhibition is a way of publishing decisions already made, and building one before making them is how a site ends up asserting things nobody chose.</p>
+  </div>
+
+  <ol class="numbered">
+    <li><strong>Copy the template</strong>
+      <p>Use this template on the CollectionBuilder-GH repository, name your own, keep it public.</p></li>
+    <li><strong>Fill in the metadata sheet</strong>
+      <p>One row per object. Every column is a claim, and the ones you leave empty are claims too.</p></li>
+    <li><strong>Add the images, or link them</strong>
+      <p>Where redistribution is closed, link to the institution's viewer instead of hosting a copy. That decision belongs in the register, with a date.</p></li>
+    <li><strong>Turn on Pages and look at it as a stranger</strong>
+      <p>Private window, phone, and someone who was not in the room. What does the arrangement appear to claim?</p></li>
+  </ol>
+
+
+  <p class="step-label">Step 5 — Say what the display decided</p>
+
+  <p>Publish, alongside the exhibition, a short note on what it does to the material. Three or four sentences, in the same place a reader can find them.</p>
+
+  <div class="box">
+    <span class="box-label">How to read this</span>
+    <p>Everything on the finished site was chosen: the order of items, what counts as one item, which leaf appears as the thumbnail, what the title says, which fields are shown and which are held back, and whether a set of volumes appears as one thing or several.</p>
+    <p>A visitor sees none of that as choices. They see a collection, arranged, with the authority that arrangement carries — the same flattening module 2 found in a catalogue record, now performed by you.</p>
+    <p>The note is the remedy, and it is cheap. It is also the part that makes the exhibition a scholarly object rather than a display.</p>
+  </div>
+
+
+  <h2 id="limits">What this cannot tell you</h2>
+
+  <ul>
+    <li><strong>It cannot show you the book.</strong> Weight, paper, the sound of a page, the size in the hand, the order in a box. A display is a representation and it is confident in a way the object never is.</li>
+    <li><strong>It cannot recover what digitisation discarded.</strong> A gutter photographed as two separate leaves cannot be rejoined by a viewer, and no setting brings back a foldout opened flat.</li>
+    <li><strong>It cannot make a viewer honour a condition its designers did not consider.</strong> Where a tool fails on this material, that is a finding about the tool, and reporting it is more useful than working around it quietly.</li>
+    <li><strong>It cannot tell you whether the arrangement is fair.</strong> Sequence is argument. Only you can say what yours is arguing.</li>
+    <li><strong>It cannot give a reader agency it has not been built to give.</strong> Whether someone can leave your path, compare two copies, or read a note attached to a region follows from the tool's data model, not from a setting. Choosing the tool decides it.</li>
+  </ul>
+
+
+  <h2 id="own">Use your own materials</h2>
+
+  <ol>
+    <li>Rewrite the six conditions for your own book. Cut any that do not apply and add what is missing; the list is the module's real deliverable.</li>
+    <li>Run step 1 against a manifest for your material and record what the two fields say.</li>
+    <li>Place your candidate tools on the two axes, then fill in the six-condition table for the two that survive.</li>
+    <li>Build a small exhibition of ten items and write the note in step 5 before you show anyone.</li>
+  </ol>
+
+  <div class="box box-close">
+    <span class="box-label">What you should now be able to do</span>
+    <ul>
+      <li>State what a particular kind of book requires of a display tool, before choosing one.</li>
+      <li>Read the fields in a manifest that govern reading direction and pairing, and recognise their absence as a finding.</li>
+      <li>Place a display tool on two axes — who decides the order, and how the text meets the image — and say what each position costs.</li>
+      <li>Hold a viewer against a list of conditions and report where it fails.</li>
+      <li>Publish a small exhibition from a spreadsheet, and say in writing what the arrangement decided.</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <span class="box-label">Status</span>
+    <p>Draft, and the module closest to being tested: this is the material of the October workshop. The six conditions are a placeholder for the version worked out there. Comments through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a>.</p>
+  </div>
+
+  <nav class="pager">
+    <a href="/modules/05-linked-data.html"><span class="nav-label">Previous</span>&larr; 05. Linked data</a>
+    <a href="/glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+    <a href="/#modules"><span class="nav-label">Up</span>All modules &rarr;</a>
+  </nav>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>e_tehon &middot; module 06 &middot; version 0.1, draft</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; code <a href="https://opensource.org/licenses/MIT">MIT</a> &middot; <a href="/#cite">cite this</a> &middot; <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
