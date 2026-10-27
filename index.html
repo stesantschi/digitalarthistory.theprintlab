@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>e_tehon | e_手本 — a digital practice book for Japanese art history</title>
+<title>e_tehon | e_手本: a digital practice book for Japanese art history</title>
 <meta name="description" content="Six modules that teach working with Japanese visual materials digitally: what the method does, why you would choose it, and what it cannot tell you.">
 <style>
 /* ============================================================
@@ -26,6 +26,7 @@
     --sap:        #5F6B36;   /* leaf — the Japanese material */
     --ochre:      #75531B;   /* lizard */
     --rule:       #D6CDAF;
+    --red:        #A3271F;   /* warning only: the construction notice */
 
     /* System fonts only: nothing is fetched from another server. */
     --display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
@@ -69,6 +70,30 @@ a:hover { text-decoration-color: var(--sumi); }
 a:focus-visible, summary:focus-visible {
     outline: 2px solid var(--ai);
     outline-offset: 2px;
+}
+
+
+/* --- under-construction notice ------------------------------ */
+/* Sits above everything, in red: the one warning on the site. */
+
+.construction {
+    background: var(--red);
+    border-bottom: 2px solid #7A1C16;
+    padding: 0.85rem 0;
+    font-family: var(--sans);
+    font-size: var(--s--1);
+    line-height: 1.6;
+    color: #FFFFFF;
+}
+.construction p { margin: 0; max-width: none; }
+.construction p + p { margin-top: 0.3rem; color: #F6DCD8; }
+.construction strong {
+    color: #FFFFFF;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
 }
 
 
@@ -119,6 +144,7 @@ footer {
 footer a { color: var(--sumi-soft); }
 footer a:hover { color: var(--sumi); }
 footer p + p { margin-top: 0.25rem; }
+footer .links a + a { margin-left: 1.25rem; }
 
 /* --- type --------------------------------------------------- */
 
@@ -802,17 +828,30 @@ figcaption .fig-title em { font-style: italic; }
 </head>
 <body>
 
+<div class="construction" role="note">
+  <div class="container">
+    <p><strong>Under construction</strong>This site is being built. Everything on it so far is a mockup: module content, examples and dates are placeholders and should not be cited.</p>
+    <p class="ja" lang="ja">本サイトは現在構築中です。掲載内容はすべて試作版です。</p>
+  </div>
+</div>
+
 <nav>
   <div class="container">
     <a class="logo" href="/">e_tehon <span class="ja">e_手本</span></a>
     <ul>
       <li><a href="/start.html">Start</a></li>
       <li><a href="#about">About</a></li>
+      <!-- HIDDEN: section hidden below
       <li><a href="#asking">Asking</a></li>
+      -->
       <li><a href="#modules">Modules</a></li>
+      <!-- HIDDEN: section hidden below
       <li><a href="#cases">Cases</a></li>
+      -->
       <li><a href="/glossary.html">Glossary</a></li>
+      <!-- HIDDEN: Japanese summary hidden below
       <li><a href="#ja" class="ja">日本語</a></li>
+      -->
     </ul>
   </div>
 </nav>
@@ -823,8 +862,8 @@ figcaption .fig-title em { font-style: italic; }
     <h1 class="wordmark">e_tehon <span class="ja">e_手本</span></h1>
     <p class="lede">A digital practice book for Japanese art history: six modules on working with Japanese visual materials digitally, each one naming what the method does, why you would choose it, and what it cannot tell you.</p>
     <p class="meta">
-      Dr. Stephanie Santschi &middot; Chair of East Asian Art History, University of Zurich<br>
-      In development &middot; modules 1&ndash;3 in classroom test, autumn 2026
+      Dr. Stephanie Santschi, Chair of East Asian Art History, University of Zurich<br>
+      In development; modules 1&ndash;3 in classroom test, autumn 2026
     </p>
   </header>
 
@@ -836,7 +875,7 @@ figcaption .fig-title em { font-style: italic; }
       <span class="fig-title">Kitagawa Utamaro, <em>Ehon mushi erabi</em> (Picture Book of Selected Insects), compiled by Yadoya no Meshimori, snake and lizard among <em>tsuyukusa</em>. Edo: Tsutaya Jūzaburō, 1788. Lower volume, leaf 2 (marked <span class="ja" lang="ja">下ノ二</span>).</span>
       <span class="fig-record">
         <span><b>held by</b> The British Museum</span>
-        <span><b>licence</b> <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> — not the licence of this site</span>
+        <span><b>licence</b> <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> (not the licence of this site)</span>
         <span><b>credit</b> © The Trustees of the British Museum</span>
         <span><b>captured</b> 2026-08-22</span>
       </span>
@@ -869,11 +908,16 @@ figcaption .fig-title em { font-style: italic; }
     <span class="box-label">The two side-panels</span>
     <p>Every module carries tabs in the margin, folded shut. Click one open when you want it.</p>
     <p><strong>The Japanese material</strong> covers what the sources require: that a designer signed under several names across a career, that Hokusai appears in a list as 北斎, ホクサイ or Hokousaï depending on who typed the record, that a print has four makers and the cataloguing convention names one.</p>
-    <p><strong>The computational operation</strong> covers what each step decides. The assumption is not that computers are unfamiliar. It is that formal analysis conducted by machine makes commitments an art historian would otherwise make explicitly — what counts as the same thing, which differences are meaningless, what enters the corpus — and makes them silently, inside a line of code.</p>
+    <p><strong>The computational operation</strong> covers what each step decides. The assumption is not that computers are unfamiliar. It is that formal analysis conducted by machine makes commitments an art historian would otherwise make explicitly (what counts as the same thing, which differences are meaningless, what enters the corpus), and makes them silently, inside a line of code.</p>
     <p>Open the one you need and leave the other shut. Nothing in the main text depends on either.</p>
   </div>
 
 
+<!-- ============================================================
+     HIDDEN: "Asking the question", kept for later, not rendered.
+     To restore, delete this comment's opening and closing lines
+     (and the matching nav link above).
+     ============================================================
 
   <h2 id="asking">Asking the question</h2>
 
@@ -902,6 +946,9 @@ figcaption .fig-title em { font-style: italic; }
 
   <p>This is why the modules are slow at the start. Naming what you want to know, in terms specific enough to be disappointed, is most of the method. The code is the easy part, and it comes after.</p>
 
+     END HIDDEN: "Asking the question"
+     ============================================================ -->
+
 
   <h2 id="reading-the-site">Reading this site</h2>
 
@@ -922,46 +969,46 @@ figcaption .fig-title em { font-style: italic; }
 
   <ol class="modules">
     <li>
-      <span class="num">module 01 · foundational</span>
+      <span class="num">Module 01, foundational</span>
       <h3><a href="/modules/01-data-literacy.html">Data literacy for Japanese datasets</a></h3>
-      <p>Names and lists: how to make a computer understand a list of Japanese terms — place names, artist names — when they are written three different ways.</p>
+      <p>Names and lists: how to make a computer understand a list of Japanese terms, such as place names and artist names, when they are written three different ways.</p>
       <span class="thread"><strong>Empathise with the data.</strong> What does it actually contain, and what has already been decided for you?</span>
-      <span class="thread"><a href="/modules/01-data-literacy.html">Open the module</a> &middot; about 60 minutes</span>
+      <span class="thread"><a href="/modules/01-data-literacy.html">Open the module</a> (about 60 minutes)</span>
     </li>
     <li>
-      <span class="num">module 02 · intermediate</span>
+      <span class="num">Module 02, intermediate</span>
       <h3><a href="/modules/02-images-and-metadata.html">Japanese images and metadata in art-historical research</a></h3>
       <p>Museum and library records: how Japanese institutions describe their images, how to find that information, and what to make of it when four institutions disagree.</p>
       <span class="thread"><strong>Define the problem.</strong> What are you trying to find, and which database can answer it?</span>
-      <span class="thread"><a href="/modules/02-images-and-metadata.html">Open the module</a> &middot; about 75 minutes</span>
+      <span class="thread"><a href="/modules/02-images-and-metadata.html">Open the module</a> (about 75 minutes)</span>
     </li>
     <li>
-      <span class="num">module 03 · intermediate</span>
+      <span class="num">Module 03, intermediate</span>
       <h3><a href="/modules/03-spatial-research-design.html">Spatial research design</a></h3>
-      <p>Maps and patterns: how placing Japanese works of art on a map reveals patterns, and what you can do with them. Ends on the harder question — where a print was seen <em>from</em> — using the participatory georeferencing built for Drawing from the Crowd.</p>
+      <p>Maps and patterns: how placing Japanese works of art on a map reveals patterns, and what you can do with them. Ends on a harder question, where a print was seen <em>from</em>, using the participatory georeferencing built for Drawing from the Crowd.</p>
       <span class="thread"><strong>Ideate.</strong> From research question to pipeline, with the choice points named.</span>
-      <span class="thread"><a href="/modules/03-spatial-research-design.html">Open the module</a> &middot; about 75 minutes</span>
+      <span class="thread"><a href="/modules/03-spatial-research-design.html">Open the module</a> (about 75 minutes)</span>
     </li>
     <li>
-      <span class="num">module 04 · advanced</span>
+      <span class="num">Module 04, advanced</span>
       <h3><a href="/modules/04-critical-computer-vision.html">Critical computer vision</a></h3>
       <p>Distant viewing: how to teach a computer to look at images of Japanese artworks, what patterns this reveals, and how to read the model's blind spots as evidence. Draws on computer vision work in Drawing from the Crowd.</p>
       <span class="thread"><strong>Prototype and test.</strong> Try the method on your corpus and read the outputs as evidence, knowing of what.</span>
-      <span class="thread"><a href="/modules/04-critical-computer-vision.html">Open the module</a> &middot; draft &middot; about 90 minutes</span>
+      <span class="thread"><a href="/modules/04-critical-computer-vision.html">Open the module</a> (draft, about 90 minutes)</span>
     </li>
     <li>
-      <span class="num">module 05 · advanced</span>
+      <span class="num">Module 05, advanced</span>
       <h3><a href="/modules/05-linked-data.html">Linked data</a></h3>
-      <p>How to connect your research to other people's, so that both can be reused. Worked on the RDF that Japanese institutions publish themselves — Japan Search and Web NDL Authorities — on Wikidata and what its rules will let you add, and on the vocabularies that can carry a contested claim.</p>
+      <p>How to connect your research to other people's, so that both can be reused. Worked on the RDF that Japanese institutions publish themselves (Japan Search and Web NDL Authorities), on Wikidata and what its rules will let you add, and on the vocabularies that can carry a contested claim.</p>
       <span class="thread"><strong>Integrate and iterate.</strong> Connect what you have built to what already exists, and refine.</span>
-      <span class="thread"><a href="/modules/05-linked-data.html">Open the module</a> &middot; draft &middot; about 110 minutes</span>
+      <span class="thread"><a href="/modules/05-linked-data.html">Open the module</a> (draft, about 110 minutes)</span>
     </li>
     <li>
-      <span class="num">module 06 · intermediate</span>
+      <span class="num">Module 06, intermediate</span>
       <h3><a href="/modules/06-display-and-the-book.html">Display and the book</a></h3>
       <p>What a book demands of a display tool, what viewers actually honour, and how to publish a small exhibition from a spreadsheet using open-source templates.</p>
       <span class="thread"><strong>Communicate.</strong> Publish what you built, and say what the arrangement decided.</span>
-      <span class="thread"><a href="/modules/06-display-and-the-book.html">Open the module</a> &middot; draft &middot; about 90 minutes</span>
+      <span class="thread"><a href="/modules/06-display-and-the-book.html">Open the module</a> (draft, about 90 minutes)</span>
     </li>
   </ol>
 
@@ -975,11 +1022,15 @@ figcaption .fig-title em { font-style: italic; }
   <ul class="rows">
     <li>
       <h3><a href="/guides/identifying-a-book-you-cannot-read.html">Identifying a book you cannot read</a></h3>
-      <p>Four routes that do not depend on reading — looking, image matching, union catalogues, machine transcription — and what each one lets you claim afterwards.</p>
-      <p class="note">About 30 minutes &middot; no prerequisite</p>
+      <p>Four routes that do not depend on reading (looking, image matching, union catalogues, machine transcription) and what each one lets you claim afterwards.</p>
+      <p class="note">About 30 minutes, no prerequisite</p>
     </li>
   </ul>
 
+
+<!-- ============================================================
+     HIDDEN: "Cases" and "Reading", kept for later, not rendered.
+     ============================================================
 
   <h2 id="cases">Cases</h2>
 
@@ -987,12 +1038,12 @@ figcaption .fig-title em { font-style: italic; }
 
   <h3>Japanese institutional RDF</h3>
   <p>Japan Search publishes its aggregated holdings as RDF and answers SPARQL queries; the National Diet Library publishes its authority file the same way. Both are built by institutions describing their own material on their own terms, which makes them the right place to see what a data model decides.</p>
-  <p>Module 5 works two of them: how Japan Search normalises who, when and where before you ever see a record, and what the coverage of an authority file tells you about the field it serves. It closes on ResearchSpace, built at the British Museum around the question these modules keep arriving at — how to publish a claim together with who asserted it and on what grounds.</p>
+  <p>Module 5 works two of them: how Japan Search normalises who, when and where before you ever see a record, and what the coverage of an authority file tells you about the field it serves. It closes on ResearchSpace, built at the British Museum around the question these modules keep arriving at: how to publish a claim together with who asserted it and on what grounds.</p>
 
   <h3>The Great Picture Book of Everything</h3>
   <p>103 Hokusai drawings, made for an encyclopaedia that was never published, sold in Paris in 1948 and not publicly recorded again for seventy years. In June 2019 they reappeared at a Paris sale catalogued as the work of a pupil; a dealer bought them convinced otherwise, a curator agreed, and the British Museum acquired them in 2020.</p>
-  <p>The maker field therefore has a date on which it changed, an agent who changed it, and a basis — and the dating has moved since, from 1829 in the acquisition announcement to the 1820s–1840s on the exhibition page. The same institution, revising in public as research proceeded.</p>
-  <p>Module 2 runs the four checks against it. Module 5 asks what a data model can carry of any of it, and what happens to a seventy-year gap that has no field — working against <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a>, a research instance holding this material across three institutions.</p>
+  <p>The maker field therefore has a date on which it changed, an agent who changed it, and a basis, and the dating has moved since, from 1829 in the acquisition announcement to the 1820s&ndash;1840s on the exhibition page. The same institution, revising in public as research proceeded.</p>
+  <p>Module 2 runs the four checks against it. Module 5 asks what a data model can carry of any of it, and what happens to a seventy-year gap that has no field, working against <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a>, a research instance holding this material across three institutions.</p>
 
   <h3>A date with no visible source</h3>
   <p>The recurring pattern behind these modules: a date recorded in many catalogues, descending from a single printed source, appearing on no surviving sheet, with dissent published in the literature that never reached the records.</p>
@@ -1015,8 +1066,21 @@ figcaption .fig-title em { font-style: italic; }
     <li>Library of Congress, <em>Descriptive Cataloging Guidelines for Pre-Meiji Japanese Books</em>.</li>
   </ul>
 
+     END HIDDEN: "Cases" and "Reading"
+     ============================================================ -->
 
-  <h2 id="cite">About &amp; citation</h2>
+
+  <h2 id="cite">About</h2>
+
+  <p>e_tehon is written by <a href="https://santschi.theprintlab.org">Dr. Stephanie Santschi</a>, Chair of East Asian Art History, University of Zurich. It is being developed openly alongside the Ishibashi Foundation Graduate Programme at UZH, whose inaugural cohort works with early versions of modules 1&ndash;3 in autumn 2026.</p>
+
+  <p class="meta">Text is <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and code is <a href="https://opensource.org/licenses/MIT">MIT</a>. Images carry their own licences, stated beneath each and excluded from CC BY 4.0. The Utamaro opening above is CC BY-NC-SA 4.0.</p>
+
+<!-- ============================================================
+     HIDDEN: full citation, licence and Japanese summary, kept for
+     the first release. NB the Japanese summary says 五つのモジュール
+     (five modules); the site now lists six.
+     ============================================================
 
   <p>Dr. Stephanie Santschi is a Japanese art historian at the Chair of East Asian Art History, University of Zurich, working on early modern illustrated books and on the digital infrastructures through which they now reach readers.</p>
 
@@ -1044,18 +1108,18 @@ https://digitalarthistory.theprintlab.org</code></pre>
   <p class="ja">各モジュールには二種類の傍注があります。ひとつは日本の資料に不慣れな読者に向けて、絵師の複数の号や表記の揺れといった事柄を説明します。もうひとつはコンピュータに不慣れな読者に向けて、機械がその時点で何をしているのか、どこにその限界があるのかを説明します。</p>
   <p class="ja">著者：ステファニー・サンチ（チューリッヒ大学東アジア美術史講座）。テキストはCC BY 4.0、コードはMITライセンス。日本語版は準備中です。</p>
 
-  <h3>Elsewhere</h3>
-  <p>Corrections and suggested terms are welcome through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a>.</p>
-  <p><a href="https://landscapes.theprintlab.org">Drawing from the Crowd: Mapping Japan's Historical Landscapes</a> is the sibling project, a participatory georeferencing platform for <em>ukiyo-e</em> research.</p>
+     END HIDDEN: citation, licence, Japanese summary
+     ============================================================ -->
 
-  <p class="meta">The colours of this site are sampled from the opening above: the paper, the sap green of the leaves, the dayflower blue of the <em>tsuyukusa</em>, and the ochre of the lizard.</p>
+  <h3>Elsewhere</h3>
+  <p><a href="https://santschi.theprintlab.org">santschi.theprintlab.org</a> is Stephanie Santschi&rsquo;s own page. <a href="https://landscapes.theprintlab.org">Drawing from the Crowd</a> is the sibling project, a participatory georeferencing platform for <em>ukiyo-e</em> research. Corrections are welcome through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a>.</p>
 
 </main>
 
 <footer>
   <div class="container">
-    <p>e_tehon &middot; ThePrintLab 2026 &middot; version 0.1, in development</p>
-    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; code <a href="https://opensource.org/licenses/MIT">MIT</a> &middot; <a href="#cite">cite this</a> &middot; <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a> &middot; <a href="https://landscapes.theprintlab.org">landscapes.theprintlab.org</a></p>
+    <p>e_tehon, ThePrintLab 2026. In development; all content is mockup.</p>
+    <p class="links"><a href="https://santschi.theprintlab.org">Stephanie Santschi</a> <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a> <a href="https://landscapes.theprintlab.org">landscapes.theprintlab.org</a></p>
   </div>
 </footer>
 
