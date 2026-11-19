@@ -28,5 +28,16 @@ Status: **open** = no source yet; **check** = source proposed, page and wording 
 - check: Box 1976 (paraphrase of "all models are wrong"; the exact wording is from Box 1979), Morgan and Morrison 1999, Harley 1989, Drucker 2011 ("capta"), Saldaña 2021 (edition), Krippendorff 2019 (edition and year).
 - check: Edo maps combining pictorial views and routes — Yonemoto 2003, page.
 
-## Modules 4–6, guide, glossary
+## Module 4
+- check: Radford et al. 2021 (CLIP), Oquab et al. 2023 (DINOv2), Arnold and Tilton 2023.
+- open: cite the DHQ paper once published (failure typology).
+
+## Module 5
+- open: number of databases Japan Search aggregates.
+- open: Japan Search documentation on standardising time, place and person.
+- open: the 2026 Wikidata notability reform discussion.
+- open: an example of an institutional linked-data service whose identifiers stopped working.
+- check: Web NDL Authorities address (id.ndl.go.jp/auth/ndla), CRMinf address, ResearchSpace description.
+
+## Module 6, glossary
 - not yet reviewed.
