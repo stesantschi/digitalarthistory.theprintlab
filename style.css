@@ -931,3 +931,9 @@ main h2::before {
 .sources { list-style: none; margin-left: 0; font-size: var(--s--1); line-height: 1.65; }
 .sources li { padding-left: 1.5rem; text-indent: -1.5rem; margin-bottom: 0.5rem; scroll-margin-top: 1.5rem; }
 .sources li:target { background: var(--paper-deep); }
+
+/* --- site map ----------------------------------------------------- */
+.sitemap { display: block; width: 100%; height: auto; }
+.sitemap a { text-decoration: none; }
+.sitemap-figure { margin-top: 0; }
+@media (max-width: 640px) { .sitemap-figure { overflow-x: auto; } .sitemap { min-width: 640px; } }
