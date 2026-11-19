@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Module 02: Japanese images and metadata in art-historical research — e_tehon</title>
-<meta name="description" content="Reading what a record actually contains, and what it doesn't. Pull records for one print from four databases and read the disagreements.">
+<meta name="description" content="What a catalogue record contains, and how each field got there. Compare records for one print in four databases and read the disagreements.">
 <link rel="stylesheet" href="/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/02-images-and-metadata.html">
@@ -28,11 +28,11 @@
 <p class="crumb"><a href="/#modules">Modules</a> / Module 2</p>
 <p class="chip">Module 02</p>
 <h1>Japanese images and metadata in art-historical research</h1>
-<p class="subtitle">Reading what a record actually contains — and what it doesn't.</p>
+<p class="subtitle">What a catalogue record contains, and how each field got there.</p>
 <ul class="facts">
 <li>~75 min</li>
 <li>requires module 1</li>
-<li>MET, NDL, Japan Search, ARC</li>
+<li>the Met, NDL, Japan Search, ARC</li>
 <li>CC BY 4.0</li>
 </ul>
 <p class="meta outline">Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits.</p></header>
@@ -45,13 +45,13 @@
 <figure class="figure-wide">
 <img alt="An open woodblock-printed book. On the left page a snake coils through dayflower plants; on the right a skink approaches beneath lines of cursive Japanese verse." src="/images/utamaro-ehon-mushi-erabi-snake-skink-met.jpg" width="1600" height="1076">
 <figcaption>
-<span class="fig-title">Every field below was entered by someone, from something. Four of them are checkable by anyone who visits the building. Two are conclusions.</span>
+<span class="fig-title">Someone entered each field below, from some source. Some can be checked by anyone; others are conclusions.</span>
 <span class="fig-record">
 <span><b>title</b> Ehon mushi erabi 画本虫撰</span>
 <span><b>designer</b> Kitagawa Utamaro</span>
 <span><b>publisher</b> Tsutaya Jūzaburō</span>
 <span><b>date</b> 1788</span>
-<span><b>opening</b> lower volume, 2 — 下ノ二, printed on the sheet</span>
+<span><b>opening</b> lower volume, 2 (下ノ二), printed on the sheet</span>
 <span><b>held by</b> The Metropolitan Museum of Art, New York (<a href="https://www.metmuseum.org/art/collection/search/37292">object 37292</a>)</span>
 <span><b>licence</b> Public domain (The Met Open Access), not the licence of this module</span>
 <span><b>credit</b> The Metropolitan Museum of Art, New York</span>
@@ -59,152 +59,154 @@
 </span>
 </figcaption>
 </figure>
-<p>The credit block above is the exercise, run once by hand before the code runs it three hundred times. Nine fields, and they are not nine of the same thing.</p>
-<p>The opening number is printed on the sheet, in the gutter: <span class="ja">下ノ二</span>. The holding institution and the licence are facts about the object's present situation, checkable by anyone. The designer and the date are conclusions, arrived at by argument from evidence this record does not show you — and they arrive in the same typeface as the rest.</p>
-<p>The capture date is there because everything above it can change. A licence is revised, an institution transfers a holding, an attribution is revisited. Without a date, the record claims a currency it cannot have.</p>
-<p>A natural question, and one that turns into a metadata problem the moment you try to answer it. Four major databases hold records that might match your print. They use different fields, different attribution conventions, different romanisation, and different rules about what counts as "the maker". Before you can compare them, you have to read each one on its own terms.</p>
+<p>This record is the module in miniature. Its nine fields carry three kinds of information.</p>
+<ul>
+<li><strong>Observations</strong> anyone can check: the opening number printed on the sheet, the institution that holds it, the licence.</li>
+<li><strong>Conclusions</strong> reached by argument from evidence the record does not show: the designer and the date. They appear in the same typeface as the observations.</li>
+<li><strong>A capture date</strong>, because everything else can change. Licences are revised, holdings move, attributions are revisited. The date says when the record was true.</li>
+</ul>
+<p>Asking who made a print quickly becomes a question about records. Several databases may hold a record for your print. They use different fields, different romanisations, and different rules for who counts as the maker. To compare them, read each one on its own terms first.</p>
 <details class="side side-japan">
 <summary><span class="side-label">The Japanese material</span></summary>
-<p>An Edo print designer worked under an art name, a <em>gō</em>, and changed it — sometimes several times across a career, sometimes to mark a new stage of work, sometimes on inheriting a studio.</p>
-<p>The man catalogued as Hokusai signed as Shunrō, Sōri, Taito, Iitsu and Gakyō Rōjin Manji at different points. All are him. None is a mistake.</p>
-<p>So a search on one name returns part of a body of work, and a record giving a different name is not necessarily describing a different person.</p>
+<p>An Edo-period print designer worked under an art name (<a class="term" href="/glossary.html#go"><em>gō</em></a>) and often changed it: to mark a new stage of work, or on taking over a teacher's studio.</p>
+<p>The artist catalogued as Hokusai signed as Shunrō, Sōri, Taito, Iitsu and Gakyō Rōjin Manji at different times. All of these are him.</p>
+<p>A search on one name therefore finds part of the work, and a record with a different name may still describe the same person.</p>
 </details>
 <details class="side side-machine">
 <summary><span class="side-label">The computational operation</span></summary>
-<p>A query is a claim about what belongs together. Searching on a name asserts that the name is the thing shared by the records you want, and the database applies that assertion literally: <code>Hokusai</code>, <code>hokusai</code> and <code>北斎</code> are three unrelated strings to it.</p>
-<p>So the recall of your search is bounded by the reach of your query, and the gap between them is invisible in the results. You see what matched, never what did not.</p>
+<p>A search treats your query literally. To a database, <code>Hokusai</code>, <code>hokusai</code> and <code>北斎</code> can be three unrelated strings.</p>
+<p>So a search finds only what your query reaches, and the results show what matched, never what was missed.</p>
 </details>
 <div class="choice">
 <span class="box-label">Choice point</span>
-<p>Before any database: which question are you actually asking? These three look like the same one.</p>
+<p>Before opening a database, decide which question you are asking. These three sound alike.</p>
 <dl>
 <dt>Who made this print?</dt>
-<dd>Returns the designer, because that is the field the databases fill. The block cutter, the printer and the publisher disappear, and nothing in the result records that they were dropped.</dd>
+<dd>Returns the designer, because that is the field databases fill. The other people who made the print drop out, and the result does not say so.</dd>
 <dt>Which name does each institution give as maker?</dt>
-<dd>Returns four answers and makes the divergence visible. Still silent about why each institution chose as it did.</dd>
+<dd>Returns several answers and shows where they differ. It does not show why.</dd>
 <dt>Which institutions name a maker, on what basis, and where do they disagree?</dt>
-<dd>Names its own evidence and its own failure condition. It can come back empty, which is what makes it worth asking.</dd>
+<dd>States its evidence and what would count as no answer. This is the version a database can actually help with.</dd>
 </dl>
-<p class="meta">This module asks the third. The starting point above is how the question arrives; this is what it has to become before a database can be useful.</p>
+<p class="meta">This module works with the third question.</p>
 </div>
+
 <h2 id="plan">What we will do</h2>
-<p>Pull records for the same print from four databases. Compare what each one tells us. Identify where they agree, where they disagree, and what the disagreement is about.</p>
-<p>The four are chosen because they answer to different traditions. The Metropolitan Museum describes an object it owns. The National Diet Library describes a publication. Japan Search aggregates across institutions and inherits whatever each contributed. The Ritsumeikan Art Research Center describes prints as a specialist collection built by researchers. None of these is the neutral one.</p>
-<p class="step-label">Step 1 — Query each database</p>
-<p>Start with the Met, whose open-access data comes as a plain table. Reading it needs one library and three lines.</p>
-
-
-<details class="side side-machine">
-<summary><span class="side-label">The computational operation</span></summary>
-<p>The pattern here — open, filter, select — recurs in every module, and each of the three steps is a decision about evidence.</p>
-<p><em>Filtering</em> is corpus construction: the rows you keep become your material, and the rows you drop leave no trace in anything downstream. <em>Selecting</em> columns decides which properties of the object are in play.</p>
+<p>Find records for the same print in four databases, compare what each says, and identify where they agree, where they disagree, and what each disagreement is about.</p>
+<p>The four describe different things. A museum describes an object it owns. A national library describes a publication. An aggregator passes on whatever its contributing institutions supply. A research centre describes a specialist collection built for research. Each is accurate for its own purpose.</p>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The four used here: the <strong>Metropolitan Museum of Art</strong> (a museum record), the <strong>National Diet Library</strong> (NDL, Japan's national library), <strong>Japan Search</strong> (the national aggregator), and the <strong>Art Research Center</strong> at Ritsumeikan University (ARC, a research database of Japanese prints).</p>
+<p>Library and museum cataloguing in Japan developed separately. A library records the publication: edition, series, extent, publisher. A museum records the object: this impression, its condition, its provenance. The same print held in both has two records, each accurate and each incomplete.</p>
 </details>
-<p>Three fields, three different kinds of claim. The name is an attribution. The dates after it are biographical fact about a person. <code>ca. 1830–32</code> is a dating of the object, and the <code>ca.</code> is the museum telling you it is an estimate.</p>
+
+<p class="step-label">Step 1 — Read one museum record</p>
+<p>Start with the Met, whose collection data is openly available. Find the record for your print and note three fields: the artist's name, the artist's dates, and the date of the object.</p>
+<p>These three fields make three different kinds of claim. The name is an attribution. The artist's dates are biography. The object's date is an estimate about this print, and a <em>ca.</em> before it is the museum saying so.</p>
 <div class="choice">
 <span class="box-label">Choice point</span>
-<p>Which field do you search on? The answer shapes everything downstream.</p>
+<p>Which field do you search on? The choice shapes everything after it.</p>
 <dl>
-<dt>Artist Display Name</dt>
-<dd>Human-readable, and what you would say aloud. It varies by institution and by romanisation, so it travels badly between databases.</dd>
-<dt>Accession or call number</dt>
-<dd>Exact and reliable, and meaningful in one institution only. Useless for comparison.</dd>
+<dt>The artist's name as displayed</dt>
+<dd>Readable, and what you would say aloud. It varies by institution and by romanisation, so it compares poorly between databases.</dd>
+<dt>The accession or call number</dt>
+<dd>Exact and reliable within one institution, and meaningless outside it.</dd>
 <dt>An authority identifier, where one is given</dt>
-<dd>Travels between institutions and is missing from most records for Japanese material. This is the gap module 5 addresses.</dd>
+<dd>Works across institutions, and is missing from most records for Japanese material. Module 5 addresses this gap.</dd>
 </dl>
-<p class="meta">This module searches on names, and part of what it demonstrates is the cost of doing so.</p>
+<p class="meta">This module searches on names, partly to show what that costs.</p>
 </div>
-<p class="step-label">Step 2 — Read the same print elsewhere</p>
-<p>The National Diet Library and Japan Search return their answers over the network rather than as a file. The shape of the code changes; the reasoning does not.</p>
 
+<p class="step-label">Step 2 — Find the same print elsewhere</p>
+<p>Search for the print in the national library, the aggregator and the research database. Note which fields each record has, and which it leaves out. An empty field is information too: it usually reflects a cataloguing rule.</p>
 <details class="side side-japan">
 <summary><span class="side-label">The Japanese material</span></summary>
-<p>Library and museum cataloguing in Japan developed along separate lines and answer separate questions.</p>
-<p>A library describes a <em>publication</em>: edition, series, extent, publisher. A museum describes an <em>object</em>: this impression, its condition, its provenance.</p>
-<p>The same print held in both gets two records that are each accurate and mutually incomplete. Neither is failing at the other's job.</p>
+<p>A woodblock print is made by at least four people: the designer who supplies the drawing, the block cutter, the printer, and the publisher who commissions and pays for it.</p>
+<p>Western cataloguing puts the designer in the artist field and the others in a note, or leaves them out. A library record with no <em>creator</em> field may be applying a rule about who is responsible for a publication, in a form where four people have a claim.</p>
 </details>
 <details class="side side-machine">
 <summary><span class="side-label">The computational operation</span></summary>
-<p><code>USE_LIVE</code> decides what your analysis is of. Left at <code>False</code>, it reads a copy captured on a known date, so the result is reproducible and datable. Set to <code>True</code>, it queries the institution now, so the result reflects today's record and cannot be re-run identically.</p>
-<p>Both are legitimate. An argument about what a catalogue says should cite a captured state; an argument about current practice should be live. Say which you did.</p>
+<p>You can work from a copy saved on a known date, or query the institution live.</p>
+<p>A saved copy gives a result anyone can repeat and date. A live query reflects today's record and may give a different answer tomorrow. Use a saved copy to argue about what a catalogue says; use a live query to describe current practice. Either way, record which you used and when.</p>
 </details>
-<p>The field names differ from the Met's, and the absences matter as much as the values. A library record carrying no <em>creator</em> is not an oversight: it reflects a cataloguing rule about what a publication's responsible party is, applied to a form of publication where the designer, the block cutter, the printer and the publisher all have a claim.</p>
-<details class="side side-japan">
-<summary><span class="side-label">The Japanese material</span></summary>
-<p>A woodblock print is made by at least four people: the designer who supplies the drawing, the block cutter, the printer, and the publisher who commissions and finances it.</p>
-<p>Western cataloguing conventions place the designer in the artist field and the rest in a note, or nowhere. That choice is an argument about authorship, made once and then invisible.</p>
-</details>
-<p class="step-label">Step 3 — Put the four side by side</p>
 
-
+<p class="step-label">Step 3 — Put the records side by side</p>
+<p>Make one table with a row per record and these columns: source, title, maker, date, and where the date comes from. Fill in the last column only when the record states it.</p>
 <div class="box">
 <span class="box-label">How to read this</span>
-<p>The <code>source_of_date</code> column is empty in every row, and that is the finding. Each institution states a date. None states where the date came from.</p>
-<p>Agreement between rows is weak evidence when the rows are not independent. Aggregators inherit their fields from contributors, and contributors copy from published catalogues, so four records saying the same thing may be one record said four times.</p>
-<p>Disagreement is the more useful signal. It tells you a decision was made, which means there is something to find.</p>
+<p>The column for where the date comes from usually stays empty. Each institution gives a date; few say what it rests on.</p>
+<p>Agreement between records is weak evidence when the records share a source. Aggregators take their fields from contributors, and contributors often copy from the same published catalogue, so four records with the same date may be one record repeated.</p>
+<p>Disagreement is more useful. It shows that someone made a decision, and so that there is something to investigate.</p>
 </div>
 <div class="box">
 <span class="box-label">Question</span>
 <p>Three of the four give the same date. Does that make it more likely to be right?</p>
 <details>
 <summary>Show the answer</summary>
-<p>Only if the three arrived at it independently, and usually they did not. Trace each back and you often reach one printed catalogue, from which everything else descends.</p>
-<p>Trace each back far enough and you often reach one printed catalogue, from which everything else descends. A date recorded in a dozen places, resting on a single mid-century source, with no corroboration on any surviving sheet, is a common enough pattern to be worth expecting rather than discovering.</p>
+<p>Only if the three reached it independently, and usually they did not. Trace each one back and you often reach a single printed catalogue that the others copied.</p>
+<p>A date repeated in a dozen places, resting on one mid-century source and on nothing on the sheet itself, is a pattern to expect.</p>
 </details>
 </div>
+
 <h2 id="case">A worked case: the Great Picture Book of Everything</h2>
-<p>Everything above is easier to see on a body of material where the record demonstrably changed, in public, recently, and is documented at every stage. The 103 Hokusai drawings the British Museum acquired in 2020 are that case.</p>
-<p>They were made for an illustrated encyclopaedia, <em>Banmotsu ehon daizen zu</em>, which was never published. Block-ready drawings, roughly postcard-sized, brushed on thin paper and pasted onto card, kept in a wooden box inscribed with the title and Hokusai's name. Two of the sheets carry the seal of Henri Vever, the French Art Nouveau jeweller and collector. They were sold at a Paris auction in 1948, entered a private French collection, and were not publicly recorded again for seventy years.</p>
-<p>Then, at a Paris sale in June 2019, they appeared catalogued as the work of Katsushika Issai, a pupil. The dealer Israel Goldman bought them for €110,000 on the conviction that they were by Hokusai himself; the British Museum's Timothy Clark agreed, and the Museum acquired them the following year.</p>
+<p>All of this is easier to see where a record changed recently, in public, with every stage documented. The 103 Hokusai drawings the British Museum acquired in 2020 are such a case.</p>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The drawings were made for an illustrated encyclopaedia, <em>Banmotsu ehon daizen zu</em>, which was never published. They are block-ready drawings, roughly postcard-sized, brushed on thin paper and pasted onto card, and kept in a wooden box inscribed with the title and Hokusai's name.</p>
+<p>Block-ready drawings were normally pasted onto the woodblock and cut away in the carving, so a surviving set is rare.</p>
+</details>
+<p>Two of the sheets carry the seal of the French collector Henri Vever. The drawings were sold at auction in Paris in 1948, went into a private French collection, and do not appear in any public record for the next seventy years.</p>
+<p>In June 2019 they reappeared at a Paris sale, catalogued as the work of Katsushika Issai, one of Hokusai's pupils. The dealer Israel Goldman bought them for €110,000, convinced they were by Hokusai himself. The British Museum's Timothy Clark agreed, and the Museum acquired them the following year.</p>
 <div class="box">
 <span class="box-label">How to read this</span>
-<p>Run the four checks against this one body of work and each returns something.</p>
-<p><strong>Where did the field come from?</strong> The maker field said Issai in June 2019 and Hokusai by September 2020. Both were records; one was an auction catalogue and one a museum acquisition. The object did not change.</p>
-<p><strong>Does the object carry it?</strong> Partly. The box carries the title and Hokusai's name, and the box was made perhaps seventy years after the drawings. Two sheets carry a collector's seal. Nothing carries a date.</p>
-<p><strong>Who else says it, independently?</strong> Before 2019, nobody said anything: the drawings were absent from every record for seventy years. Absence in the catalogues was not evidence about the drawings.</p>
-<p><strong>Has anyone dissented?</strong> Here the interesting movement is within one institution rather than between two. The Museum's 2020 announcement gives the drawings as created in 1829. Its exhibition page gives them as produced in the 1820s–1840s. That is a twenty-year widening, published by the same institution, as research proceeded.</p>
+<p>Four questions, applied to this one group of drawings:</p>
+<p><strong>Where did the field come from?</strong> The maker was Issai in June 2019 and Hokusai by September 2020. One record was an auction catalogue, the other a museum acquisition. The drawings stayed the same.</p>
+<p><strong>Does the object carry it?</strong> In part. The box carries the title and Hokusai's name, but the box may be some seventy years younger than the drawings. Two sheets carry a collector's seal. Nothing carries a date.</p>
+<p><strong>Who else says it, independently?</strong> Before 2019, no record mentions the drawings. Their absence from catalogues for seventy years says something about the catalogues, and nothing about the drawings.</p>
+<p><strong>Has anyone disagreed?</strong> The clearest change happened within one institution. The Museum's 2020 announcement dates the drawings to 1829. Its exhibition page dates them to the 1820s–1840s, a range twenty years wider, published as research continued.</p>
 </div>
 <div class="box">
 <span class="box-label">Question</span>
 <p>Your dataset was built in 2020 and records the date as 1829. Is it wrong?</p>
 <details>
 <summary>Show the answer</summary>
-<p>It is accurate as to what the source said when you captured it, and out of step with what the same source says now. Those are different failures and only one of them is yours.</p>
-<p>A record of the capture date turns the first into a citation and the second into a known limitation. Without it, your dataset silently contradicts the institution it drew from, and a later reader has no way to tell whether you disagreed or simply arrived early.</p>
-<p>This is why the credit block at the top of this page carries a <code>captured</code> field, and why the register in <code>data/</code> has one for every file.</p>
+<p>It correctly records what the source said when you captured it, and it differs from what the same source says now. Only the second is a problem, and it is easy to handle.</p>
+<p>With a capture date, the first becomes a citation and the second a stated limitation. Without one, a later reader cannot tell whether you disagreed with the institution or simply recorded an earlier version. This is why the record at the top of this page has a <em>captured</em> field.</p>
 </details>
 </div>
-<p>All 103 drawings are on the Museum's Collection online, and they also sit in <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a>, a research instance holding the artist's late work across the British Museum, the Metropolitan Museum and the Freer|Sackler. That is this module's four-database comparison already built, by people who had the same problem.</p>
-<p class="meta">Sources: British Museum acquisition announcement (2020); <em>Hokusai: The Great Picture Book of Everything</em>, exhibition and catalogue (2021); trade press reporting of the 2019 Piasa sale.</p>
+<p>All 103 drawings are in the British Museum's online collection. They are also in <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a>, a research database of the artist's late work across the British Museum, the Metropolitan Museum and the Freer|Sackler: a comparison of the kind this module teaches, built by researchers who faced the same problem.</p>
+<p class="meta">Sources: British Museum acquisition announcement (2020); <em>Hokusai: The Great Picture Book of Everything</em>, exhibition and catalogue (2021); trade press reports of the 2019 Piasa sale.</p>
+
 <h2 id="limits">What this cannot tell you</h2>
-<p>The comparison shows you where records diverge. It does not tell you which is correct, and nothing in this module can.</p>
+<p>A comparison shows where records differ. Deciding which is correct takes evidence from outside the records.</p>
 <ul>
-<li><strong>It cannot date the object.</strong> Only the sheet can do that, through a colophon, a censor's seal, or a publisher's address in a datable form.</li>
-<li><strong>It cannot establish independence.</strong> Whether two records descend from one source is a bibliographic question, answered in the literature rather than in the data.</li>
-<li><strong>It cannot see what was never catalogued.</strong> Absence in four databases is evidence about four databases.</li>
-<li><strong>It cannot resolve names by itself.</strong> Matching 北斎 to Hokusai to Hokousaï takes either an authority file or your own judgement. Module 1 covers the mechanics; the judgement stays yours.</li>
+<li><strong>The date of the object.</strong> That comes from the sheet itself: a colophon, a censor's seal, a publisher's address that can be dated.</li>
+<li><strong>Whether records are independent.</strong> Whether two records share a source is a bibliographic question, answered in the literature.</li>
+<li><strong>What was never catalogued.</strong> Absence from four databases is a fact about those databases.</li>
+<li><strong>Which names belong together.</strong> Linking 北斎, Hokusai and Hokousaï takes an authority file or your own judgement. Module 1 covers the method.</li>
 </ul>
-<p>What it does give you is a shortlist of places where the record was decided rather than observed. That shortlist is where the art-historical work starts.</p>
+<p>What the comparison gives you is a shortlist of places where the record reflects a decision rather than an observation. The art-historical work starts there.</p>
+
 <h2 id="own">Use your own materials</h2>
-<p>Every step above works on a print of your choosing.</p>
 <ol>
-<li>Replace the accession number in step 1 with one from a collection you work on.</li>
-<li>Set <code>USE_LIVE = True</code> and put your own search terms in step 2.</li>
-<li>Run step 3 unchanged. The comparison table takes whatever rows you give it.</li>
+<li>Choose a print from a collection you work on and find its museum record.</li>
+<li>Find the same print in at least two other databases, and note the date you looked.</li>
+<li>Build the comparison table from step 3.</li>
 </ol>
-<p>Then write four sentences: which fields diverge, what each institution appears to be describing, which claim you trust least, and what evidence would settle it. That last sentence is the one worth bringing to a supervisor.</p>
+<p>Then write four sentences: which fields differ, what each institution appears to be describing, which claim you trust least, and what evidence would settle it. The last sentence is the one to bring to a supervisor.</p>
 <div class="box box-close">
 <span class="box-label">What you should now be able to do</span>
 <ul>
-<li>Pull a record from a museum table, a library service and an aggregator, and read each on its own terms.</li>
-<li>Say what kind of claim each field carries: observation, inference, or convention.</li>
-<li>Recognise that agreement between records is weak evidence when the records are not independent.</li>
-<li>Name what a metadata comparison cannot settle, and what would settle it.</li>
+<li>Find a record in a museum collection, a library catalogue and an aggregator, and read each on its own terms.</li>
+<li>Say what kind of claim each field makes: observation, conclusion, or convention.</li>
+<li>Explain why agreement between records is weak evidence when they share a source.</li>
+<li>Name what a comparison of records cannot settle, and what would settle it.</li>
 </ul>
 </div>
 <nav class="pager">
-<a href="01-data-literacy.html"><span class="nav-label">Previous</span>← 01. Data literacy</a>
-<a href="../glossary.html"><span class="nav-label">Reference</span>Glossary</a>
-<a href="03-spatial-research-design.html"><span class="nav-label">Next</span>03. Spatial research design →</a>
+<a href="/modules/01-data-literacy.html"><span class="nav-label">Previous</span>← 01. Data literacy</a>
+<a href="/glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+<a href="/modules/03-spatial-research-design.html"><span class="nav-label">Next</span>03. Spatial research design →</a>
 </nav>
 </main>
 
