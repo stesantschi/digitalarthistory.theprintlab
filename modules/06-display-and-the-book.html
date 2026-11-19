@@ -103,10 +103,13 @@ nav .logo {
     color: var(--sumi);
     text-decoration: none;
 }
-nav .logo { display: inline-flex; align-items: baseline; gap: 0.5rem; }  /* the mark's bar sits on the text baseline */
+nav .logo { display: inline-flex; align-items: flex-end; gap: 0.5rem; }
+nav .logo > span:not(.logo-rule) { line-height: 1; padding-bottom: 0.17em; }  /* the mark's bar sits on the text baseline */
 nav .logo-mark { width: 1.6em; height: 1.6em; flex: 0 0 auto; }
 nav .logo-brand { font-weight: 400; }
-nav .logo-site { border-left: 1px solid var(--rule); padding-left: 0.6rem; margin-left: 0.1rem; white-space: nowrap; }
+nav .logo-site { white-space: nowrap; }
+/* lockup rule: as tall as the mark's drawn shapes (90.2% of its box, inset 4.9% top and bottom) */
+nav .logo-rule { align-self: flex-end; width: 1px; height: calc(1.6em * 0.902); margin: 0 0.15rem calc(1.6em * 0.049); background: var(--sumi-soft); }
 @media (max-width: 480px) { nav .logo .ja { display: none; } }
 nav .logo .ja { color: var(--sumi-soft); font-weight: 400; }
 nav ul { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
@@ -840,7 +843,7 @@ main h2::before {
     padding: 0.15rem 0.6rem;
 }
 
-/* workbook: tables to fill in */
+/* tables to fill in */
 .fill td { height: 3.2rem; }
 .fill td:first-child { width: 34%; }
 .fill td + td { border-left: 1px solid var(--rule); padding-left: 0.75rem; }
@@ -857,6 +860,15 @@ main h2::before {
 .wide .rows, .wide .numbered, .wide .tools dd, .wide figcaption { max-width: var(--col); }
 .box p, .box ul, .box ol, .choice p, .starting p, .rows p, .numbered p { max-width: none; }
 .choice .meta { margin-top: 1rem; }
+.ref { border-top: 1px solid var(--rule); max-width: var(--col, 44rem); }
+.ref + .ref { border-top: 1px solid var(--rule); }
+.ref:has(+ :not(.ref)) { border-bottom: 1px solid var(--rule); margin-bottom: 2rem; }
+.ref > summary { cursor: pointer; list-style: none; position: relative; padding: 0.7rem 2rem 0.7rem 0; font-weight: 600; }
+.ref > summary::-webkit-details-marker { display: none; }
+.ref > summary::after { content: "+"; position: absolute; right: 0; top: 0.7rem; font-weight: 400; }
+.ref[open] > summary::after { content: "\2212"; }
+.ref[open] { padding-bottom: 1rem; }
+.ref h4 { margin: 1.25rem 0 0.25rem; font-size: var(--s-0); }
 .wide .masthead { margin-bottom: 0; }
 .wide .masthead .facts { margin-bottom: 0; }
 .wide .masthead + .run { border-top: 0; }
@@ -883,7 +895,7 @@ main h2::before {
 
 <nav>
   <div class="container">
-    <a class="logo" href="/"><svg class="logo-mark" viewBox="130 88 818 818" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M674.3 332.6C674.3 200.4 599.1 128.0 461.5 128.0H170.0V788.0H305.8V552.6H475.1C596.4 552.6 674.3 466.6 674.3 332.6ZM538.5 340.8C538.5 407.8 505.0 439.4 432.6 439.4H305.8V241.2H432.6C505.0 241.2 538.5 272.9 538.5 340.8Z"/><path d="M170 812H357V866H170Z"/><path d="M429 812H854V600H908V866H429Z"/><path d="M318 249h30v30h-30zM318 287h30v30h-30zM318 325h30v30h-30zM318 363h30v30h-30zM318 401h30v30h-30zM356 249h30v30h-30zM356 325h30v30h-30zM356 363h30v30h-30zM356 401h30v30h-30zM394 249h30v30h-30zM394 325h30v30h-30zM394 401h30v30h-30zM432 287h30v30h-30zM432 363h30v30h-30zM470 325h30v30h-30z"/></svg><span class="logo-brand">ThePrintLab</span><span class="logo-site">e_tehon <span class="ja" lang="ja">e_手本</span></span></a>
+    <a class="logo" href="/"><svg class="logo-mark" viewBox="130 88 818 818" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M674.3 332.6C674.3 200.4 599.1 128.0 461.5 128.0H170.0V788.0H305.8V552.6H475.1C596.4 552.6 674.3 466.6 674.3 332.6ZM538.5 340.8C538.5 407.8 505.0 439.4 432.6 439.4H305.8V241.2H432.6C505.0 241.2 538.5 272.9 538.5 340.8Z"/><path d="M170 812H357V866H170Z"/><path d="M429 812H854V600H908V866H429Z"/><path d="M318 249h30v30h-30zM318 287h30v30h-30zM318 325h30v30h-30zM318 363h30v30h-30zM318 401h30v30h-30zM356 249h30v30h-30zM356 325h30v30h-30zM356 363h30v30h-30zM356 401h30v30h-30zM394 249h30v30h-30zM394 325h30v30h-30zM394 401h30v30h-30zM432 287h30v30h-30zM432 363h30v30h-30zM470 325h30v30h-30z"/></svg><span class="logo-brand">ThePrintLab</span><span class="logo-rule" aria-hidden="true"></span><span class="logo-site">e_tehon <span class="ja" lang="ja">e_手本</span></span></a>
     <ul>
       <li><a href="/start.html">Start</a></li>
       <li><a href="/#about">About</a></li>
@@ -908,7 +920,6 @@ main h2::before {
       <li>requires modules 1 and 2</li>
       <li>intermediate</li>
       <li>IIIF viewers, storytelling tools, CollectionBuilder</li>
-      <li><a href="/modules/06-workbook.html">workbook</a></li>
       <li>CC BY 4.0</li>
     </ul>
   </header>
@@ -963,7 +974,69 @@ main h2::before {
 
   <p>Find your book in at least two repositories and record, for each, what it says: the title in the record and the title on the book, where the date comes from, which volumes are held, and the address of the IIIF Manifest. Then open the book in each repository's own viewer and note what it does well and where it goes wrong.</p>
 
-  <p>The disagreements between records are the first finding of this module. The <a href="/modules/06-workbook.html">workbook</a> has the repositories to search, eight books that each make one problem visible, and a record form to fill in.</p>
+  <p>The Manifest address usually ends in <code>manifest.json</code>. Look for the IIIF logo (a small square of coloured bars) or a link reading “IIIF Manifest” near the image, right-click it and copy the link. If a viewer is already running on the page, the address is in its information panel. The address must start with <code>https</code>, and if one viewer shows nothing, try a second before deciding it is wrong.</p>
+
+  <p>The disagreements between records are the first finding of this module.</p>
+
+  <details class="ref" id="where">
+    <summary>Where to look: eighteen repositories</summary>
+    <table>
+    <thead><tr><th>Repository</th><th>IIIF</th><th>Good for, and what to watch</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://kokusho.nijl.ac.jp/">Kokusho (NIJL)</a></td><td>Some</td><td>Finding a book when you do not have the right title. Start here when a title search fails elsewhere.</td></tr>
+      <tr><td><a href="https://dl.ndl.go.jp/">NDL Digital Collections</a></td><td>Yes</td><td>Wide coverage. Check whether a record is an Edo original or a later facsimile. Some items are restricted to users in Japan or at partner institutions.</td></tr>
+      <tr><td><a href="https://ndlsearch.ndl.go.jp/">NDL Search</a></td><td>No</td><td>Bibliographic records, separate from the Digital Collections. Good for secondary information.</td></tr>
+      <tr><td><a href="https://www.wul.waseda.ac.jp/kotenseki/">Waseda Kotenseki</a></td><td>Some</td><td>Deep holdings and good images. Not every record has a Manifest.</td></tr>
+      <tr><td><a href="https://pulverer.si.edu/">Pulverer Collection</a></td><td>No</td><td>The fullest English-language records for Japanese illustrated books, cover to cover, in a custom page-turner.</td></tr>
+      <tr><td><a href="https://www.si.edu/collections">Smithsonian collections</a></td><td>Yes</td><td>Manifest on the object page. Rights vary by unit: Libraries material is often CC0, the Freer Pulverer books carry conditions. For a multi-volume book, the Manifest may describe one image or several pages.</td></tr>
+      <tr><td><a href="https://www.britishmuseum.org/collection">British Museum</a></td><td>Some</td><td>Provenance detail. Image licensing is separate from the record. Few Manifests.</td></tr>
+      <tr><td><a href="https://www.metmuseum.org/art/collection">Metropolitan Museum</a></td><td>Yes</td><td>Open Access images, freely reusable, with Manifests.</td></tr>
+      <tr><td><a href="https://collections.mfa.org/">MFA Boston</a></td><td>Some</td><td>Large Japanese holdings, often under copyright.</td></tr>
+      <tr><td><a href="https://collections.vam.ac.uk/">Victoria and Albert Museum</a></td><td>Some</td><td>Object-level records. Manifests at <code>iiif.vam.ac.uk/collections/{accession}/manifest.json</code>.</td></tr>
+      <tr><td><a href="https://jpsearch.go.jp/">Japan Search</a></td><td>n/a</td><td>Searches several institutions at once. It does not merge their records, so one book can appear twice. A good starting point.</td></tr>
+      <tr><td><a href="https://cultural.jp/">Cultural Japan</a></td><td>Some</td><td>Cross-institution search, and one of the fastest ways to find a Manifest.</td></tr>
+      <tr><td><a href="https://colbase.nich.go.jp/">ColBase</a></td><td>Some</td><td>Japan's four national museums and the research institutes.</td></tr>
+      <tr><td><a href="https://ukiyo-e.org/">ukiyo-e.org</a></td><td>n/a</td><td>Reverse image search. More prints than books, and some links are out of date.</td></tr>
+      <tr><td><a href="https://www.arc.ritsumei.ac.jp/e/database/">ARC, Ritsumeikan</a></td><td>Some</td><td>Federated search across ARC and partner collections. The Early Japanese Books database shows Manifest buttons where the holder provides them.</td></tr>
+      <tr><td><a href="https://rmda.kulib.kyoto-u.ac.jp/">Kyoto University</a></td><td>Yes</td><td>Around 26,000 titles, with a Manifest for every item.</td></tr>
+      <tr><td><a href="https://digitalcollections.library.upenn.edu/">Penn Digital Collections</a></td><td>Yes</td><td>Full books in high resolution, with notes stating where a date came from. Includes the Tress Collection.</td></tr>
+      <tr><td><a href="https://iiif.io/guides/finding_resources/">Finding Manifests</a></td><td>n/a</td><td>Step-by-step guidance for over 100 institutions. Check here first when you cannot find an address.</td></tr>
+    </tbody>
+  </table>
+  </details>
+
+  <details class="ref" id="practice">
+    <summary>Eight books to practise on</summary>
+    <p>Each is widely held and makes one problem easy to see.</p>
+    <table>
+    <thead><tr><th>Book</th><th>What it makes you notice</th><th>Where to start</th></tr></thead>
+    <tbody>
+      <tr><td><em>Hokusai manga</em> <span lang="ja">北斎漫画</span><br>Katsushika Hokusai, 1814–1878</td><td>Titles, dates and volume counts differ from place to place, and Meiji reprints are often catalogued as Edo originals.</td><td>Kokusho, then NDL, then any museum</td></tr>
+      <tr><td><em>Ehon mushi erabi</em> <span lang="ja">画本虫撰</span><br>Kitagawa Utamaro, 1788</td><td>Colour matters, and each repository renders it differently. Poems and images share one surface, so a viewer that treats the page as only picture or only text loses part of the meaning.</td><td>British Museum, Pulverer, NDL, Waseda</td></tr>
+      <tr><td><em>Ehon seirō bijin awase</em> <span lang="ja">絵本青楼美人合</span><br>Suzuki Harunobu, 1770</td><td>Five volumes in full colour, verse and portrait interleaved. Tests whether a viewer can hold a set together as one work.</td><td>Smithsonian</td></tr>
+      <tr><td><em>Fugaku hyakkei</em> <span lang="ja">富嶽百景</span><br>Katsushika Hokusai, 1834–35</td><td>Reprinted for decades from worn blocks, so copies differ visibly. Good for comparing two impressions side by side.</td><td>NDL, Waseda, Met, MFA Boston</td></tr>
+      <tr><td><em>Miyako meisho zue</em> <span lang="ja">都名所図会</span><br>Takehara Shunchōsai, 1780</td><td>Landscape views composed across the opening. A single-page viewer cuts every one in half.</td><td>NDL, Waseda, ARC</td></tr>
+      <tr><td><em>Shiohi no tsuto</em> <span lang="ja">潮干のつと</span><br>Kitagawa Utamaro, c. 1789</td><td>Embossing, metallic pigment and blind printing, which flat digitisation records poorly.</td><td>Pulverer, British Museum, MFA</td></tr>
+      <tr><td><em>Onna daigaku takarabako</em> <span lang="ja">女大学宝箱</span><br>various, 1716 onward</td><td>One title, many editions decades apart, often catalogued with dates that belong to a different edition.</td><td>Kokusho first, then NDL and Waseda</td></tr>
+      <tr><td><em>Wakan sansai zue</em> <span lang="ja">和漢三才図会</span><br>Terajima Ryōan, 1712</td><td>An encyclopedia in 105 volumes. Shows what a display tool does with an object too large for it.</td><td>NDL, Waseda</td></tr>
+    </tbody>
+  </table>
+  </details>
+
+  <details class="ref" id="record">
+    <summary>What to record for each repository</summary>
+    <ul>
+      <li>The title in the record, copied exactly, and the title printed on the book (cover slip, <em>daisen</em>, or first page). Any variant titles.</li>
+      <li>The date, and where it comes from: colophon (<em>okuzuke</em>), preface, cataloguer's estimate, or not stated.</li>
+      <li>The artist as the record names them, and any signature in the book.</li>
+      <li>How many volumes the book has, and which ones this repository holds.</li>
+      <li>The Manifest address, or “none found”.</li>
+      <li>Image quality (can you zoom to individual lines?) and what the record says about reuse.</li>
+      <li>Where you got stuck: the exact search terms, and what happened.</li>
+      <li>Where the record and the book disagree.</li>
+      <li>For the repository as a whole: what it does well, what is weak, and what appears only in the Manifest or only on the record page.</li>
+    </ul>
+  </details>
 
   <p class="step-label">Step 1 — Ask what the manifest already asserts</p>
 
@@ -999,7 +1072,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     <p>Note also what a stated value does not do. Declaring <code>paged</code> asks a viewer to pair leaves; it does not say <em>which</em> leaves pair, and an odd canvas near the front — a cover, a title slip — offsets every opening after it. Condition 2 fails silently from a single unmarked sheet.</p>
   </div>
 
-  <p>Three more fields deserve the same scrutiny. <code>metadata</code> carries artist, date and format, which look settled once they travel with the image: check them against the book. <code>items</code> lists the pages, and a library holding volumes 2 and 5 of fifteen may list just those two, which a viewer then joins as if consecutive. <code>rights</code> says what may be reproduced. In version 2 Manifests, <code>items</code> is called <code>sequences</code> and <code>behavior</code> is <code>viewingHint</code>. The <a href="/modules/06-workbook.html#questions">workbook</a> sets out all five questions as a table.</p>
+  <p>Three more fields deserve the same scrutiny. <code>metadata</code> carries artist, date and format, which look settled once they travel with the image: check them against the book. <code>items</code> lists the pages, and a library holding volumes 2 and 5 of fifteen may list just those two, which a viewer then joins as if consecutive. <code>rights</code> says what may be reproduced. In version 2 Manifests, <code>items</code> is called <code>sequences</code> and <code>behavior</code> is <code>viewingHint</code>.</p>
 
 
   <p class="step-label">Step 2 — Place the tools on two axes</p>
@@ -1051,7 +1124,40 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     </tbody>
   </table>
 
-  <p class="meta">Verified October 2026. Check before relying on any row: these products change, and two of them are commercial. Links and further IIIF tools are in the <a href="/modules/06-workbook.html#viewers">workbook</a>.</p>
+  <p class="meta">Verified October 2026. Check before relying on any row: these products change, and two of them are commercial.</p>
+
+  <details class="ref" id="tools">
+    <summary>Links to the tools</summary>
+    <h4>Viewers</h4>
+  <dl class="tools">
+    <dt><a href="https://theseusviewer.org/">Theseus</a></dt>
+    <dd>A IIIF viewer. Paste the Manifest address after <code>https://theseusviewer.org/?iiif-content=</code>, or use “Quick open”.</dd>
+    <dt><a href="https://codh.rois.ac.jp/software/iiif-curation-viewer/">IIIF Curation Viewer (CODH)</a></dt>
+    <dd>Built in Japan for Japanese material, with a Japanese interface. Reads version 2 Manifests. Paste the address after <code>https://codh.rois.ac.jp/software/iiif-curation-viewer/demo/?manifest=</code>.</dd>
+  </dl>
+
+  <h4>Publishing tools</h4>
+  <dl class="tools">
+    <dt><a href="https://storiiies-editor.cogapp.com/">Storiiies</a> (free account)</dt>
+    <dd>Takes a Manifest, with a specific page, and returns a shareable annotated story. Add a title and an email address; the editing link arrives by email. Zoom until one detail fills the frame and click “Add annotation”. See a <a href="https://storiiies.cogapp.com/view/768x5/Miniature-garden-page">finished example</a>.</dd>
+    <dt><a href="https://view.collections.yale.edu/m3/">Mirador</a> (no account)</dt>
+    <dd>The research viewer used across libraries and museums. Open a second window and set the two to different pages or to two different copies, with deep zoom and annotation in both. It is built for comparison: what you draw is lost on reload, so export the workspace before closing the tab. One-click alternative: <code>projectmirador.org/embed/?iiif-content=</code> followed by the Manifest address.</dd>
+    <dt><a href="https://storymap.knightlab.com/">StoryMapJS</a> (Google account)</dt>
+    <dd>Moves a reader through points on a map, one image and a short text at each. It takes uploaded image files, so the record stays behind: reading direction, rights and the link to the library are lost. It suits books about places, or where the place of production matters. Ask first: which places does my book discuss? <a href="https://youtu.be/l8QbczQgCmo">Tutorial</a>.</dd>
+  </dl>
+
+  <h4>Further IIIF tools</h4>
+  <dl class="tools">
+    <dt><a href="https://universalviewer.io/">Universal Viewer</a></dt>
+    <dd>The embeddable viewer most museums use. Handles IIIF images, audio and video, plus 3D and PDF.</dd>
+    <dt><a href="https://glycerine.io/try-viewer">Glycerine Viewer</a></dt>
+    <dd>Drag the IIIF logo from a museum page onto it. A workbench for annotating collections together.</dd>
+    <dt><a href="https://manifest-editor.digirati.services/">Digirati Manifest Editor</a></dt>
+    <dd>Create and edit IIIF Manifests visually.</dd>
+    <dt><a href="https://iiif.io/get-started/tools/">All IIIF tools</a></dt>
+    <dd>The list maintained by the IIIF community.</dd>
+  </dl>
+  </details>
 
   <div class="box">
     <span class="box-label">How to read this</span>
@@ -1092,7 +1198,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
 
   <p>Keep the completed table. A comparison of display tools against a stated list of conditions, for a specific kind of object, is publishable in its own right — and almost nobody writes them, because it requires knowing the object well enough to state the conditions first.</p>
 
-  <p>The <a href="/modules/06-workbook.html#viewers">workbook's viewer checklist</a> adds practical tests to the six conditions: whether you can zoom far enough to see block wear, whether a shared link works for someone else, and which device and browser you used.</p>
+  <p>Add four practical tests: can you zoom far enough to see block wear, does it show the date and the rights, does a shared link work for someone else, and which device and browser did you use? Then note what it got wrong.</p>
 
   <p class="step-label">Step 4 — Build a small exhibition from a spreadsheet</p>
 
@@ -1129,7 +1235,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     <li><strong>Write as you would speak</strong>, in the active voice. Read it aloud.</li>
   </ul>
 
-  <p class="meta">More in the <a href="/modules/06-workbook.html#caption">workbook</a>, with the V&amp;A's guide to gallery text.</p>
+  <p class="meta">Further reading: Lucy Trench, <a href="https://www.vam.ac.uk/blog/wp-content/uploads/VA_Gallery-Text-Writing-Guidelines_online_Web.pdf"><em>Gallery Text at the V&amp;A: A Ten Point Guide</em></a> (2018).</p>
 
   <p class="step-label">Step 6 — Say what the display decided, and present it</p>
 
@@ -1142,7 +1248,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     <p>The note is the remedy, and it is cheap. It is also the part that makes the exhibition a scholarly object rather than a display.</p>
   </div>
 
-  <p>Keep a record of what you built: the share code for Storiiies, the Manifest address and exported workspace for Mirador, the URL for StoryMapJS. Then present it in three minutes: a hook from one visible detail, the problem the tool could not render, the display as evidence, and what it means for anyone showing a book like yours. The <a href="/modules/06-workbook.html#display">workbook</a> sets out each part.</p>
+  <p>Keep a record of what you built: the share code for Storiiies, the Manifest address and exported workspace for Mirador, the URL for StoryMapJS. Then present it in three minutes: a hook from one visible detail, the problem the tool could not render, the display as evidence, and what it means for anyone showing a book like yours.</p>
 
 
   <h2 id="workshop">In the classroom: the October 2026 workshop</h2>
@@ -1165,7 +1271,6 @@ for c in manifest["sequences"][0]["canvases"][:6]:
       <li><strong>The same book in three tools.</strong> Mirador showed two copies side by side, with the spoken argument in place of a caption; Storiiies walked a reader through one opening, detail by detail (<a href="https://storiiies.cogapp.com/view/768x5/Miniature-garden-page">example</a>); StoryMapJS showed where the copies are held.</li>
       <li><strong>Choose the tool to suit the argument.</strong> Before opening any tool, write down what the book is, which openings you will show, what the audience should understand, and what the material needs a tool to do.</li>
     </ul>
-    <p>The process the students followed is published as the <a href="/modules/06-workbook.html">workbook</a>.</p>
   </div>
 
   <p class="meta">With thanks to the Ishibashi Foundation, whose Graduate Programme made the workshop possible, and to the students of its inaugural cohort, whose displays and questions shaped this page.</p>
@@ -1185,7 +1290,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
   <h2 id="own">Use your own materials</h2>
 
   <ol>
-    <li>Practise first on one of the <a href="/modules/06-workbook.html#books">eight test books</a> in the workbook, then move to your own.</li>
+    <li>Practise first on one of the <a href="#practice">eight test books</a>, then move to your own.</li>
     <li>Rewrite the six conditions for your own book. Cut any that do not apply and add what is missing; the list is the module's real deliverable.</li>
     <li>Run step 1 against a manifest for your material and record what the two fields say.</li>
     <li>Place your candidate tools on the two axes, then fill in the six-condition table for the two that survive.</li>
@@ -1207,7 +1312,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
 
   <div class="box">
     <span class="box-label">Status</span>
-    <p>Draft, taught once: this is the material of the <a href="#workshop">October 2026 workshop</a>, and the six conditions above are the version worked out there. The step-by-step process is in the <a href="/modules/06-workbook.html">workbook</a>. Comments through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a> or by email to <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a>.</p>
+    <p>Draft, taught once: this is the material of the <a href="#workshop">October 2026 workshop</a>, and the six conditions above are the version worked out there. Comments through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a> or by email to <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a>.</p>
   </div>
 
   <nav class="pager">
