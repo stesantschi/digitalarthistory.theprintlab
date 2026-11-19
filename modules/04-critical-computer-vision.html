@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 04: Critical computer vision — e_tehon</title>
+<meta name="description" content="Distant viewing: what the model saw, and what it was trained to see. Reading a model's blind spots on Japanese visual material as evidence.">
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/04-critical-computer-vision.html">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="logo" href="/"><svg class="logo-mark" viewBox="130 88 818 818" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M674.3 332.6C674.3 200.4 599.1 128.0 461.5 128.0H170.0V788.0H305.8V552.6H475.1C596.4 552.6 674.3 466.6 674.3 332.6ZM538.5 340.8C538.5 407.8 505.0 439.4 432.6 439.4H305.8V241.2H432.6C505.0 241.2 538.5 272.9 538.5 340.8Z"/><path d="M170 812H357V866H170Z"/><path d="M429 812H854V600H908V866H429Z"/><path d="M318 249h30v30h-30zM318 287h30v30h-30zM318 325h30v30h-30zM318 363h30v30h-30zM318 401h30v30h-30zM356 249h30v30h-30zM356 325h30v30h-30zM356 363h30v30h-30zM356 401h30v30h-30zM394 249h30v30h-30zM394 325h30v30h-30zM394 401h30v30h-30zM432 287h30v30h-30zM432 363h30v30h-30zM470 325h30v30h-30z"/></svg><span class="logo-brand">ThePrintLab</span><span class="logo-rule" aria-hidden="true"></span><span class="logo-site">e_tehon <span class="ja" lang="ja">e_手本</span></span></a>
+    <ul>
+      <li><a href="/start.html">Start</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#modules" aria-current="true">Modules</a></li>
+      <li><a href="/glossary.html">Glossary</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wide">
+<header class="masthead">
+<p class="crumb"><a href="/#modules">Modules</a> / Module 4</p>
+<p class="chip">Module 04</p>
+<h1>Critical computer vision</h1>
+<p class="subtitle">Distant viewing — what the model saw, and what it was trained to see.</p>
+<ul class="facts">
+<li>~90 min</li>
+<li>requires modules 1–3</li>
+<li>GPU runtime recommended</li>
+<li>CC BY 4.0</li>
+</ul>
+<p class="meta outline">Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits.</p></header>
+
+<h2 id="question">The research question</h2>
+<div class="starting">
+<span class="box-label">Starting point</span>
+<p>I have three hundred print images. Can the computer group them for me, and should I trust the groups?</p>
+</div>
+<p>The computer will group them. It always will, on any input, including noise. So the second half of the question is the whole of the work, and this module is built around it rather than around getting a result.</p>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>A vision model turns each image into a list of numbers — an <em>embedding</em> — chosen so that images the model considers similar end up with similar numbers.</p>
+<p>Clustering then groups images whose numbers are close. Nothing in this process involves understanding. It is a measurement of similarity, under a definition of similarity the model acquired from whatever it was trained on.</p>
+</details>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The large pretrained models were built on photographs and Western art, scraped from the web. Japanese prints are a thin sliver of that, and pre-modern Japanese prints thinner still.</p>
+<p>So the model arrives with no notion of the things this material is organised by: the conventions of actor portraiture, the vocabulary of <em>mitate</em> (visual parody through substitution), the significance of a crest or a robe pattern in identifying a figure.</p>
+<p>It has a strong notion of edges, colour fields and texture, which is why it will happily group by paper tone.</p>
+</details>
+<div class="box">
+<span class="box-label">Where this comes from</span>
+<p>This module draws on computer vision work in <a href="https://landscapes.theprintlab.org">Drawing from the Crowd</a>, a participatory georeferencing platform for <em>ukiyo-e</em> research, developed with Himanshu Panday and the project team.</p>
+<p>Two things that project produced belong here rather than in a generic treatment. The first is a corpus with institutional provenance recorded per image, which is what step 3 needs and what most print datasets lack. The second is a working typology of the ways these models fail on this material — which is the difference between a module that reports clusters and one that can say what a failure means.</p>
+<p class="meta">Findings from that work are being written up separately; this module will cite them rather than restate them.</p>
+</div>
+<h2 id="plan">What we will do</h2>
+<p>Embed a set of images with a pretrained model, cluster them, and look at the groups. Then diagnose what the clustering actually responded to, by testing it against sets whose membership we already know. What the model fails to separate turns out to be the more interesting output.</p>
+<p class="step-label">Step 1 — Embed the images</p>
+
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>Which model, and what does the choice commit you to?</p>
+<dl>
+<dt>A general pretrained model, as above</dt>
+<dd>Free, fast, reproducible, and shaped entirely by a training set that barely contains your material. Its idea of similarity is borrowed.</dd>
+<dt>A model fine-tuned on Japanese prints</dt>
+<dd>Better separation, at the cost of needing a labelled set to fine-tune on — and your labels then determine what the model can see.</dd>
+<dt>Simple visual features, computed directly</dt>
+<dd>Colour histograms, edge density, ink coverage. Crude, and every dimension is one you can name and defend, which for an argument is sometimes worth more than performance.</dd>
+</dl>
+<p class="meta">The third option is undersold in the literature. A measure you can explain in a footnote can carry an argument that a black box cannot.</p>
+</div>
+<p class="step-label">Step 2 — Cluster, and look at the groups</p>
+
+<p>Looking at the images in each cluster is the step people skip, and skipping it is how a paper ends up arguing about digitisation practice while believing it is arguing about style.</p>
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>Expect several clusters to be about the photograph rather than the print. Common ones, in rough order of frequency:</p>
+<ul>
+<li><strong>Paper tone and staining.</strong> One institution's scans are warmer than another's, and the model sees that before it sees anything else.</li>
+<li><strong>Crop and margin.</strong> Whether the sheet was photographed with a border, a backing board or a colour target.</li>
+<li><strong>Format.</strong> Vertical against horizontal, and single sheets against diptychs, which is a real distinction arrived at for the wrong reason.</li>
+<li><strong>Condition.</strong> Faded impressions grouping together, which conflates a printing history with a preservation history.</li>
+</ul>
+<p>None of these is a failure of the method. They are the method working correctly on a question nobody asked it.</p>
+</div>
+<p class="step-label">Step 3 — Diagnose what it responded to</p>
+<p>Test the clustering against groups whose membership you already know, so that its behaviour becomes measurable rather than impressionistic.</p>
+
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>A cluster that maps cleanly onto one institution is measuring that institution's photography.</p>
+<p>A cluster that maps onto a series is more interesting and still ambiguous, since a series shares a designer, a publisher, a palette, a format and frequently a single digitisation session.</p>
+<p>The clusters that map onto neither are where the argument might be.</p>
+</div>
+<div class="box">
+<span class="box-label">Question</span>
+<p>The model puts almost every actor print in one large cluster and refuses to subdivide it. Is that a failure?</p>
+<details>
+<summary>Show the answer</summary>
+<p>It is a finding stated as a failure. Actor prints share a compositional vocabulary so tight — pose, framing, the placement of the cartouche, the treatment of the robe — that under a general model's definition of similarity they genuinely are alike.</p>
+<p>What distinguishes them for a viewer is a crest, a facial convention, a mon on a sleeve: small, local, semantically loaded signals that occupy few pixels and carry no weight in a measure built for photographs.</p>
+<p>So the model's inability to separate them is evidence about the strength of the convention, and about what the measure is blind to. Both are reportable.</p>
+</details>
+</div>
+<p class="step-label">Step 4 — Read the blind spots as evidence</p>
+<p>Turn the diagnosis around. Instead of asking what the model found, ask what it consistently cannot distinguish, and whether that boundary means anything.</p>
+
+<p>Two impressions of one design, photographed by two institutions, will often sit further apart than two unrelated designs photographed by one. That single observation is worth more to an argument about digital mediation than any clustering result, and it is reproducible.</p>
+<h2 id="limits">What this cannot tell you</h2>
+<ul>
+<li><strong>It cannot attribute.</strong> Visual similarity is not authorship, and a model has no access to the evidence attribution rests on.</li>
+<li><strong>It cannot see iconography it was never shown.</strong> Absence of a pattern is evidence about the training set.</li>
+<li><strong>It cannot separate the print from its photograph.</strong> Every measurement is of an image of an object, made under conditions you did not control.</li>
+<li><strong>It cannot tell you a cluster means something.</strong> Clustering always returns clusters. Whether a boundary is meaningful is an art-historical judgement made after looking.</li>
+<li><strong>It cannot be reported as accuracy.</strong> There is no ground truth for "correctly grouped", so a percentage here would be measuring agreement with your own labels.</li>
+</ul>
+<h2 id="own">Use your own materials</h2>
+<ol>
+<li>Assemble images with their institution recorded, which step 3 needs.</li>
+<li>Run steps 1 and 2, and look at every cluster before reading any output.</li>
+<li>Run step 3 before forming any interpretation. If the clustering tracks institution, that is your result and it is publishable.</li>
+<li>Write down what you expected before you started, and keep it.</li>
+</ol>
+<div class="box box-close">
+<span class="box-label">What you should now be able to do</span>
+<ul>
+<li>Embed and cluster a set of images, and say what the model's definition of similarity came from.</li>
+<li>Recognise clusters that track digitisation rather than depiction.</li>
+<li>Test a clustering against metadata you already hold, before interpreting it.</li>
+<li>Read a model's failure to distinguish as evidence about a pictorial convention and about the model.</li>
+</ul>
+</div>
+<div class="box"><span class="box-label">Status</span><p>Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits. </p></div>
+<nav class="pager">
+<a href="03-spatial-research-design.html"><span class="nav-label">Previous</span>← 03. Spatial research design</a>
+<a href="../glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+<a href="05-linked-data.html"><span class="nav-label">Next</span>05. Linked data →</a>
+</nav>
+</main>
+
+<footer>
+  <div class="container">
+    <p>e_tehon, a ThePrintLab project. Module 04, outline.</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code <a href="https://opensource.org/licenses/MIT">MIT</a>. <a href="/#cite">Cite this</a>. <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">Repository</a>. <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

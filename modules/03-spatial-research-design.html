@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 03: Spatial research design — e_tehon</title>
+<meta name="description" content="Maps and patterns: what a point on a map claims, and what it cannot. Placing Japanese works of art in space without mistaking depiction for observation.">
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/03-spatial-research-design.html">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="logo" href="/"><svg class="logo-mark" viewBox="130 88 818 818" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M674.3 332.6C674.3 200.4 599.1 128.0 461.5 128.0H170.0V788.0H305.8V552.6H475.1C596.4 552.6 674.3 466.6 674.3 332.6ZM538.5 340.8C538.5 407.8 505.0 439.4 432.6 439.4H305.8V241.2H432.6C505.0 241.2 538.5 272.9 538.5 340.8Z"/><path d="M170 812H357V866H170Z"/><path d="M429 812H854V600H908V866H429Z"/><path d="M318 249h30v30h-30zM318 287h30v30h-30zM318 325h30v30h-30zM318 363h30v30h-30zM318 401h30v30h-30zM356 249h30v30h-30zM356 325h30v30h-30zM356 363h30v30h-30zM356 401h30v30h-30zM394 249h30v30h-30zM394 325h30v30h-30zM394 401h30v30h-30zM432 287h30v30h-30zM432 363h30v30h-30zM470 325h30v30h-30z"/></svg><span class="logo-brand">ThePrintLab</span><span class="logo-rule" aria-hidden="true"></span><span class="logo-site">e_tehon <span class="ja" lang="ja">e_手本</span></span></a>
+    <ul>
+      <li><a href="/start.html">Start</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#modules" aria-current="true">Modules</a></li>
+      <li><a href="/glossary.html">Glossary</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wide">
+<header class="masthead">
+<p class="crumb"><a href="/#modules">Modules</a> / Module 3</p>
+<p class="chip">Module 03</p>
+<h1>Spatial research design</h1>
+<p class="subtitle">Maps and patterns — what a point on a map claims, and what it cannot.</p>
+<ul class="facts">
+<li>~75 min</li>
+<li>requires modules 1 and 2</li>
+<li>gazetteer, GSI terrain, Smapshot API</li>
+<li>CC BY 4.0</li>
+</ul>
+<p class="meta outline">Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits.</p></header>
+
+<h2 id="question">The research question</h2>
+<div class="starting">
+<span class="box-label">Starting point</span>
+<p>I have fifty prints of famous places. If I put them on a map, what will I see?</p>
+</div>
+<p>Something, certainly. A map of any set of images produces a pattern, and the pattern will look like a finding. The work of this module is establishing what the pattern is a finding about, because the honest answer is usually publishing rather than landscape.</p>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>A <a class="term" href="../glossary.html#meisho"><em>meisho</em></a> is a famous place: a site with an established literary and pictorial reputation, depicted according to conventions built up over centuries.</p>
+<p>A designer working on a <em>meisho</em> series was not primarily recording a view. He was placing a work inside a tradition of depicting that site, in which earlier images, poems and associations all carry weight.</p>
+<p>So a print of a place is evidence that the place had standing in that tradition. Whether anyone went there is a separate question, and often the answer is no.</p>
+</details>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>Plotting converts a claim about place into a claim about position, and the two are not the same kind of statement.</p>
+<p>A point asserts an exact location with no width and no uncertainty. Nothing in the format can express "somewhere along this stretch of river" or "a view understood to be from here", so your uncertainty is discarded at the moment of conversion.</p>
+<p>The discarding is silent, and the result looks more precise than the evidence that produced it. That is the specific analytical risk of mapping, as distinct from any question about the software.</p>
+</details>
+<div class="box">
+<span class="box-label">Where this comes from</span>
+<p>This module draws on <a href="https://landscapes.theprintlab.org">Drawing from the Crowd</a>, a participatory georeferencing platform for <em>ukiyo-e</em> research, built on Smapshot with the Geographic Information Systems laboratory at HEIG-VD, registered at the Art Research Center's international centre at Ritsumeikan, and running on terrain data from the Geospatial Information Authority of Japan.</p>
+<p>What that project contributes here is the distinction the second half of this module rests on: naming where a print is <em>of</em> and computing where it was seen <em>from</em> are two different operations, answering two different questions, failing in two different ways.</p>
+<p class="meta">Methods from that project are being written up separately; this module will cite them rather than restate them.</p>
+</div>
+<h2 id="plan">What we will do</h2>
+<p>Take place names out of titles. Match them to coordinates and watch what fails. Plot the result and read the density. Test the pattern against the thing most likely to be producing it, which is the shape of the collection rather than the shape of Japan.</p>
+<p>Then, in the last step, ask the harder question: where was the viewer standing? That one needs a different method entirely, and its failures are the most informative output in the module.</p>
+<p class="step-label">Step 1 — From title to place</p>
+<p>Titles carry place names, in a form written for readers rather than for lookup.</p>
+
+
+
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>How do you get place names out?</p>
+<dl>
+<dt>By hand, from the series list</dt>
+<dd>Slow, accurate, and possible because these series are finite and published. Fifty titles is an afternoon. This is usually the right answer at this scale.</dd>
+<dt>Pattern matching on the title string</dt>
+<dd>Fast and brittle. It works where titles follow one convention and fails silently where they do not, which you will only discover by checking the output by hand anyway.</dd>
+<dt>A named-entity model</dt>
+<dd>Trained on modern prose, so it treats Edo-period place names inconsistently and has no way to know that a name refers to a district that no longer exists.</dd>
+</dl>
+<p class="meta">At fifty items, doing it by hand is faster than debugging an automatic method. That calculation changes at five thousand, and the module says so rather than pretending the automatic route is always the mature one.</p>
+</div>
+<p class="step-label">Step 2 — Match places to coordinates</p>
+
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>Geocoding is a lookup against a list somebody compiled, so a coordinate is a citation of that list rather than a fact about the ground.</p>
+<p>Where a service does not recognise a name, it returns the best guess of its own matching rules — and the guess arrives formatted identically to a confident answer. Nothing in the output distinguishes them.</p>
+<p>Which means the gazetteer is a source, and it belongs in your bibliography.</p>
+</details>
+<p>The unmatched list is the useful output of this step. Read it before fixing it.</p>
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>Failures to match come in kinds, and they are not all the same problem.</p>
+<ul>
+<li><strong>The name changed.</strong> Districts were renamed after 1868 and again after 1947. The place exists; the label does not.</li>
+<li><strong>The place is an area, not a point.</strong> A stretch of riverbank, a road, a view across a bay.</li>
+<li><strong>The place is not a place.</strong> Some titles name an imagined or literary site, or a place borrowed from a Chinese model.</li>
+<li><strong>The ground moved.</strong> Edo's shoreline has been reclaimed repeatedly. A location on the water in 1856 is inland now, and a modern coordinate puts it in the wrong relationship to everything around it.</li>
+</ul>
+<p>The fourth is the one that will not announce itself. Everything plots, nothing errors, and the map is quietly wrong.</p>
+</div>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The Sumida's mouth and the whole eastern bayfront of Edo have been filled progressively since the seventeenth century, and heavily since the nineteenth.</p>
+<p>Sites depicted at the water's edge now sit well inland, with several kilometres of later ground between them and the sea. Modern coordinates place them correctly on the modern map and wrongly in relation to the water that the print is about.</p>
+</details>
+<p class="step-label">Step 3 — Plot it and read the density</p>
+
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>You will see clusters. Before interpreting them as anything about the city, work through what else produces clustering.</p>
+<p><strong>The series produces it.</strong> A hundred-view series was planned as a set, with a distribution decided by a publisher for commercial reasons.</p>
+<p><strong>The collection produces it.</strong> Your fifty prints came from institutions that collected unevenly, and their gaps are now your gaps.</p>
+<p><strong>The gazetteer produces it.</strong> Places your list could not match are absent from the map entirely, and they went missing in a pattern.</p>
+<p>Only after those three have been accounted for is what remains a pattern about depiction. Frequently there is something left, and it is worth having.</p>
+</div>
+<p class="step-label">Step 4 — Test the pattern</p>
+<p>The most useful check is comparing your distribution against what you would expect if nothing but the collection were driving it.</p>
+
+<p>Where the two columns track each other, your pattern is the collection's pattern. Where they diverge, you have something to explain, and the divergence is the finding rather than the map.</p>
+<div class="box">
+<span class="box-label">Question</span>
+<p>Your map shows a dense cluster along the Sumida. Is that a fact about Edo, about the series, or about your data?</p>
+<details>
+<summary>Show the answer</summary>
+<p>It cannot be settled from the map. The river was genuinely a centre of the city's life and a subject with deep pictorial standing, so the density is plausible. It is also exactly where a hundred-view series would concentrate, and exactly where surviving impressions are commonest.</p>
+<p>The baseline comparison in step 4 separates the last of those from the first two. Separating series convention from lived geography needs the literature, not the data.</p>
+</details>
+</div>
+<p class="step-label">Step 5 — Locate the viewpoint, not just the place</p>
+<p>Everything so far has answered <em>where is this a picture of</em>. A different question is <em>where was this seen from</em>, and no gazetteer can answer it. A place name gives you a subject; a viewpoint gives you a position, a direction, an angle of view and an implied distance.</p>
+<p>The method is monoplotting. A person marks the same features in the historical image and on a 3D terrain model — six or more correspondence points — and the geometry that reconciles them yields the position from which the scene was rendered, along with the orientation of the view.</p>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>The computation solves for the camera: three numbers for position, three for orientation, plus the field of view. Six degrees of freedom rather than the two a map pin carries.</p>
+<p>It assumes the image obeys a single consistent perspective projection. Given that assumption and enough correspondence points, the position follows from the geometry.</p>
+<p>Where the assumption fails, the solver still returns an answer. It returns the position that minimises the disagreement, and reports how large that disagreement was. The residual is the useful number.</p>
+</details>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The assumption of a single consistent perspective is exactly what an Edo print does not promise.</p>
+<p>Viewpoints are constructed: elevated where no vantage existed, compressed to fit a format, built from earlier images and guidebooks rather than from standing somewhere. A <em>meisho</em> view can combine features that cannot be seen together.</p>
+<p>So a large residual is not necessarily an error in the georeferencing. It can be a measurement of how far the image departs from a position anyone could occupy — which is an art-historical finding, arrived at numerically.</p>
+</details>
+
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>Three things become available that a plotted place name cannot give you.</p>
+<p><strong>Direction.</strong> Two prints of one site, made from opposite sides, are one point on the map from step 3 and two quite different pictures. Orientation separates them.</p>
+<p><strong>Altitude.</strong> Many views sit well above any ground a person could stand on. The number says how far above, which turns an impression into a quantity.</p>
+<p><strong>Residual.</strong> How badly the image resists being fitted to a coherent viewpoint at all. Sorted, this column is a rough index of how conventional a view is — and it should be read against what you already know about each print, not instead of it.</p>
+</div>
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>Which spatial claim are you making? Both are legitimate and they are not interchangeable.</p>
+<dl>
+<dt>Subject location</dt>
+<dd>Where the print is <em>of</em>. Cheap, scalable, resolvable from a title and a gazetteer. Says nothing about how the site was seen.</dd>
+<dt>Viewpoint</dt>
+<dd>Where the print was seen <em>from</em>. Expensive, needs a person per image, and yields direction, height and a measure of its own failure. Does not scale to thousands without help.</dd>
+<dt>Both, recorded separately</dt>
+<dd>The right answer for a corpus you intend to argue from, and the reason a project like this needs volunteers rather than a script.</dd>
+</dl>
+<p class="meta">Collapsing the two into one coordinate column is the commonest way a spatial dataset becomes unusable for the question it was built to answer.</p>
+</div>
+<h2 id="limits">What this cannot tell you</h2>
+<ul>
+<li><strong>It cannot tell you the artist went there.</strong> Many <em>meisho</em> views were made from earlier images, guidebooks and convention. Depiction is not observation.</li>
+<li><strong>It cannot tell you where the viewer stood — until step 5, and then only conditionally.</strong> Monoplotting returns the position that best fits the image, which exists only if the image obeys one consistent perspective. Where it does not, the answer is a fiction with a large residual attached, and the residual is what you report.</li>
+<li><strong>It cannot represent an area as an area.</strong> Anything you plot becomes a point, and the false precision is invisible in the output.</li>
+<li><strong>It cannot show you the historical ground.</strong> Modern coordinates on a modern basemap describe modern Japan. Where the coastline, the rivers or the street pattern have changed, the map is accurate and misleading at once.</li>
+<li><strong>It cannot see places never depicted.</strong> Absence on the map is a fact about the pictorial tradition and the collection, and it will look like a fact about the city.</li>
+</ul>
+<h2 id="own">Use your own materials</h2>
+<ol>
+<li>Bring the cleaned list from module 1. This module assumes the names have already been through a concordance.</li>
+<li>Build your own gazetteer rows for whatever the example one lacks, recording the source of each coordinate in a third column.</li>
+<li>Run step 4 against the full holdings of whichever institutions you drew from. This is the step people skip and the one that keeps the argument honest.</li>
+<li>Georeference a handful of your prints by hand before deciding whether step 5 is worth it at your scale. Ten will tell you what the residuals look like for your material.</li>
+</ol>
+<p>Write down, before you plot, what pattern you expect and what would count as evidence against it. A map is unusually good at confirming whatever you brought to it.</p>
+<div class="box box-close">
+<span class="box-label">What you should now be able to do</span>
+<ul>
+<li>Get place names out of titles and say what the extraction discarded.</li>
+<li>Read a list of geocoding failures as four distinct problems rather than one error.</li>
+<li>Recognise that a point asserts a precision your evidence does not have.</li>
+<li>Test a spatial pattern against the collection that produced it, before treating it as a pattern about the world.</li>
+<li>Tell a subject location from a viewpoint, and say which one your dataset records.</li>
+<li>Read a georeferencing residual as a measurement of how far an image departs from any occupiable position.</li>
+</ul>
+</div>
+<nav class="pager">
+<a href="02-images-and-metadata.html"><span class="nav-label">Previous</span>← 02. Images and metadata</a>
+<a href="../glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+<a href="04-critical-computer-vision.html"><span class="nav-label">Next</span>04. Critical computer vision →</a>
+</nav>
+</main>
+
+<footer>
+  <div class="container">
+    <p>e_tehon, a ThePrintLab project. Module 03, outline.</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code <a href="https://opensource.org/licenses/MIT">MIT</a>. <a href="/#cite">Cite this</a>. <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">Repository</a>. <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
