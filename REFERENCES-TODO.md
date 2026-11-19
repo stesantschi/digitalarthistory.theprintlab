@@ -24,5 +24,9 @@ Status: **open** = no source yet; **check** = source proposed, page and wording 
 - check: Smapshot — which publication to cite for the method (operator: HEIG-VD or EPFL; to confirm).
 - check: camera model (position, orientation, field of view) — Hartley and Zisserman 2004, chapter.
 
+## Guide: Models, maps and counting
+- check: Box 1976 (paraphrase of "all models are wrong"; the exact wording is from Box 1979), Morgan and Morrison 1999, Harley 1989, Drucker 2011 ("capta"), Saldaña 2021 (edition), Krippendorff 2019 (edition and year).
+- check: Edo maps combining pictorial views and routes — Yonemoto 2003, page.
+
 ## Modules 4–6, guide, glossary
 - not yet reviewed.
