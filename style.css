@@ -16,15 +16,15 @@
    ============================================================ */
 
 :root {
-    --paper:      #F4EEDA;
-    --paper-deep: #ECE5CC;
+    --paper:      #F7F6F2;   /* washi white: neutral ground, so the prints carry the warmth */
+    --paper-deep: #EDECE6;
     --sumi:       #211E18;
     --sumi-soft:  #57513F;
     --ai:         #2F4A85;   /* dayflower — the computational operation */
     --ai-deep:    #22375F;
     --sap:        #5F6B36;   /* leaf — the Japanese material */
     --ochre:      #75531B;   /* lizard */
-    --rule:       #D6CDAF;
+    --rule:       #D8D5CB;
     --red:        #A3271F;   /* warning only: the construction notice */
 
     /* One typeface, TeX Gyre Heros, served from this site's own /fonts folder: nothing is fetched from another server.
