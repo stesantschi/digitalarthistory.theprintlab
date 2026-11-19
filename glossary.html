@@ -61,13 +61,13 @@
 <dd>
 <p>A national <a class="term" href="#aggregator">aggregator</a> gathering records from Japanese museums, libraries, archives and universities into one search.</p>
 <p>It inherits its fields from its contributors, so a record found there is generally the contributing institution's record, reshaped. Finding the same claim in Japan Search and at the contributing museum is one claim seen twice.</p>
-<p>It publishes its aggregate as RDF and answers SPARQL queries. On the way in, values for time, place and person are normalised as far as possible and given URIs — which is what makes the whole searchable, and is a decision made on your behalf before you see a record. Module 5 works this directly.</p>
+<p>It publishes its aggregate as RDF and answers SPARQL queries. On the way in, values for time, place and person are normalised as far as possible and given URIs — which is what makes the whole searchable, and is a decision made on your behalf before you see a record. Module 3 works this directly.</p>
 </dd>
 <dt id="georeferencing">Georeferencing</dt>
 <dd>
 <p>Assigning a position on the earth to an image. The simple form matches a place name against a gazetteer and returns a point, which locates the <em>subject</em>.</p>
 <p>The harder form, <em>monoplotting</em>, marks the same features in the image and on a 3D terrain model and solves for the position the scene was rendered from — with direction, height and field of view. That locates the <em>viewpoint</em>, and reports how badly the image resisted being fitted at all.</p>
-<p class="seealso">Module 3 works both. See also <a class="term" href="#meisho">meisho</a>.</p>
+<p class="seealso">Module 4 works both. See also <a class="term" href="#meisho">meisho</a>.</p>
 </dd>
 <dt id="go">Gō <span class="ja">号</span></dt>
 <dd>
@@ -147,7 +147,7 @@
 <dd>
 <p>A note bound to a region of an image rather than placed beside it. The IIIF and W3C annotation models make the binding explicit — this text is about that rectangle on that canvas — so the note travels with the image, can be exported, and can be cited.</p>
 <p>Most display tools put text next to a picture and leave the joining to the reader. For material where what matters is positional — a seal in a corner, a signature at an edge, a line of verse on the facing leaf — that joining is exactly the work a reader new to the material cannot do.</p>
-<p class="seealso">Module 6 treats this as one of two axes on which a display tool can be placed.</p>
+<p class="seealso">Module 7 treats this as one of two axes on which a display tool can be placed.</p>
 </dd>
 <dt id="api">API <span class="ja">応用プログラム interface</span></dt>
 <dd>
@@ -178,7 +178,7 @@
 <dd>
 <p>The museum sector's shared vocabulary for cultural heritage data. Its organising move is to describe <em>events</em> rather than objects: a production, with participants in distinct roles, at a time, in a place. That costs several more statements per claim and lets you say that four people made a print.</p>
 <p><strong>CRMinf</strong> is its extension for argumentation, supplying classes for belief, inference and premise — so an assertion can be recorded as held by someone, on stated grounds, at a given strength. Most vocabularies have no equivalent, which is why provenance of claims is usually improvised.</p>
-<p class="seealso">Module 5 weighs it against schema.org. See also <a class="term" href="#researchspace">ResearchSpace</a>.</p>
+<p class="seealso">Module 3 weighs it against schema.org. See also <a class="term" href="#researchspace">ResearchSpace</a>.</p>
 </dd>
 <dt id="researchspace">ResearchSpace</dt>
 <dd>
@@ -273,7 +273,7 @@
 <dd>
 <p>Two facing leaves seen together. In an early modern Japanese illustrated book the opening, rather than the page, is the composed surface: images routinely run across the gutter, and a design read one leaf at a time is a design cut in half.</p>
 <p>Most viewers show single pages by default, and do so tidily enough that the loss is easy to miss.</p>
-<p class="seealso">Module 6 makes this the first of six conditions.</p>
+<p class="seealso">Module 7 makes this the first of six conditions.</p>
 </dd>
 <dt id="record">Record</dt>
 <dd>
@@ -308,13 +308,13 @@
 <dd>
 <p>The interface an institution wraps around a digitised object: the page-turning window with a zoom control. It reads a <a class="term" href="#manifest">manifest</a> and makes display decisions from it.</p>
 <p>A viewer is persuasive. It presents one copy with a smoothness that suggests completeness, and it shows a contested attribution in the same type as a shelfmark.</p>
-<p>It also brings assumptions about what a book is — page as unit, left to right, image inside a text block — which arrive with the software rather than being chosen. Module 6 holds them against what this material requires.</p>
+<p>It also brings assumptions about what a book is — page as unit, left to right, image inside a text block — which arrive with the software rather than being chosen. Module 7 holds them against what this material requires.</p>
 </dd>
 <dt id="wikidata">Wikidata and Wikibase</dt>
 <dd>
 <p>An openly editable knowledge base and the hub most other datasets point at, which makes a Wikidata identifier the cheapest way for a name to travel between projects.</p>
 <p>What may be added is governed by a notability rule: an item needs a sitelink to a Wikimedia page, or serious publicly available references, or a structural need — being required to make statements on another item more useful. For early modern Japanese material this bites at exactly the point where the field is most interesting, since block cutters, printers and individual prints rarely clear the first condition and depend on external identifiers to clear the second.</p>
-<p><strong>Wikibase</strong> is the same software run as your own instance, with no notability rule, no community and no incoming links. Where your data will not be accepted, this is the project's own suggested alternative, and the trade it represents is the subject of module 5.</p>
+<p><strong>Wikibase</strong> is the same software run as your own instance, with no notability rule, no community and no incoming links. Where your data will not be accepted, this is the project's own suggested alternative, and the trade it represents is the subject of module 3.</p>
 <p class="seealso">Because items can be merged, revised or deleted by others, record the date you reconciled alongside the identifier.</p>
 </dd>
 <dt id="viewingdirection">viewingDirection and behavior</dt>

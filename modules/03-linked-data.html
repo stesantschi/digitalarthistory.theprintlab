@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 03: Linked data — e_tehon</title>
+<meta name="description" content="Publishing your data so that other projects can connect to it: identifiers, Japanese authority files, Wikidata's rules, and attaching a source to every claim.">
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
+<link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/03-linked-data.html">
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="logo" href="/"><svg class="logo-mark" viewBox="130 88 818 818" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M674.3 332.6C674.3 200.4 599.1 128.0 461.5 128.0H170.0V788.0H305.8V552.6H475.1C596.4 552.6 674.3 466.6 674.3 332.6ZM538.5 340.8C538.5 407.8 505.0 439.4 432.6 439.4H305.8V241.2H432.6C505.0 241.2 538.5 272.9 538.5 340.8Z"/><path d="M170 812H357V866H170Z"/><path d="M429 812H854V600H908V866H429Z"/><path d="M318 249h30v30h-30zM318 287h30v30h-30zM318 325h30v30h-30zM318 363h30v30h-30zM318 401h30v30h-30zM356 249h30v30h-30zM356 325h30v30h-30zM356 363h30v30h-30zM356 401h30v30h-30zM394 249h30v30h-30zM394 325h30v30h-30zM394 401h30v30h-30zM432 287h30v30h-30zM432 363h30v30h-30zM470 325h30v30h-30z"/></svg><span class="logo-brand">ThePrintLab</span><span class="logo-rule" aria-hidden="true"></span><span class="logo-site">e_tehon <span class="ja" lang="ja">e_手本</span></span></a>
+    <ul>
+      <li><a href="/start.html">Start</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#modules" aria-current="true">Modules</a></li>
+      <li><a href="/glossary.html">Glossary</a></li>
+      <li><a href="/map.html">Map</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wide">
+<header class="masthead">
+<p class="crumb"><a href="/#modules">Modules</a> / Module 3</p>
+<p class="chip">Module 03</p>
+<h1>Linked data</h1>
+<p class="subtitle">Publishing your data so that other projects can connect to it, with each claim's source attached.</p>
+<ul class="facts">
+<li>~110 min</li>
+<li>requires modules 1 and 2</li>
+<li>Japan Search, Web NDL Authorities, Wikidata, ResearchSpace</li>
+<li>CC BY 4.0</li>
+</ul>
+<p class="meta outline">Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits.</p></header>
+
+<h2 id="question">The research question</h2>
+<div class="starting">
+<span class="box-label">Starting point</span>
+<p>I've built a dataset of two hundred prints. How do I publish it so that someone else's project can use it, and mine can use theirs?</p>
+</div>
+<p>Datasets usually refer to people, places and works by name, and every project spells names differently. Module 1 solved this within one project with a concordance. Linked data solves it between projects: each thing gets a shared identifier, so datasets connect even when their spellings differ.</p>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>Linked data replaces a name with an <a class="term" href="/glossary.html#uri">identifier</a>: a web address that stands for the person, place or work.</p>
+<p>Data is then written as three-part statements (triples): subject, property, object. For example: <em>this print</em>, <em>was designed by</em>, <em>that person</em>. Statements from many sources join up wherever they use the same identifier.</p>
+</details>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>International authority files cover Japanese material unevenly. Major designers have entries; block cutters, printers, minor publishers and most individual works do not.</p>
+<p>Japanese infrastructures fill part of the gap: the <a class="term" href="/glossary.html#arc">ARC</a> databases, <a class="term" href="/glossary.html#japan-search">Japan Search</a>, and the National Diet Library's authority file. Each follows its own data model, so matching across them is always partial. Report what did not match as well as what did.</p>
+</details>
+
+<h2 id="plan">What we will do</h2>
+<p>Give the things in your dataset identifiers. Match them against existing authority files, and count what does not match. Write the relationships as statements. Then attach to each claim where it came from and who disputes it. Finally, decide where any new entries belong.</p>
+
+<p class="step-label">Step 1 — Give your things identifiers</p>
+<p>Give each print, person and place in your dataset a stable web address. A useful identifier never changes, and someone intends to keep it working. Both are commitments about the future, so choose a web domain you will still control in ten years.</p>
+
+<p class="step-label">Step 2 — Match your names against Japanese authorities</p>
+<p>Two Japanese institutions publish their data as linked data that you can query directly. <a href="https://jpsearch.go.jp/">Japan Search</a> combines the holdings of many Japanese museums, libraries and archives <span class="cite-open">(source to add: number of contributing databases)</span>. <a href="https://id.ndl.go.jp/auth/ndla/">Web NDL Authorities</a> publishes the National Diet Library's authority file of names.</p>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>Both answer queries in SPARQL, a query language for linked data. A SPARQL query describes a pattern of statements with gaps, and the database returns every combination of values that fills them.</p>
+<p>An empty result can mean two things: the item is absent, or your pattern does not match how the data is structured. Check the second before concluding the first.</p>
+</details>
+<p>The authority file shows what the library treats as one person, and every written form of the name it has recorded.</p>
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>The variant forms are the most useful field. An authority record exists because a name has several written forms, and it records which forms the library has decided belong to one person: module 1's concordance, built by a national library.</p>
+<p>Look also for links to international identifiers such as Wikidata. A record with both a Japanese and an international identifier connects across borders; a record with one stays within its own system.</p>
+</div>
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>Which authority do you match against? Each covers a different part of the field.</p>
+<dl>
+<dt>Web NDL Authorities</dt>
+<dd>Built for Japanese material, with variant forms and readings. Strong on people who published, thinner on block cutters.</dd>
+<dt>Japan Search</dt>
+<dd>Reaches museums, libraries, archives and universities at once. It standardises some values on the way in (see step 4).</dd>
+<dt>ARC, Ritsumeikan</dt>
+<dd>Built by print researchers: records publisher marks, seals and states. Less often linked outside Japan.</dd>
+<dt>Wikidata</dt>
+<dd>The widest reach, openly editable, and linked from most other datasets. Thin beyond the major names, with rules on what may be added (below).</dd>
+<dt>VIAF, ULAN</dt>
+<dd>Library and museum authorities with editorial review. Narrower, and built around Western conventions of authorship.</dd>
+</dl>
+<p class="meta">Match against more than one, and record each result separately, including the misses. The match rate measures how well an authority covers your material, and is often a key finding.</p>
+</div>
+<div class="box">
+<span class="box-label">Before adding to Wikidata</span>
+<p>A Wikidata item must meet at least one of three conditions <a class="cite" href="#src-wikidata-notability">(Wikidata: Notability)</a>: it links to a Wikimedia page, such as a Wikipedia article; it describes a clearly identifiable entity documented in serious, public sources; or other items need it to make their statements useful.</p>
+<p>Major designers meet the first condition. A block cutter, a printer, a minor publisher or a single print usually needs the second or third. In practice, an external identifier such as an ARC record, an NDL authority or a published catalogue meets the second. Items without one are often proposed for deletion.</p>
+<p>The rules are under discussion <span class="cite-open">(source to add)</span>; check the current policy. For data outside the rules, Wikibase lets you run the same software as your own instance: no notability rule, but also no community and fewer incoming links.</p>
+</div>
+<div class="box">
+<span class="box-label">Worked case: the notability rule</span>
+<p>Apply the three conditions to the 103 Hokusai drawings for an unpublished encyclopaedia, acquired by the British Museum in 2020 (see module 2).</p>
+<p><strong>The set</strong> passes easily: it has an exhibition, a catalogue and a Wikipedia article.</p>
+<p><strong>Each drawing</strong> passes on the second condition, because the Museum's catalogue and a published book document it <a class="cite" href="#src-clark2021">(Clark 2021)</a>. The same 103 sheets in a regional collection without a monograph might fail.</p>
+<p><strong>The block cutter</strong> has no entry to make: the book was never published, so no block cutter worked on it.</p>
+<p class="meta">Notability measures how much has already been written about something. That follows the geography of scholarship as much as importance.</p>
+</div>
+
+<p class="step-label">Step 3 — Write the statements</p>
+<p>Express your data as statements, choosing a vocabulary: a published set of properties such as <em>creator</em> or <em>dateCreated</em>.</p>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>A print has <a class="term" href="/glossary.html#four-hands">four makers</a>: designer, block cutter, printer and publisher. A single <code>creator</code> field holds one of them, usually the designer, which repeats the cataloguing convention examined in module 2. Vocabularies that record roles, such as CIDOC-CRM, take more work and can record all four.</p>
+</details>
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>Which vocabulary? Each decides what you can say.</p>
+<dl>
+<dt>schema.org</dt>
+<dd>Used by Japan Search and read by search engines <a class="cite" href="#src-schema">(schema.org)</a>. Made for describing things on the web, with one value per field.</dd>
+<dt>CIDOC-CRM</dt>
+<dd>Made by and for museums <a class="cite" href="#src-cidoc">(CIDOC CRM)</a>. Organised around events: a production, with participants in distinct roles, at a time and place. More statements per claim, and it can record what happened.</dd>
+<dt>CIDOC-CRM with CRMinf</dt>
+<dd>An extension for argument <a class="cite" href="#src-crminf">(CRMinf)</a>: belief, inference, premise, and who holds which view on what grounds. It treats an assertion as something with an author (step 4).</dd>
+<dt>IIIF plus your own fields</dt>
+<dd>Enough where the images are central and the argument lives in prose. Others cannot query your own fields.</dd>
+</dl>
+</div>
+
+<p class="step-label">Step 4 — Publish each claim with its source</p>
+<p>Most of what a dataset holds are claims with sources, and some are disputed. This step attaches to each claim who made it, on what basis, and who disagrees.</p>
+<p>Start with what an aggregator does before you see its data. Japan Search standardises time, place and person on the way in, gives them identifiers, and links them to international hubs <span class="cite-open">(source to add: Japan Search documentation)</span>. That makes the data searchable, and it is a large interpretive step taken on your behalf.</p>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>Standardising time for early modern Japan means converting era names and reign years to one calendar. Standardising persons means deciding that two written forms of a name are one person. Modules 1 and 2 treat both as decisions; here they arrive already made.</p>
+</details>
+<p>Both the standardised value and the value the contributing institution supplied are usually in the data. Query both, so you can see where standardisation changed something.</p>
+<div class="box">
+<span class="box-label">How to read this</span>
+<p>Common vocabularies make it easy to state a date and hard to state where it came from. Saying "this date comes from one printed catalogue, rests on an inference, and has been contested in print" takes deliberate modelling in every common schema. CIDOC-CRM can record it, with more statements per claim; schema.org has no clear place for it.</p>
+<p>Published without its source, a claim looks like an observation to everyone downstream. That is how a date resting on one mid-century catalogue appears, unqualified, in a dozen records.</p>
+</div>
+<div class="box">
+<span class="box-label">Worked case: what a record should carry</span>
+<p>The British Museum drawings again. Their maker field changed from Katsushika Issai in a 2019 auction catalogue to Hokusai on acquisition in 2020, and their dating has since widened from 1829 to the 1820s–1840s (module 2).</p>
+<p>A schema.org record keeps almost none of this: <code>creator</code> takes one value, with no date and no author. The seventy years in which the drawings were absent from any record has no field at all.</p>
+</div>
+<div class="box">
+<span class="box-label">Where this has been worked out</span>
+<p><a href="https://researchspace.org/">ResearchSpace</a>, built at the British Museum and released as open source, treats a research assertion as an object in its own right: made by someone, on a stated basis, which others can strengthen or weaken <a class="cite" href="#src-researchspace">(ResearchSpace)</a>.</p>
+<p>A running instance holds material close to this module. <a href="https://latehokusai.researchspace.org/resource/rsp:Start">Late Hokusai</a> brings together the artist's late work from the British Museum, the Metropolitan Museum and the Freer|Sackler, including the 103 drawings: module 2's comparison across institutions, built as linked data. It is a published version, fixed at its build date, which is also how this practice book publishes.</p>
+<p>Its data model records the grounds of each assertion: direct observation, adopting someone else's belief, or inference from premises that are themselves recorded. The vocabulary is CIDOC-CRM with CRMinf. Reasoning is modelled as strengthening or weakening a hypothesis, which matches how an art-historical argument runs.</p>
+<p class="meta">Read its model before designing your own source fields. Adopt the platform only if the argument is central to your project, since it means running a system as well as publishing a file.</p>
+</div>
+<div class="box">
+<span class="box-label">Question</span>
+<p>Open a drawing in Late Hokusai and note its address. Does that address return data to a program, or only a page to a person?</p>
+<details>
+<summary>Show the answer</summary>
+<p>Test it; it takes two minutes and decides whether the address can be used as linked data.</p>
+<p>Request the address asking for data (RDF) instead of a web page. Any tool that lets you set the <code>Accept</code> header will do. Compare the result with what the browser shows.</p>
+<p>Some interfaces build the page in the browser, so a program following the link receives an empty page. Then the data exists, but its addresses cannot be used as linked data. Record what you find, with the date.</p>
+</details>
+</div>
+<div class="box">
+<span class="box-label">Question</span>
+<p>Your dataset contains a date you believe is wrong. Do you publish it?</p>
+<details>
+<summary>Show the answer</summary>
+<p>Yes, with its source and your objection attached. Then a later reader can follow the disagreement and decide.</p>
+</details>
+</div>
+
+<p class="step-label">Step 5 — Contribute what is missing</p>
+<p>Steps 1 to 4 read and connect existing data. This step adds to a resource other people depend on. An entry you create circulates under your name, and others will copy it and cite it as a source.</p>
+<details class="side side-machine">
+<summary><span class="side-label">The computational operation</span></summary>
+<p>Creating an item makes a new identifier that works immediately; community review comes afterwards.</p>
+<p>The identifier keeps working, but its content can change: items are merged, split, revised and deleted. A merge leaves a redirect to an item that may differ from the one you cited. Record the date you linked.</p>
+</details>
+<details class="side side-japan">
+<summary><span class="side-label">The Japanese material</span></summary>
+<p>The entries you will want to add are those the field covers least: block cutters, printers, minor publishers, the poets in a <em>kyōka</em> anthology, single sheets. They are also the most likely to be challenged, because their evidence is often in Japanese-language scholarship and specialist databases. Attaching an ARC or NDL identifier is the most effective support.</p>
+</details>
+<div class="choice">
+<span class="box-label">Choice point</span>
+<p>Where does a new entry go?</p>
+<dl>
+<dt>Wikidata</dt>
+<dd>Free, linked and reused at once. Subject to the notability rule, editable by anyone, and outside your control once saved. For entities that meet the rule and that you want other projects to find.</dd>
+<dt>Your own Wikibase</dt>
+<dd>Your rules and your vocabulary, with no community and fewer incoming links, and a system to maintain. For material other resources will not accept, if you can keep it running.</dd>
+<dt>A specialist authority</dt>
+<dd>Proposing an entry to ARC, NDL or a subject register is slower, and the result has review behind it. For entities in a field that already has a keeper.</dd>
+<dt>Your own published dataset</dt>
+<dd>The quickest option and often the right one. A documented concordance with a DOI is a citable contribution that others can match against freely.</dd>
+</dl>
+</div>
+<div class="box">
+<span class="box-label">Before you create an entry</span>
+<p><strong>Search thoroughly.</strong> The entity may exist under another romanisation, or in Japanese script only. A duplicate splits the links that should meet.</p>
+<p><strong>Give a source for every statement.</strong> Items without external identifiers or cited sources are proposed for deletion.</p>
+<p><strong>Mark what is uncertain.</strong> Wikidata has ranks and qualifiers for this. Use them for a contested date.</p>
+<p><strong>Record what you did:</strong> which items you created, when, and from which sources, in your project's documentation.</p>
+<p><strong>Expect edits.</strong> If someone changes your entry wrongly, answer with sources on the discussion page.</p>
+</div>
+<div class="box">
+<span class="box-label">Question</span>
+<p>You have found a block cutter named in a colophon, absent from every authority file. Should you create a Wikidata item?</p>
+<details>
+<summary>Show the answer</summary>
+<p>It depends on what the item would do. If it will carry statements about works that are themselves described (this person cut these blocks for that book), it meets the third condition and is useful.</p>
+<p>If it is one name from one colophon, publish it in your own dataset with the colophon cited. It stays available for matching, carries its evidence, and waits for more.</p>
+</details>
+</div>
+
+<h2 id="limits">What this cannot tell you</h2>
+<ul>
+<li><strong>Which side of a disagreement is right.</strong> Two linked datasets that disagree now disagree in a form a program can detect. That is progress; resolving it is scholarship.</li>
+<li><strong>Coverage that is missing.</strong> Where the authorities are thin for Japanese material, links are thin too, and on Wikidata the rules may limit what you can add.</li>
+<li><strong>Whether a cited entry stays the same.</strong> Openly edited items change. Record the date you linked alongside the identifier.</li>
+<li><strong>What standardisation removed.</strong> Query both the standardised and the original value to see it.</li>
+<li><strong>Everything you know.</strong> Every vocabulary decides what can be said, according to the material its makers had in view.</li>
+<li><strong>Reuse.</strong> Publishing well makes reuse more likely; others decide whether it happens.</li>
+<li><strong>Addresses that outlive their owner.</strong> An identifier works only while someone keeps it running, and institutional services do close <span class="cite-open">(example and source to add)</span>. Choose a domain you will control, and expect some outgoing links to break.</li>
+</ul>
+
+<h2 id="own">Use your own materials</h2>
+<ol>
+<li>Create identifiers under a domain you own.</li>
+<li>Match against at least two authorities, one Japanese and one international, and record both results, including the misses.</li>
+<li>For every date and attribution, add a field saying who stated it and where. Even as free text in a spreadsheet, this is the most valuable column in the file.</li>
+<li>Publish the data, your concordance from module 1, and a note on what the collection leaves out.</li>
+<li>Before designing your own source fields, read how CRMinf models belief and inference.</li>
+</ol>
+<div class="box box-close">
+<span class="box-label">What you should now be able to do</span>
+<ul>
+<li>Create stable identifiers and say what they commit you to.</li>
+<li>Match names against an authority file and report the misses as a finding.</li>
+<li>Write data as statements, and see where the vocabulary decides what you can say.</li>
+<li>Attach a source and a dissent to a claim, and explain why common schemas make that hard.</li>
+<li>Decide where a new entry belongs, and what creating one obliges you to do.</li>
+<li>Name a vocabulary that models assertion, belief and inference, and say what adopting it costs.</li>
+</ul>
+</div>
+
+<h2 id="sources">Sources</h2>
+<ul class="sources">
+<li id="src-cidoc">CIDOC CRM Special Interest Group. <em>CIDOC Conceptual Reference Model.</em> <a href="https://cidoc-crm.org/">cidoc-crm.org</a>.</li>
+<li id="src-clark2021">Clark, Timothy. <em>Hokusai: The Great Picture Book of Everything.</em> London: British Museum Press, 2021.</li>
+<li id="src-crminf">CIDOC CRM Special Interest Group. <em>CRMinf: An Extension of CIDOC CRM to Support Argumentation.</em> Version 1.2.1. <a href="https://cidoc-crm.org/crminf/">cidoc-crm.org/crminf</a>.</li>
+<li id="src-researchspace">ResearchSpace. <a href="https://researchspace.org/">researchspace.org</a>.</li>
+<li id="src-schema">schema.org. “creator.” <a href="https://schema.org/creator">schema.org/creator</a>.</li>
+<li id="src-wikidata-notability">Wikidata. “Wikidata:Notability.” <a href="https://www.wikidata.org/wiki/Wikidata:Notability">wikidata.org/wiki/Wikidata:Notability</a>. Accessed 19 November 2026.</li>
+</ul>
+<p class="meta">All sources are collected on the <a href="/references.html">references page</a>.</p>
+<div class="box"><span class="box-label">Status</span><p>Outline. The worked example and its code are being prepared; this page gives the question, the steps and their limits.</p></div>
+<nav class="pager">
+<a href="/modules/02-images-and-metadata.html"><span class="nav-label">Previous</span>← 02. Images and metadata</a>
+<a href="/glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+<a href="/modules/04-spatial-research-design.html"><span class="nav-label">Next</span>04. Spatial research design →</a>
+</nav>
+</main>
+
+<footer>
+  <div class="container">
+    <p>e_tehon, a ThePrintLab project. Module 03, outline.</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code <a href="https://opensource.org/licenses/MIT">MIT</a>. <a href="/#cite">Cite this</a>. <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">Repository</a>. <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
