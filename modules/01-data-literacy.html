@@ -65,7 +65,7 @@
 <summary><span class="side-label">The computational operation</span></summary>
 <p><strong>Encoding</strong> is the way a file stores text as numbers. Modern files use Unicode. Older Japanese exports often use Shift-JIS.</p>
 <p>If the wrong encoding is assumed, Japanese text turns into meaningless symbols: <span class="ja">文字化け</span>, <em>mojibake</em>. Open the file again as <code>shift_jis</code> or <code>cp932</code> before deciding it is damaged.</p>
-<p>The encoding describes the institution's export system, not the print.</p>
+<p>The encoding describes the institution's export system. It tells you nothing about the print.</p>
 </details>
 <p>The columns already tell you something. A file with separate fields for the artist in Latin script and in Japanese script reflects a decision to treat them as two kinds of information.</p>
 <div class="box">
@@ -88,7 +88,7 @@
 <summary><span class="side-label">The computational operation</span></summary>
 <p>Normalisation applies one judgement to every row at once, and afterwards the differences it removed are no longer visible.</p>
 <p>Unicode stores some characters in more than one form: full-width Ａ and half-width A look alike but are different characters. <code>NFKC</code> is a standard way of merging such forms <a class="cite" href="#src-uax15">(Unicode, UAX #15)</a>. It goes further than most people expect: it also turns ① into 1.</p>
-<p>Using it means stating that these differences carry no evidence in your material. That is often true, and worth saying explicitly.</p>
+<p>Using it means stating that these differences carry no evidence in your material. That is often true. Say so explicitly.</p>
 </details>
 <div class="choice">
 <span class="box-label">Choice point</span>

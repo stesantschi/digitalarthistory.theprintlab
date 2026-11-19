@@ -52,14 +52,14 @@
     <p>I want to put a book online so people can read it. Which viewer do I use, and what will it do to the book?</p>
   </div>
 
-  <p>The first half of that question has easy answers and the second half decides whether they are the right ones. A display tool is not a window. It is a set of assumptions about what a book is, built by people who mostly had a different kind of book in mind, and every one of those assumptions arrives with the software rather than being chosen.</p>
+  <p>The second half of the question decides the first. Every display tool carries assumptions about what a book is, made by people who mostly had a different kind of book in mind. You inherit those assumptions when you choose the tool.</p>
 
-  <p>This module works in the other direction. State what the object requires, then hold each tool against that list, then build something and say plainly what it cost.</p>
+  <p>This module works in three moves: state what the object requires, test each tool against that list, then build something and record what the tool decided.</p>
 
   <details class="side side-japan">
     <summary><span class="side-label">The Japanese material</span></summary>
     <p>Most viewers were designed for codices read left to right, in which the page is the unit and the image sits inside a text block.</p>
-    <p>An early modern Japanese illustrated book meets almost none of that. It reads right to left, its images routinely run across the gutter so that the opening is the composed surface, it comes in multi-volume sets that are one work, and its text and image share the sheet rather than occupying separate zones.</p>
+    <p>An early modern Japanese illustrated book meets almost none of that. It reads right to left, its images routinely run across the gutter so that the opening is the composed surface, it comes in multi-volume sets that are one work, and its text and image share the same sheet.</p>
   </details>
 
 
@@ -71,7 +71,7 @@
     <li><h3><span class="num">01</span>Direction: the book reads right to left</h3>
       <p>Including the direction of paging, the position of the first leaf, and which way an arrow should point. If the manifest does not state the direction, the viewer uses its default: left to right.</p></li>
     <li><h3><span class="num">02</span>Opening: the opening is the unit</h3>
-      <p>Designs are composed across the opening, not the page. In pouch binding (<em>fukurotoji</em>) each leaf is one sheet folded at the fore-edge, so the two halves of an opening come from two different sheets, joined at the gutter. A viewer that shows single pages splits the composition.</p></li>
+      <p>Designs are composed across the opening, the two facing pages. In pouch binding (<em>fukurotoji</em>) each leaf is one sheet folded at the fore-edge, so the two halves of an opening come from two different sheets, joined at the gutter. A viewer that shows single pages splits the composition.</p></li>
     <li><h3><span class="num">03</span>Surface: text and image share it</h3>
       <p>There is no separate caption zone to put a transcription in, and treating the text as metadata about the image mistakes what the sheet is doing.</p></li>
     <li><h3><span class="num">04</span>Dispersal: one book, many copies</h3>
@@ -85,7 +85,7 @@
   <p class="meta">This list was worked out in the October 2026 workshop (see <a href="#workshop">below</a>). It is still a draft to argue with: replacing it with your own, for your own material, is the first exercise of the module.</p>
 
 
-  <p class="step-label">Before you start — Find the book and its manifest</p>
+  <p class="step-label">Before you start — Find the book and its Manifest</p>
 
   <p>Find your book in at least two repositories and record, for each, what it says: the title in the record and the title on the book, where the date comes from, which volumes are held, and the address of the IIIF Manifest. Then open the book in each repository's own viewer and note what it does well and where it goes wrong.</p>
 
@@ -162,13 +162,13 @@
     <summary><span class="side-label">The computational operation</span></summary>
     <p><code>viewingDirection</code> takes one of four values and tells a viewer which way the sequence runs. <code>right-to-left</code> is the one this material needs.</p>
     <p>The behaviour field says how to group: <em>paged</em> for a book shown as openings, <em>continuous</em> for a scroll, <em>individuals</em> for unrelated sheets. Individual canvases can be marked <em>non-paged</em>, which is how covers and colour targets are kept out of the pairing.</p>
-    <p>Where these are absent a viewer applies its own defaults, which are almost always left to right and single pages. Nothing errors. The book is simply displayed backwards.</p>
+    <p>Where these are absent a viewer applies its own defaults, which are almost always left to right and single pages. The viewer shows no error, and the book appears backwards.</p>
   </details>
 
   <div class="box">
     <span class="box-label">How to read this</span>
-    <p>An absent <code>viewingDirection</code> is the commonest finding, and it is not a small one. It means the institution has published a book without saying which way it reads, and every viewer that renders it will guess the same wrong way.</p>
-    <p>Note also what a stated value does not do. Declaring <code>paged</code> asks a viewer to pair leaves; it does not say <em>which</em> leaves pair, and an odd canvas near the front — a cover, a title slip — offsets every opening after it. Condition 2 fails silently from a single unmarked sheet.</p>
+    <p>The commonest finding is a missing <code>viewingDirection</code>. The institution has published the book without saying which way it reads, so every viewer guesses, and guesses left to right.</p>
+    <p>A stated value has limits too. Declaring <code>paged</code> asks a viewer to pair leaves, but leaves the choice of pairs to the viewer. One extra image near the front, such as a cover or a title slip, shifts every opening after it. A single unmarked sheet is enough to break condition 2.</p>
   </div>
 
   <p>Three more fields deserve the same scrutiny. <code>metadata</code> carries artist, date and format, which look settled once they travel with the image: check them against the book. <code>items</code> lists the pages, and a library holding volumes 2 and 5 of fifteen may list just those two, which a viewer then joins as if consecutive. <code>rights</code> says what may be reproduced. In version 2 Manifests, <code>items</code> is called <code>sequences</code> and <code>behavior</code> is <code>viewingHint</code>.</p>
@@ -176,13 +176,13 @@
 
   <p class="step-label">Step 2 — Place the tools on two axes</p>
 
-  <p>Tools come and go, so a list of them dates within a year. Two questions do not date, and every display tool answers both whether or not its makers noticed.</p>
+  <p>Tools change every year. Two questions stay the same, and every display tool answers both.</p>
 
   <h3>Who decides the order?</h3>
 
-  <p>At one end the author does: a sequence is composed, and the reader follows it. At the other the reader does: everything is available, and the arrangement offers routes rather than a path.</p>
+  <p>At one end the author decides: a sequence is composed, and the reader follows it. At the other the reader decides: everything is available, and the arrangement offers several routes.</p>
 
-  <p>Neither end is better and both are arguments. A composed sequence is a claim about how the material should be understood, and it can be checked against the material — which makes it scholarship. An open arrangement declines to make that claim, which is honest about the limits of your authority and leaves a visitor to construct a reading you will never see, from an arrangement you nonetheless built.</p>
+  <p>Both ends are arguments. A composed sequence claims how the material should be understood, and readers can check that claim against the material, which makes it scholarship. An open arrangement leaves the reading to the visitor, who builds it from an arrangement you still made.</p>
 
   <details class="side side-machine">
     <summary><span class="side-label">The computational operation</span></summary>
@@ -195,7 +195,7 @@
 
   <p>Three arrangements, in increasing order of difficulty and of usefulness.</p>
 
-  <p><strong>Beside.</strong> A caption, a metadata panel, a paragraph next to a picture. The commonest, and the reader does the joining, which for an unfamiliar script or an iconography they do not know means the joining does not happen.</p>
+  <p><strong>Beside.</strong> A caption, a metadata panel, a paragraph next to a picture. The commonest arrangement. The reader has to connect text and image, which is hard with an unfamiliar script or iconography.</p>
 
   <p><strong>Over.</strong> The text moves the view: a narrative step pans and zooms to the part being discussed. The reader is shown where to look.</p>
 
@@ -260,9 +260,9 @@
 
   <div class="box">
     <span class="box-label">How to read this</span>
-    <p>Look at the bottom rows. A 3D exhibition space gives a visitor real agency — walk, turn, approach, choose what to look at next — and it does so by putting the work on a wall.</p>
-    <p>For a hanging scroll or a print that is a reasonable metaphor. For a book it is a category error performed convincingly. The object becomes a picture, frozen at one opening; the thing a reader would actually do with it, which is turn it, is the one action the room does not offer. Spatial agency has replaced bibliographic agency, and the trade is invisible because the room looks like a place where art is properly shown.</p>
-    <p>That is worth knowing rather than avoiding. A virtual room communicates <em>exhibition</em> to an audience that would not open a IIIF viewer, and Kunstmatrix runs an education tier with role-based collaboration, which suits a group of students building something together. Use it for what it does. Say what it cost.</p>
+    <p>Look at the bottom rows. A 3D exhibition space lets a visitor walk, turn, approach and choose what to look at next, and it does so by putting the work on a wall.</p>
+    <p>That suits a hanging scroll or a print. A book becomes a picture, fixed at one opening, and the reader loses the one action a book invites: turning the page. The room trades the freedom to turn pages for the freedom to walk, and because it looks like a gallery, the trade is easy to miss.</p>
+    <p>A virtual room still has uses. It reads as an exhibition to an audience that would never open a IIIF viewer, and Kunstmatrix offers an education tier for groups of students working together. Use it for that, and state what it costs the book.</p>
   </div>
 
   <div class="choice">
@@ -270,11 +270,11 @@
     <p>How much do you decide for the reader?</p>
     <dl>
       <dt>Compose the sequence</dt>
-      <dd>You make an argument, in order, and it can be evaluated. The reader sees what you chose and nothing else, and cannot check you against the rest.</dd>
+      <dd>You make an argument in order, and readers can evaluate it. They see only what you chose, so they cannot check it against the rest.</dd>
       <dt>Arrange and let them browse</dt>
-      <dd>The reader finds their own way, and finds things you did not think to say. Nothing is argued, and an arrangement that argues nothing still arranges.</dd>
+      <dd>Readers find their own way, and find things you did not think to say. You make no argument, though the arrangement still shapes what they see.</dd>
       <dt>Both, marked as different</dt>
-      <dd>A guided path through eight objects, with the whole collection reachable beside it. More work, and the only version that is honest about which parts are your claim.</dd>
+      <dd>A guided path through eight objects, with the whole collection beside it. More work, and the clearest about which parts are your claim.</dd>
     </dl>
     <p class="meta">The third is what a good exhibition catalogue has always been: an essay, and a checklist, bound together and distinguishable.</p>
   </div>
@@ -295,7 +295,7 @@
     </tbody>
   </table>
 
-  <p>Keep the completed table. A comparison of display tools against a stated list of conditions, for a specific kind of object, is publishable in its own right — and almost nobody writes them, because it requires knowing the object well enough to state the conditions first.</p>
+  <p>Keep the completed table. A comparison of display tools against stated conditions, for one kind of object, is publishable in its own right. It is rare, because it requires knowing the object well enough to state the conditions.</p>
 
   <p>Add four practical tests: can you zoom far enough to see block wear, does it show the date and the rights, does a shared link work for someone else, and which device and browser did you use? Then note what it got wrong.</p>
 
@@ -303,12 +303,12 @@
 
   <p>The route that works on any machine with a browser, including a locked one, uses an open-source template that builds itself on GitHub.</p>
 
-  <p><strong>CollectionBuilder</strong> generates a collection site from a metadata spreadsheet and a folder of files. Two of its templates need nothing installed. <em>CollectionBuilder-Sheets</em> reads a published Google Sheet directly, so a group can prototype together and see the effect of a metadata change immediately. <em>CollectionBuilder-GH</em> is copied with a single button, takes a CSV, and publishes through GitHub Pages — no software installation, and small collections only, since a repository caps at 1&nbsp;GB.</p>
+  <p><strong>CollectionBuilder</strong> generates a collection site from a metadata spreadsheet and a folder of files. Two of its templates need nothing installed. <em>CollectionBuilder-Sheets</em> reads a published Google Sheet directly, so a group can prototype together and see the effect of a metadata change immediately. <em>CollectionBuilder-GH</em> is copied with a single button, takes a CSV, and publishes through GitHub Pages , with no software to install. It suits small collections, since a repository is limited to 1&nbsp;GB.</p>
 
   <div class="box">
     <span class="box-label">How this maps onto the modules</span>
     <p>The spreadsheet the template asks for is the output of module 1. Its columns are decisions of the kind module 2 examined. If your material has coordinates, they come from module 3; if it has identifiers, from module 5.</p>
-    <p>Which is the point of putting this module last. An exhibition is a way of publishing decisions already made, and building one before making them is how a site ends up asserting things nobody chose.</p>
+    <p>That is why this module comes last. An exhibition publishes decisions made earlier. Build it after making them, so that the site asserts only what you chose.</p>
   </div>
 
   <ol class="numbered">
@@ -343,8 +343,8 @@
   <div class="box">
     <span class="box-label">How to read this</span>
     <p>Everything on the finished site was chosen: the order of items, what counts as one item, which leaf appears as the thumbnail, what the title says, which fields are shown and which are held back, and whether a set of volumes appears as one thing or several.</p>
-    <p>A visitor sees none of that as choices. They see a collection, arranged, with the authority that arrangement carries — the same flattening module 2 found in a catalogue record, now performed by you.</p>
-    <p>The note is the remedy, and it is cheap. It is also the part that makes the exhibition a scholarly object rather than a display.</p>
+    <p>A visitor sees a finished collection and none of these choices. The arrangement carries authority, as a catalogue record does in module 2.</p>
+    <p>The note fixes this, and it is quick to write. It also turns the exhibition into a scholarly object.</p>
   </div>
 
   <p>Keep a record of what you built: the share code for Storiiies, the Manifest address and exported workspace for Mirador, the URL for StoryMapJS. Then present it in three minutes: a hook from one visible detail, the problem the tool could not render, the display as evidence, and what it means for anyone showing a book like yours.</p>
@@ -378,11 +378,11 @@
   <h2 id="limits">What this cannot tell you</h2>
 
   <ul>
-    <li><strong>It cannot show you the book.</strong> Weight, paper, the sound of a page, the size in the hand, the order in a box. A display is a representation and it is confident in a way the object never is.</li>
-    <li><strong>It cannot recover what digitisation discarded.</strong> A gutter photographed as two separate leaves cannot be rejoined by a viewer, and no setting brings back a foldout opened flat.</li>
-    <li><strong>It cannot make a viewer honour a condition its designers did not consider.</strong> Where a tool fails on this material, that is a finding about the tool, and reporting it is more useful than working around it quietly.</li>
-    <li><strong>It cannot tell you whether the arrangement is fair.</strong> Sequence is argument. Only you can say what yours is arguing.</li>
-    <li><strong>It cannot give a reader agency it has not been built to give.</strong> Whether someone can leave your path, compare two copies, or read a note attached to a region follows from the tool's data model, not from a setting. Choosing the tool decides it.</li>
+    <li><strong>The book itself.</strong> Weight, paper, the sound of a page, the size in the hand, the order in a box. A display represents the book, and looks more certain than the object.</li>
+    <li><strong>What digitisation discarded.</strong> A gutter photographed as two separate leaves cannot be rejoined by a viewer, and no setting brings back a foldout opened flat.</li>
+    <li><strong>Conditions the viewer's designers did not consider.</strong> Where a tool fails on this material, that is a finding about the tool. Report it.</li>
+    <li><strong>Whether the arrangement is fair.</strong> Sequence is argument. Only you can say what yours is arguing.</li>
+    <li><strong>Freedoms the tool was not built to give.</strong> Whether readers can leave your path, compare two copies, or read a note attached to a region depends on the tool's data model. Choosing the tool decides it.</li>
   </ul>
 
 
@@ -390,7 +390,7 @@
 
   <ol>
     <li>Practise first on one of the <a href="#practice">eight test books</a>, then move to your own.</li>
-    <li>Rewrite the six conditions for your own book. Cut any that do not apply and add what is missing; the list is the module's real deliverable.</li>
+    <li>Rewrite the six conditions for your own book. Cut what does not apply and add what is missing. This list is the module's main result.</li>
     <li>Run step 1 against a manifest for your material and record what the two fields say.</li>
     <li>Place your candidate tools on the two axes, then fill in the six-condition table for the two that survive.</li>
     <li>Build a small exhibition of ten items and write the note in step 6 before you show anyone.</li>
@@ -402,7 +402,7 @@
       <li>Find a book's IIIF Manifest, and record where repositories disagree about it.</li>
       <li>State what a particular kind of book requires of a display tool, before choosing one.</li>
       <li>Read the fields in a manifest that govern reading direction and pairing, and recognise their absence as a finding.</li>
-      <li>Place a display tool on two axes — who decides the order, and how the text meets the image — and say what each position costs.</li>
+      <li>Place a display tool on two axes (who decides the order, and how the text meets the image) and say what each position costs.</li>
       <li>Hold a viewer against a list of conditions and report where it fails.</li>
       <li>Publish a small exhibition from a spreadsheet, and say in writing what the arrangement decided.</li>
       <li>Write a caption for a reader new to the book, and present a display in three minutes.</li>
