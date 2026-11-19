@@ -6,10 +6,11 @@
 /* ============================================================
    Reading Against the Record — digitalarthistory.theprintlab
    
-   Palette sampled from Utamaro, Ehon mushi erabi (1788):
-   the tsuyukusa opening with snake and lizard. Paper, sap green,
-   dayflower blue, the lizard's ochre, sumi. The blue is pushed
-   a little for screen legibility; the hue is the print's.
+   Palette: washi-white ground and sumi ink, with three accents,
+   one meaning each. Edo purple (Edo-murasaki) for the Japanese
+   material; Prussian blue for the
+   computational operation; vermilion, the colour of a seal, for a
+   decision you make. Blue and vermilion are ThePrintLab's colours.
    
    No JavaScript anywhere on this site. Every page is HTML and
    this one stylesheet.
@@ -20,10 +21,10 @@
     --paper-deep: #EDECE6;
     --sumi:       #211E18;
     --sumi-soft:  #57513F;
-    --ai:         #2F4A85;   /* dayflower — the computational operation */
-    --ai-deep:    #22375F;
-    --sap:        #5F6B36;   /* leaf — the Japanese material */
-    --ochre:      #75531B;   /* lizard */
+    --ai:         #1D4A73;   /* Prussian blue, lightened from ThePrintLab’s #0E3150 so it reads apart from sumi: the computational operation */
+    --ai-deep:    #0A2338;
+    --sap:        #5B3A84;   /* Edo purple (Edo-murasaki): the Japanese material */
+    --ochre:      #B8301B;   /* vermilion (ThePrintLab), the colour of a seal: a decision you make */
     --rule:       #D8D5CB;
     --red:        #A3271F;   /* warning only: the construction notice */
 
@@ -551,16 +552,16 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
     margin-bottom: 0;
     line-height: 1.4;
 }
-/* Sap green for what the material requires, dayflower blue for what the
-   operation decides. The two pigments from the print, each doing one job. */
+/* Edo purple for what the material requires, Prussian blue for what the
+   operation decides, each doing one job. */
 .side-japan  { color: var(--sap); }
 .side-machine { color: var(--ai); }
 .side-japan .side-label,  .side-japan > summary::after  { color: var(--sap); }
 .side-machine .side-label, .side-machine > summary::after { color: var(--ai); }
 /* Open, the panel gets a ground of its own colour at low strength, so the
    margin reads as a second voice rather than a footnote. */
-.side-japan[open]  { background: rgba(95, 107, 54, 0.07); }
-.side-machine[open] { background: rgba(47, 74, 133, 0.06); }
+.side-japan[open]  { background: rgba(91, 58, 132, 0.06); }
+.side-machine[open] { background: rgba(29, 74, 115, 0.05); }
 .side[open] > summary { padding-top: 0.5rem; }
 .side p, .side li { color: var(--sumi-soft); }
 
