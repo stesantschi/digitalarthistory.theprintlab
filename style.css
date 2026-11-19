@@ -17,15 +17,15 @@
    ============================================================ */
 
 :root {
-    --paper:      #E8ECEF;   /* blue-grey paper: a calm ground, so the prints carry the warmth */
-    --paper-deep: #DCE2E7;
+    --paper:      #EEF1F4;   /* pale indigo: a calm ground, so the prints carry the warmth */
+    --paper-deep: #E3E8ED;
     --sumi:       #211E18;
     --sumi-soft:  #57513F;
     --ai:         #1D4A73;   /* Prussian blue, lightened from ThePrintLab’s #0E3150 so it reads apart from sumi: the computational operation */
     --ai-deep:    #0A2338;
     --sap:        #5B3A84;   /* Edo purple (Edo-murasaki): the Japanese material */
     --ochre:      #B8301B;   /* vermilion (ThePrintLab), the colour of a seal: a decision you make */
-    --rule:       #C3CCD4;
+    --rule:       #CBD3DB;
     --red:        #A3271F;   /* warning only: the construction notice */
 
     /* One typeface, TeX Gyre Heros, served from this site's own /fonts folder: nothing is fetched from another server.
