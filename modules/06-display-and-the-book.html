@@ -198,12 +198,6 @@ code {
 /* Every aside on the site is this. The label says what it is;
    the styling never varies. Two exceptions below. */
 
-.box {
-    border-left: 2px solid var(--sap);
-    padding: 0.35rem 0 0.35rem 1.25rem;
-    margin: 2rem 0;
-    max-width: var(--measure);
-}
 .box > *:last-child { margin-bottom: 0; }
 .box-label {
     display: block;
@@ -233,12 +227,6 @@ code {
 .box details[open] summary::before { content: "▾ "; }
 .box details[open] summary { margin-bottom: 0.75rem; }
 
-/* Exception 2: the closing summary, set on the ground colour */
-.box-close {
-    border-left-color: var(--ai);
-    background: var(--paper-deep);
-    padding: 1.25rem 1.25rem 1.25rem 1.15rem;
-}
 
 /* Two columns for questions and objectives */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -503,13 +491,10 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
     clear: right;
     width: 17rem;
     margin: 0.5rem 0 1.75rem 2.5rem;
-    padding: 0 0 0 1.1rem;
-    border-left: 3px solid currentColor;
     font-size: var(--s--1);
     line-height: 1.6;
     color: var(--sumi-soft);
 }
-.side[open] { padding-bottom: 0.4rem; }
 .side > summary {
     cursor: pointer;
     list-style: none;
@@ -555,7 +540,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
    margin reads as a second voice rather than a footnote. */
 .side-japan[open]  { background: rgba(95, 107, 54, 0.07); }
 .side-machine[open] { background: rgba(47, 74, 133, 0.06); }
-.side[open] > summary, .side[open] p, .side[open] ul { padding-right: 0.9rem; }
 .side[open] > summary { padding-top: 0.5rem; }
 .side p, .side li { color: var(--sumi-soft); }
 
@@ -619,13 +603,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
 /* Every module opens with a research question in the first person,
    because that is how it arrives in real work. */
 
-.starting {
-    border-left: 2px solid var(--ai);
-    background: var(--paper-deep);
-    padding: 1.15rem 1.25rem;
-    margin: 1.5rem 0 2rem;
-    max-width: 66ch;
-}
 .starting .box-label { color: var(--ai); }
 .starting p {
     margin-bottom: 0;
@@ -653,12 +630,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
 /* Not a recipe: at each fork the module names the options and says
    what each one costs. */
 
-.choice {
-    border-left: 2px solid var(--ochre);
-    padding: 0.35rem 0 0.35rem 1.25rem;
-    margin: 2rem 0;
-    max-width: 66ch;
-}
 .choice .box-label { color: var(--ochre); }
 .choice dt { font-weight: 600; margin-top: 0.8rem; }
 .choice dt:first-of-type { margin-top: 0; }
@@ -802,6 +773,105 @@ figcaption .fig-title em { font-style: italic; }
 
 /* Frame matches the wide module column, so header, page and footer align */
 .container { width: min(94vw, 1080px); }
+
+/* ==============================================================
+   Book layer
+   The page is set like a woodblock-printed book (wahon): text sits
+   inside ruled frames (kyōkaku 匡郭), the masthead and the end of
+   the page carry the thick-and-thin double rule of the frame's top
+   edge, and sections are counted 其一, 其二 (part one, part two), the way
+   an Edo-period series counts its parts.
+   ============================================================== */
+:root { --frame: #8F866C; }
+
+/* thick-and-thin rule: a 3px line, a gap, a 1px line */
+.masthead, footer .container {
+    background:
+        linear-gradient(var(--sumi), var(--sumi)) 0 0 / 100% 3px no-repeat,
+        linear-gradient(var(--sumi), var(--sumi)) 0 6px / 100% 1px no-repeat;
+    padding-top: 1.75rem;
+}
+footer { border-top: 0; }
+
+/* sections counted 其一, 其二, 其三 in a small frame */
+main { counter-reset: sec; }
+main h2 { counter-increment: sec; display: flex; align-items: baseline; gap: 0.75rem; }
+main h2::before {
+    content: "其" counter(sec, japanese-informal);
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 1.75em; padding: 0 0.35em; letter-spacing: 0.05em;
+    border: 1px solid var(--sumi);
+    font-size: 0.62em; font-weight: 400; line-height: 1;
+    transform: translateY(-0.15em);
+}
+.gloss-part h2::before { content: none; }
+.toc ol { list-style: none; margin-left: 0; counter-reset: toc; }
+.toc ol li { counter-increment: toc; display: flex; gap: 0.75rem; }
+.toc ol li::before { content: "其" counter(toc, japanese-informal); min-width: 2.6em; color: var(--sumi-soft); }
+
+/* every aside is a framed block of text */
+.box, .choice {
+    border: 1px solid var(--frame);
+    padding: 1.1rem 1.35rem 1.2rem;
+    margin: 2rem 0;
+    max-width: 66ch;
+}
+.box-close { background: var(--paper-deep); }
+
+/* the research question: the double frame of a title slip (daisen 題簽) */
+.starting {
+    border: 2px solid var(--sumi);
+    box-shadow: inset 0 0 0 3px var(--paper-deep), inset 0 0 0 4px var(--sumi);
+    background: var(--paper-deep);
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0 2.5rem;
+    max-width: 66ch;
+}
+
+/* margin panels: framed in their colour, no side bar */
+.side { border: 1px solid currentColor; padding: 0 0.9rem; }
+.side[open] { padding-bottom: 0.7rem; }
+
+/* the label above a framed block */
+.chip {
+    font-family: var(--sans); font-size: var(--s--1); letter-spacing: 0;
+    background: none; border: 1px solid var(--sumi); color: var(--sumi);
+    padding: 0.15rem 0.6rem;
+}
+
+/* workbook: tables to fill in */
+.fill td { height: 3.2rem; }
+.fill td:first-child { width: 34%; }
+.fill td + td { border-left: 1px solid var(--rule); padding-left: 0.75rem; }
+.fill .hint { display: block; color: var(--sumi-soft); font-size: 0.9em; line-height: 1.5; margin-top: 0.15rem; }
+.fill th + th { padding-left: 0.75rem; }
+.tools dt { font-weight: 600; margin-top: 1rem; }
+.tools dd { margin: 0.1rem 0 0; max-width: 66ch; font-size: var(--s--1); line-height: 1.65; color: var(--sumi-soft); }
+
+/* one reading column: every block on a module page ends at the same line */
+.wide { --col: 44rem; }
+.wide p, .wide ul, .wide ol, .wide h2, .wide table, .wide .box, .wide .choice,
+.wide .starting, .wide .code, .wide .output, .wide .run, .wide .toc, .wide .pager,
+.wide .meta, .wide .provenance, .wide .steps, .wide .step-label, .wide .facts,
+.wide .rows, .wide .numbered, .wide .tools dd, .wide figcaption { max-width: var(--col); }
+.box p, .box ul, .box ol, .choice p, .starting p, .rows p, .numbered p { max-width: none; }
+.choice .meta { margin-top: 1rem; }
+.wide .masthead { margin-bottom: 0; }
+.wide .masthead .facts { margin-bottom: 0; }
+.wide .masthead + .run { border-top: 0; }
+.wide .masthead + .toc, .wide .masthead + .run + * { margin-top: 2.5rem; }
+
+@media print {
+    nav, .pager, .run { display: none; }
+    body { background: #fff; font-size: 11pt; }
+    .wide { width: auto; }
+    .wide table { max-width: none; }
+    h2 { break-after: avoid; }
+    table, .box { break-inside: avoid; }
+    .fill td { height: 2.4rem; }
+    a { text-decoration: none; }
+}
 </style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="canonical" href="https://digitalarthistory.theprintlab.org/modules/06-display-and-the-book.html">
@@ -829,14 +899,16 @@ figcaption .fig-title em { font-style: italic; }
 <main class="wide">
 
   <header class="masthead">
-    <p class="crumb"><a href="/#modules">Modules</a> &middot; Module 6</p>
-    <p class="chip">module 06 · intermediate · draft</p>
+    <p class="crumb"><a href="/#modules">Modules</a> / Module 6</p>
+    <p class="chip">Module 06</p>
     <h1>Display and the book</h1>
     <p class="subtitle">What a book demands of a display tool, and what the tool decides in return.</p>
     <ul class="facts">
       <li>~110 min</li>
       <li>requires modules 1 and 2</li>
-      <li>IIIF viewers · storytelling tools · CollectionBuilder</li>
+      <li>intermediate</li>
+      <li>IIIF viewers, storytelling tools, CollectionBuilder</li>
+      <li><a href="/modules/06-workbook.html">workbook</a></li>
       <li>CC BY 4.0</li>
     </ul>
   </header>
@@ -887,6 +959,12 @@ figcaption .fig-title em { font-style: italic; }
   <p class="meta">This list was worked out in the October 2026 workshop (see <a href="#workshop">below</a>). It is still a draft to argue with: replacing it with your own, for your own material, is the first exercise of the module.</p>
 
 
+  <p class="step-label">Before you start — Find the book and its manifest</p>
+
+  <p>Find your book in at least two repositories and record, for each, what it says: the title in the record and the title on the book, where the date comes from, which volumes are held, and the address of the IIIF Manifest. Then open the book in each repository's own viewer and note what it does well and where it goes wrong.</p>
+
+  <p>The disagreements between records are the first finding of this module. The <a href="/modules/06-workbook.html">workbook</a> has the repositories to search, eight books that each make one problem visible, and a record form to fill in.</p>
+
   <p class="step-label">Step 1 — Ask what the manifest already asserts</p>
 
   <p>Two fields in a IIIF manifest carry most of what a viewer needs in order to get conditions 1 and 2 right. They are frequently absent.</p>
@@ -920,6 +998,8 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     <p>An absent <code>viewingDirection</code> is the commonest finding, and it is not a small one. It means the institution has published a book without saying which way it reads, and every viewer that renders it will guess the same wrong way.</p>
     <p>Note also what a stated value does not do. Declaring <code>paged</code> asks a viewer to pair leaves; it does not say <em>which</em> leaves pair, and an odd canvas near the front — a cover, a title slip — offsets every opening after it. Condition 2 fails silently from a single unmarked sheet.</p>
   </div>
+
+  <p>Three more fields deserve the same scrutiny. <code>metadata</code> carries artist, date and format, which look settled once they travel with the image: check them against the book. <code>items</code> lists the pages, and a library holding volumes 2 and 5 of fifteen may list just those two, which a viewer then joins as if consecutive. <code>rights</code> says what may be reproduced. In version 2 Manifests, <code>items</code> is called <code>sequences</code> and <code>behavior</code> is <code>viewingHint</code>. The <a href="/modules/06-workbook.html#questions">workbook</a> sets out all five questions as a table.</p>
 
 
   <p class="step-label">Step 2 — Place the tools on two axes</p>
@@ -958,10 +1038,12 @@ for c in manifest["sequences"][0]["canvases"][:6]:
   <table>
     <thead><tr><th>Tool</th><th>Order decided by</th><th>Text meets image</th></tr></thead>
     <tbody>
+      <tr><td>Theseus</td><td>Reader — paging through one object</td><td>Beside — a metadata panel</td></tr>
+      <tr><td>IIIF Curation Viewer (CODH)</td><td>Reader — built in Japan for Japanese material</td><td>Beside, with curation lists</td></tr>
       <tr><td>Mirador</td><td>Reader — several windows, copies side by side</td><td>Attached — annotation on a region</td></tr>
       <tr><td>Universal Viewer</td><td>Reader — paging through one object</td><td>Beside — a metadata panel</td></tr>
       <tr><td>Storiiies</td><td>Author — a guided sequence of regions</td><td>Over, and attached underneath</td></tr>
-      <tr><td>StoryMap JS</td><td>Author — a scripted walk, including through one large image</td><td>Over</td></tr>
+      <tr><td>StoryMap JS</td><td>Author — a scripted walk, including through one large image</td><td>Over. It takes uploaded images, so the record stays behind</td></tr>
       <tr><td>ArcGIS StoryMaps</td><td>Author — a scrolling narrative</td><td>Beside, occasionally over</td></tr>
       <tr><td>Juncture</td><td>Author — an essay in plain text, with IIIF</td><td>Over, written in Markdown</td></tr>
       <tr><td>Kunstmatrix, Artsteps</td><td>Reader spatially — you walk the room</td><td>Beside — a wall label</td></tr>
@@ -969,7 +1051,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     </tbody>
   </table>
 
-  <p class="meta">Verified October 2026. Check before relying on any row: these products change, and two of them are commercial.</p>
+  <p class="meta">Verified October 2026. Check before relying on any row: these products change, and two of them are commercial. Links and further IIIF tools are in the <a href="/modules/06-workbook.html#viewers">workbook</a>.</p>
 
   <div class="box">
     <span class="box-label">How to read this</span>
@@ -1010,6 +1092,8 @@ for c in manifest["sequences"][0]["canvases"][:6]:
 
   <p>Keep the completed table. A comparison of display tools against a stated list of conditions, for a specific kind of object, is publishable in its own right — and almost nobody writes them, because it requires knowing the object well enough to state the conditions first.</p>
 
+  <p>The <a href="/modules/06-workbook.html#viewers">workbook's viewer checklist</a> adds practical tests to the six conditions: whether you can zoom far enough to see block wear, whether a shared link works for someone else, and which device and browser you used.</p>
+
   <p class="step-label">Step 4 — Build a small exhibition from a spreadsheet</p>
 
   <p>The route that works on any machine with a browser, including a locked one, uses an open-source template that builds itself on GitHub.</p>
@@ -1034,7 +1118,20 @@ for c in manifest["sequences"][0]["canvases"][:6]:
   </ol>
 
 
-  <p class="step-label">Step 5 — Say what the display decided</p>
+  <p class="step-label">Step 5 — Write the captions</p>
+
+  <p>Write for a reader who is intelligent and new to your book, in about 150 words, the length of a museum label. Four rules carry most of the work:</p>
+
+  <ul>
+    <li><strong>Put the object at the centre.</strong> Point at what is visible: the line, the wear, the design across the fold. A sentence that would still be true of another book belongs elsewhere.</li>
+    <li><strong>Name the one uncertainty that matters</strong>, and write the rest directly.</li>
+    <li><strong>Bring in the people</strong> who cut the blocks, bought, bound and retitled the book.</li>
+    <li><strong>Write as you would speak</strong>, in the active voice. Read it aloud.</li>
+  </ul>
+
+  <p class="meta">More in the <a href="/modules/06-workbook.html#caption">workbook</a>, with the V&amp;A's guide to gallery text.</p>
+
+  <p class="step-label">Step 6 — Say what the display decided, and present it</p>
 
   <p>Publish, alongside the exhibition, a short note on what it does to the material. Three or four sentences, in the same place a reader can find them.</p>
 
@@ -1044,6 +1141,8 @@ for c in manifest["sequences"][0]["canvases"][:6]:
     <p>A visitor sees none of that as choices. They see a collection, arranged, with the authority that arrangement carries — the same flattening module 2 found in a catalogue record, now performed by you.</p>
     <p>The note is the remedy, and it is cheap. It is also the part that makes the exhibition a scholarly object rather than a display.</p>
   </div>
+
+  <p>Keep a record of what you built: the share code for Storiiies, the Manifest address and exported workspace for Mirador, the URL for StoryMapJS. Then present it in three minutes: a hook from one visible detail, the problem the tool could not render, the display as evidence, and what it means for anyone showing a book like yours. The <a href="/modules/06-workbook.html#display">workbook</a> sets out each part.</p>
 
 
   <h2 id="workshop">In the classroom: the October 2026 workshop</h2>
@@ -1066,6 +1165,7 @@ for c in manifest["sequences"][0]["canvases"][:6]:
       <li><strong>The same book in three tools.</strong> Mirador showed two copies side by side, with the spoken argument in place of a caption; Storiiies walked a reader through one opening, detail by detail (<a href="https://storiiies.cogapp.com/view/768x5/Miniature-garden-page">example</a>); StoryMapJS showed where the copies are held.</li>
       <li><strong>Choose the tool to suit the argument.</strong> Before opening any tool, write down what the book is, which openings you will show, what the audience should understand, and what the material needs a tool to do.</li>
     </ul>
+    <p>The process the students followed is published as the <a href="/modules/06-workbook.html">workbook</a>.</p>
   </div>
 
   <p class="meta">With thanks to the Ishibashi Foundation, whose Graduate Programme made the workshop possible, and to the students of its inaugural cohort, whose displays and questions shaped this page.</p>
@@ -1085,26 +1185,29 @@ for c in manifest["sequences"][0]["canvases"][:6]:
   <h2 id="own">Use your own materials</h2>
 
   <ol>
+    <li>Practise first on one of the <a href="/modules/06-workbook.html#books">eight test books</a> in the workbook, then move to your own.</li>
     <li>Rewrite the six conditions for your own book. Cut any that do not apply and add what is missing; the list is the module's real deliverable.</li>
     <li>Run step 1 against a manifest for your material and record what the two fields say.</li>
     <li>Place your candidate tools on the two axes, then fill in the six-condition table for the two that survive.</li>
-    <li>Build a small exhibition of ten items and write the note in step 5 before you show anyone.</li>
+    <li>Build a small exhibition of ten items and write the note in step 6 before you show anyone.</li>
   </ol>
 
   <div class="box box-close">
     <span class="box-label">What you should now be able to do</span>
     <ul>
+      <li>Find a book's IIIF Manifest, and record where repositories disagree about it.</li>
       <li>State what a particular kind of book requires of a display tool, before choosing one.</li>
       <li>Read the fields in a manifest that govern reading direction and pairing, and recognise their absence as a finding.</li>
       <li>Place a display tool on two axes — who decides the order, and how the text meets the image — and say what each position costs.</li>
       <li>Hold a viewer against a list of conditions and report where it fails.</li>
       <li>Publish a small exhibition from a spreadsheet, and say in writing what the arrangement decided.</li>
+      <li>Write a caption for a reader new to the book, and present a display in three minutes.</li>
     </ul>
   </div>
 
   <div class="box">
     <span class="box-label">Status</span>
-    <p>Draft, taught once: this is the material of the <a href="#workshop">October 2026 workshop</a>, and the six conditions above are the version worked out there. Comments through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a>.</p>
+    <p>Draft, taught once: this is the material of the <a href="#workshop">October 2026 workshop</a>, and the six conditions above are the version worked out there. The step-by-step process is in the <a href="/modules/06-workbook.html">workbook</a>. Comments through the <a href="https://github.com/stesantschi/digitalarthistory.theprintlab/issues">repository issues</a> or by email to <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a>.</p>
   </div>
 
   <nav class="pager">
@@ -1117,8 +1220,8 @@ for c in manifest["sequences"][0]["canvases"][:6]:
 
 <footer>
   <div class="container">
-    <p>e_tehon &middot; module 06 &middot; version 0.1, draft</p>
-    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; code <a href="https://opensource.org/licenses/MIT">MIT</a> &middot; <a href="/#cite">cite this</a> &middot; <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a></p>
+    <p>e_tehon, module 06, version 0.1, draft</p>
+    <p>Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code <a href="https://opensource.org/licenses/MIT">MIT</a>. <a href="/#cite">Cite this</a>. <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">Repository</a>. <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a></p>
   </div>
 </footer>
 

@@ -222,12 +222,6 @@ code {
 /* Every aside on the site is this. The label says what it is;
    the styling never varies. Two exceptions below. */
 
-.box {
-    border-left: 2px solid var(--sap);
-    padding: 0.35rem 0 0.35rem 1.25rem;
-    margin: 2rem 0;
-    max-width: var(--measure);
-}
 .box > *:last-child { margin-bottom: 0; }
 .box-label {
     display: block;
@@ -257,12 +251,6 @@ code {
 .box details[open] summary::before { content: "▾ "; }
 .box details[open] summary { margin-bottom: 0.75rem; }
 
-/* Exception 2: the closing summary, set on the ground colour */
-.box-close {
-    border-left-color: var(--ai);
-    background: var(--paper-deep);
-    padding: 1.25rem 1.25rem 1.25rem 1.15rem;
-}
 
 /* Two columns for questions and objectives */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -527,13 +515,10 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
     clear: right;
     width: 17rem;
     margin: 0.5rem 0 1.75rem 2.5rem;
-    padding: 0 0 0 1.1rem;
-    border-left: 3px solid currentColor;
     font-size: var(--s--1);
     line-height: 1.6;
     color: var(--sumi-soft);
 }
-.side[open] { padding-bottom: 0.4rem; }
 .side > summary {
     cursor: pointer;
     list-style: none;
@@ -579,7 +564,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
    margin reads as a second voice rather than a footnote. */
 .side-japan[open]  { background: rgba(95, 107, 54, 0.07); }
 .side-machine[open] { background: rgba(47, 74, 133, 0.06); }
-.side[open] > summary, .side[open] p, .side[open] ul { padding-right: 0.9rem; }
 .side[open] > summary { padding-top: 0.5rem; }
 .side p, .side li { color: var(--sumi-soft); }
 
@@ -643,13 +627,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
 /* Every module opens with a research question in the first person,
    because that is how it arrives in real work. */
 
-.starting {
-    border-left: 2px solid var(--ai);
-    background: var(--paper-deep);
-    padding: 1.15rem 1.25rem;
-    margin: 1.5rem 0 2rem;
-    max-width: 66ch;
-}
 .starting .box-label { color: var(--ai); }
 .starting p {
     margin-bottom: 0;
@@ -677,12 +654,6 @@ td:not(:last-child), th:not(:last-child) { padding-right: 1.5rem; }
 /* Not a recipe: at each fork the module names the options and says
    what each one costs. */
 
-.choice {
-    border-left: 2px solid var(--ochre);
-    padding: 0.35rem 0 0.35rem 1.25rem;
-    margin: 2rem 0;
-    max-width: 66ch;
-}
 .choice .box-label { color: var(--ochre); }
 .choice dt { font-weight: 600; margin-top: 0.8rem; }
 .choice dt:first-of-type { margin-top: 0; }
@@ -843,6 +814,105 @@ figcaption .fig-title em { font-style: italic; }
     .modules { display: block; border-bottom: none; }
     .modules > li:last-child { border-bottom: 1px solid var(--rule); }
 }
+
+/* ==============================================================
+   Book layer
+   The page is set like a woodblock-printed book (wahon): text sits
+   inside ruled frames (kyōkaku 匡郭), the masthead and the end of
+   the page carry the thick-and-thin double rule of the frame's top
+   edge, and sections are counted 其一, 其二 (part one, part two), the way
+   an Edo-period series counts its parts.
+   ============================================================== */
+:root { --frame: #8F866C; }
+
+/* thick-and-thin rule: a 3px line, a gap, a 1px line */
+.masthead, footer .container {
+    background:
+        linear-gradient(var(--sumi), var(--sumi)) 0 0 / 100% 3px no-repeat,
+        linear-gradient(var(--sumi), var(--sumi)) 0 6px / 100% 1px no-repeat;
+    padding-top: 1.75rem;
+}
+footer { border-top: 0; }
+
+/* sections counted 其一, 其二, 其三 in a small frame */
+main { counter-reset: sec; }
+main h2 { counter-increment: sec; display: flex; align-items: baseline; gap: 0.75rem; }
+main h2::before {
+    content: "其" counter(sec, japanese-informal);
+    flex: 0 0 auto;
+    display: inline-flex; align-items: center; justify-content: center;
+    height: 1.75em; padding: 0 0.35em; letter-spacing: 0.05em;
+    border: 1px solid var(--sumi);
+    font-size: 0.62em; font-weight: 400; line-height: 1;
+    transform: translateY(-0.15em);
+}
+.gloss-part h2::before { content: none; }
+.toc ol { list-style: none; margin-left: 0; counter-reset: toc; }
+.toc ol li { counter-increment: toc; display: flex; gap: 0.75rem; }
+.toc ol li::before { content: "其" counter(toc, japanese-informal); min-width: 2.6em; color: var(--sumi-soft); }
+
+/* every aside is a framed block of text */
+.box, .choice {
+    border: 1px solid var(--frame);
+    padding: 1.1rem 1.35rem 1.2rem;
+    margin: 2rem 0;
+    max-width: 66ch;
+}
+.box-close { background: var(--paper-deep); }
+
+/* the research question: the double frame of a title slip (daisen 題簽) */
+.starting {
+    border: 2px solid var(--sumi);
+    box-shadow: inset 0 0 0 3px var(--paper-deep), inset 0 0 0 4px var(--sumi);
+    background: var(--paper-deep);
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0 2.5rem;
+    max-width: 66ch;
+}
+
+/* margin panels: framed in their colour, no side bar */
+.side { border: 1px solid currentColor; padding: 0 0.9rem; }
+.side[open] { padding-bottom: 0.7rem; }
+
+/* the label above a framed block */
+.chip {
+    font-family: var(--sans); font-size: var(--s--1); letter-spacing: 0;
+    background: none; border: 1px solid var(--sumi); color: var(--sumi);
+    padding: 0.15rem 0.6rem;
+}
+
+/* workbook: tables to fill in */
+.fill td { height: 3.2rem; }
+.fill td:first-child { width: 34%; }
+.fill td + td { border-left: 1px solid var(--rule); padding-left: 0.75rem; }
+.fill .hint { display: block; color: var(--sumi-soft); font-size: 0.9em; line-height: 1.5; margin-top: 0.15rem; }
+.fill th + th { padding-left: 0.75rem; }
+.tools dt { font-weight: 600; margin-top: 1rem; }
+.tools dd { margin: 0.1rem 0 0; max-width: 66ch; font-size: var(--s--1); line-height: 1.65; color: var(--sumi-soft); }
+
+/* one reading column: every block on a module page ends at the same line */
+.wide { --col: 44rem; }
+.wide p, .wide ul, .wide ol, .wide h2, .wide table, .wide .box, .wide .choice,
+.wide .starting, .wide .code, .wide .output, .wide .run, .wide .toc, .wide .pager,
+.wide .meta, .wide .provenance, .wide .steps, .wide .step-label, .wide .facts,
+.wide .rows, .wide .numbered, .wide .tools dd, .wide figcaption { max-width: var(--col); }
+.box p, .box ul, .box ol, .choice p, .starting p, .rows p, .numbered p { max-width: none; }
+.choice .meta { margin-top: 1rem; }
+.wide .masthead { margin-bottom: 0; }
+.wide .masthead .facts { margin-bottom: 0; }
+.wide .masthead + .run { border-top: 0; }
+.wide .masthead + .toc, .wide .masthead + .run + * { margin-top: 2.5rem; }
+
+@media print {
+    nav, .pager, .run { display: none; }
+    body { background: #fff; font-size: 11pt; }
+    .wide { width: auto; }
+    .wide table { max-width: none; }
+    h2 { break-after: avoid; }
+    table, .box { break-inside: avoid; }
+    .fill td { height: 2.4rem; }
+    a { text-decoration: none; }
+}
 </style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%22130%2088%20818%20818%22%3E%3Cg%20fill%3D%22%23211E18%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M674.3%20332.6C674.3%20200.4%20599.1%20128.0%20461.5%20128.0H170.0V788.0H305.8V552.6H475.1C596.4%20552.6%20674.3%20466.6%20674.3%20332.6ZM538.5%20340.8C538.5%20407.8%20505.0%20439.4%20432.6%20439.4H305.8V241.2H432.6C505.0%20241.2%20538.5%20272.9%20538.5%20340.8Z%22/%3E%3Cpath%20d%3D%22M170%20812H357V866H170Z%22/%3E%3Cpath%20d%3D%22M429%20812H854V600H908V866H429Z%22/%3E%3Cpath%20d%3D%22M318%20249h30v30h-30zM318%20287h30v30h-30zM318%20325h30v30h-30zM318%20363h30v30h-30zM318%20401h30v30h-30zM356%20249h30v30h-30zM356%20325h30v30h-30zM356%20363h30v30h-30zM356%20401h30v30h-30zM394%20249h30v30h-30zM394%20325h30v30h-30zM394%20401h30v30h-30zM432%20287h30v30h-30zM432%20363h30v30h-30zM470%20325h30v30h-30z%22/%3E%3C/g%3E%3C/svg%3E">
 <link rel="canonical" href="https://digitalarthistory.theprintlab.org/">
@@ -971,7 +1041,7 @@ figcaption .fig-title em { font-style: italic; }
       <h3><a href="/modules/06-display-and-the-book.html">Display and the book</a></h3>
       <p>What a book requires of a display tool, what viewers actually support, and how to publish a small exhibition from a spreadsheet with open-source templates.</p>
       <span class="thread"><strong>Communicate.</strong> Publish what you built, and state the decisions behind its arrangement.</span>
-      <span class="thread"><a href="/modules/06-display-and-the-book.html">Open the module</a> (draft, about 90 minutes; taught in October 2026)</span>
+      <span class="thread"><a href="/modules/06-display-and-the-book.html">Open the module</a> (draft, about 90 minutes; taught in October 2026), with its <a href="/modules/06-workbook.html">workbook</a></span>
     </li>
   </ol>
 
@@ -1151,7 +1221,7 @@ https://digitalarthistory.theprintlab.org</code></pre>
 <footer>
   <div class="container">
     <p>e_tehon, ThePrintLab 2026. In development; all content is mockup.</p>
-    <p class="links"><a href="https://santschi.theprintlab.org">Stephanie Santschi</a> <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a> <a href="https://landscapes.theprintlab.org">landscapes.theprintlab.org</a></p>
+    <p class="links"><a href="https://santschi.theprintlab.org">Stephanie Santschi</a> <a href="https://github.com/stesantschi/digitalarthistory.theprintlab">repository</a> <a href="https://landscapes.theprintlab.org">landscapes.theprintlab.org</a> <a href="mailto:stephanie@theprintlab.org">stephanie@theprintlab.org</a></p>
   </div>
 </footer>
 
