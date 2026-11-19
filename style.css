@@ -921,3 +921,13 @@ main h2::before {
 }
 .masthead .outline { margin-top: 1rem; }
 
+
+/* --- references ------------------------------------------------- */
+/* Author-date references in the text link to the Sources list at the
+   end of the page. "source to add" marks a claim still being checked. */
+.cite { color: var(--sumi-soft); text-decoration: none; white-space: nowrap; }
+.cite:hover { color: var(--sumi); text-decoration: underline; }
+.cite-open { color: var(--ochre); font-size: 0.9em; white-space: nowrap; }
+.sources { list-style: none; margin-left: 0; font-size: var(--s--1); line-height: 1.65; }
+.sources li { padding-left: 1.5rem; text-indent: -1.5rem; margin-bottom: 0.5rem; scroll-margin-top: 1.5rem; }
+.sources li:target { background: var(--paper-deep); }
