@@ -5,6 +5,8 @@ Nothing here is shown on the public pages; the pages mark open claims with "sour
 
 Status: **open** = no source yet; **check** = source proposed, page and wording not yet verified.
 
+Bibliographic details (author, title, publisher, year) of every listed source were verified on 19 November 2026. What remains to check is whether each source supports the specific claim, and on which page.
+
 ## Module 1
 - check: Hokusai's art names (Shunrō, Sōri, Taito, Iitsu) — Clark 2017; page to add.
 
