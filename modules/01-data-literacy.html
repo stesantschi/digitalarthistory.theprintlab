@@ -28,7 +28,7 @@
 <p class="crumb"><a href="/#modules">Modules</a> / Module 1</p>
 <p class="chip">Module 01</p>
 <h1>Data literacy for Japanese datasets</h1>
-<p class="subtitle">Names and lists — what your data already decided before you opened it.</p>
+<p class="subtitle">Names in a list: what each source decided before you opened the file.</p>
 <ul class="facts">
 <li>~60 min</li>
 <li>no prerequisite</li>
@@ -42,110 +42,106 @@
 <span class="box-label">Starting point</span>
 <p>I have a spreadsheet of two hundred prints I gathered from four sources. Half the artist names don't match each other. How do I turn this into one list?</p>
 </div>
-<p>This is the first thing that happens to everyone, and it looks like a tidying job. It is not. Each mismatch is a place where somebody made a decision — about how to romanise a name, about which of an artist's names to record, about whether a work has one maker — and the decisions were made by different people, in different institutions, for different purposes. Tidying the list means choosing whose decision wins.</p>
+<p>Almost every project starts here. Each mismatch records a decision someone made: how to romanise a name, which of an artist's names to use, whether a work has one maker or several. Different people made these decisions, in different institutions, for different purposes. Merging the list means choosing between them, and this module shows how to make those choices visible.</p>
 <details class="side side-japan">
 <summary><span class="side-label">The Japanese material</span></summary>
-<p>Japanese names appear family-name-first in Japanese and often given-name-first in Western catalogues, and the two are not reliably marked.</p>
-<p>Long vowels can be written with a macron (Ryōko), a doubled vowel (Ryouko), an <em>h</em> (Ohno), or nothing at all (Ryoko). All four turn up in real records.</p>
-<p>Beyond that, an Edo print designer worked under an art name, a <a class="term" href="../glossary.html#go"><em>gō</em></a>, and changed it across a career. Hokusai signed as Shunrō, Sōri, Taito, Iitsu and others. Those are not variants of one name; they are different names for one person.</p>
+<p>Japanese names are written family name first. Western catalogues often reverse the order, usually without saying so.</p>
+<p>Long vowels appear in four forms: with a macron (Ryōko), a doubled vowel (Ryouko), an <em>h</em> (Ohno), or unmarked (Ryoko). All four occur in real records.</p>
+<p>Edo-period print designers also worked under art names (<a class="term" href="/glossary.html#go"><em>gō</em></a>) and changed them during their careers. Hokusai signed as Shunrō, Sōri, Taito, Iitsu and others. These are separate names for one person, so no spelling rule will connect them.</p>
 </details>
 <details class="side side-machine">
 <summary><span class="side-label">The computational operation</span></summary>
-<p>Matching two strings is an identity test, and it uses a criterion: two names are the same when their characters are the same. That is a defensible criterion. It is not the one you use.</p>
-<p>A cataloguer identifies by signature, seal, date and context. Character equality identifies by typographic form. Everything in this module is the work of translating the first criterion into terms the second can carry, one decision at a time — and each translation loses something you should be able to name.</p>
+<p>A computer treats two names as the same when their characters are identical. A cataloguer identifies an artist by signature, seal, date and context.</p>
+<p>This module translates the cataloguer's judgement into a form the computer can use, one decision at a time, and records what each decision leaves out.</p>
 </details>
+
 <h2 id="plan">What we will do</h2>
-<p>Open a messy list and read what is in it. Count the variants of each name. Normalise the ones that are the same string written differently. Then build a concordance by hand for the ones that are different names for the same person, because no algorithm can do that part.</p>
-<p class="step-label">Step 1 — Open it and look</p>
-<p>Before any cleaning, find out what the file actually contains.</p>
+<p>Open a messy list and see what it contains. Count the spellings of each name. Merge the ones that differ only in how they are written. Then build a concordance by hand for the names that are different but refer to the same person. That last part needs a person's judgement.</p>
 
-
+<p class="step-label">Step 1 — Open the file and look</p>
+<p>Before changing anything, check what the file contains: which columns there are, how many rows, and how many cells are empty in each column.</p>
 <details class="side side-machine">
 <summary><span class="side-label">The computational operation</span></summary>
-<p><strong>Encoding</strong> is how text was stored as numbers by whoever exported the file. Modern files use Unicode; older Japanese ones often use Shift-JIS, which does not travel.</p>
-<p>Get it wrong and Japanese arrives as boxes: <span class="ja">文字化け</span>, <em>mojibake</em>. Try <code>encoding="shift_jis"</code> or <code>encoding="cp932"</code> before concluding the file is broken.</p>
-<p>Worth noting as a matter of evidence: the encoding is a property of the export, not of the material. It tells you something about the institution's systems and nothing about the print.</p>
+<p><strong>Encoding</strong> is the way a file stores text as numbers. Modern files use Unicode. Older Japanese exports often use Shift-JIS.</p>
+<p>If the wrong encoding is assumed, Japanese text turns into meaningless symbols: <span class="ja">文字化け</span>, <em>mojibake</em>. Open the file again as <code>shift_jis</code> or <code>cp932</code> before deciding it is damaged.</p>
+<p>The encoding describes the institution's export system, not the print.</p>
 </details>
-<p>Two artist columns, which is already informative: somebody decided the Latin-script and Japanese-script forms were different fields. Whether they are populated consistently is the next question.</p>
-
+<p>The columns already tell you something. A file with separate fields for the artist in Latin script and in Japanese script reflects a decision to treat them as two kinds of information.</p>
 <div class="box">
 <span class="box-label">How to read this</span>
-<p>Missing values cluster by source rather than scattering evenly, and that pattern is the finding. One institution fills the Japanese-script field and another leaves it empty, because one catalogues in Japanese and the other transliterates on entry.</p>
-<p>A count of missing values is therefore a description of four cataloguing practices, before it is a description of your data.</p>
+<p>Empty cells usually cluster by source. One institution fills the Japanese-script field because it catalogues in Japanese; another leaves it empty because it transliterates on entry.</p>
+<p>A count of empty cells therefore describes four cataloguing practices first, and your data second.</p>
 </div>
-<p class="step-label">Step 2 — Count the variants</p>
 
-
-
+<p class="step-label">Step 2 — Count the spellings</p>
+<p>List every form in which each artist's name appears, with how often it occurs. Then sort the forms into four kinds: differences of typing (capitals, spaces), of script (Latin or Japanese), of romanisation (Hokusai, Hokousaï), and different names for one person (Shunrō, Hokusai).</p>
 <details class="side side-japan">
 <summary><span class="side-label">The Japanese material</span></summary>
-<p>Katsushika is a place name adopted as a surname; Hokusai is the <em>gō</em>. The pairing is a convention of Western cataloguing rather than how he signed.</p>
-<p>A record giving only <em>Hokusai</em> is not incomplete in the same way a record giving only <em>Katsushika</em> would be. The <em>gō</em> is the identifying part.</p>
+<p>Katsushika is a place name Hokusai adopted as a surname; Hokusai is the <em>gō</em>. Western catalogues pair them by convention, but he rarely signed that way.</p>
+<p>A record giving only <em>Hokusai</em> still identifies him, because the <em>gō</em> is the identifying part. A record giving only <em>Katsushika</em> would not.</p>
 </details>
 
-<p class="step-label">Step 3 — Normalise, and notice what it costs</p>
-<p>Normalisation makes strings comparable by removing differences you have decided do not matter. The phrase to hold on to is <em>you have decided</em>.</p>
-
+<p class="step-label">Step 3 — Standardise the spelling, and note what it costs</p>
+<p>Standardising (normalising) makes names comparable by removing differences you have decided do not matter. Each such decision should be written down.</p>
 <details class="side side-machine">
 <summary><span class="side-label">The computational operation</span></summary>
-<p>Normalisation is an argument about which differences are meaningless, applied at scale and then made invisible.</p>
-<p>Unicode stores some characters more than one way: full-width Ａ and half-width A look almost identical and are different characters. <code>NFKC</code> is one of four standard ways of folding those together, and it is aggressive — it also turns ① into 1 and ㍿ into a company suffix.</p>
-<p>Choosing it commits you to the position that those distinctions carry no evidence in your material. Sometimes true. Worth stating rather than inheriting.</p>
+<p>Normalisation applies one judgement to every row at once, and afterwards the differences it removed are no longer visible.</p>
+<p>Unicode stores some characters in more than one form: full-width Ａ and half-width A look alike but are different characters. <code>NFKC</code> is a standard way of merging such forms. It goes further than most people expect: it also turns ① into 1.</p>
+<p>Using it means stating that these differences carry no evidence in your material. That is often true, and worth saying explicitly.</p>
 </details>
 <div class="choice">
 <span class="box-label">Choice point</span>
-<p>How far do you normalise? Each option loses something.</p>
+<p>How far do you standardise? Each option removes something.</p>
 <dl>
-<dt>Whitespace and case only</dt>
-<dd>Safe, reversible, and leaves most of the problem unsolved. A good default when the dataset is going to be published.</dd>
-<dt>Add Unicode NFKC folding</dt>
-<dd>Resolves full-width and half-width forms, which is usually right for names. Also flattens distinctions in other columns, so apply it per column rather than to the whole table.</dd>
-<dt>Strip macrons and diacritics</dt>
-<dd>Matches Ryōko to Ryoko, and also matches things that should stay apart. It discards information the record was careful to record.</dd>
+<dt>Spaces and capitals only</dt>
+<dd>Safe and reversible, and it solves only the simplest cases. A good default for a dataset you will publish.</dd>
+<dt>Add Unicode NFKC</dt>
+<dd>Merges full-width and half-width forms, usually right for names. Apply it to the name column only, since it also changes other kinds of text.</dd>
+<dt>Remove macrons and accents</dt>
+<dd>Matches Ryōko with Ryoko, and also matches names that should stay apart. It discards information the cataloguer recorded on purpose.</dd>
 <dt>Lowercase everything</dt>
-<dd>Convenient for matching, unhelpful for display. Keep the original column and match on a derived one.</dd>
+<dd>Useful for matching, poor for display. Match on a lowercase copy and keep the original for display.</dd>
 </dl>
-<p class="meta">The rule worth following: normalise into a new column, never over the original. The original is your evidence.</p>
+<p class="meta">Always standardise into a new column and keep the original. The original is your evidence.</p>
 </div>
+
 <p class="step-label">Step 4 — Build the concordance by hand</p>
-<p>What is left after normalisation is the part that needs a person: names that are genuinely different and refer to the same maker.</p>
-
-
-
-
+<p>What remains are names that are genuinely different and refer to the same maker. Write a concordance with three columns: the name as recorded, the name you will use, and the evidence for the match (a signature, a seal, a reference work). The third column lets a reader check, and disagree with, each line on its own.</p>
 <div class="box">
 <span class="box-label">How to read this</span>
-<p>The unmatched list is the working list, and it should shrink slowly. A concordance that covers everything on the first pass usually means the equivalences were asserted too freely.</p>
-<p>Fuzzy matching, which scores how similar two strings look, will offer to do this automatically. It measures typographic distance and knows nothing about people, so it will happily merge two artists with similar names and refuse to merge Shunrō with Hokusai. Use it to propose candidates, never to decide them.</p>
+<p>The list of unmatched names is your working list, and it should shrink slowly. A concordance that matches everything on the first pass usually contains matches that are too generous.</p>
+<p>Fuzzy matching scores how similar two spellings look. It will merge two different artists with similar names and miss that Shunrō and Hokusai are one person. Use it to suggest candidates, and decide each one yourself.</p>
 </div>
+
 <h2 id="limits">What this cannot tell you</h2>
 <ul>
-<li><strong>It cannot tell you that two names are one person.</strong> That is an art-historical judgement, drawn from signatures, dates, seals and the literature. The concordance records the judgement; it does not make it.</li>
-<li><strong>It cannot date a name change.</strong> Knowing that Shunrō became Hokusai is one thing; knowing when, and therefore which prints fall on which side, is a scholarly question with a contested answer.</li>
-<li><strong>It cannot see what was never recorded.</strong> A block cutter absent from every record in your four sources is absent from your analysis, and the absence will look like a fact about Edo publishing.</li>
-<li><strong>It cannot tell you which source to trust.</strong> When two records disagree about a name, the concordance forces you to choose, and the choice is yours to defend.</li>
+<li><strong>Whether two names belong to one person.</strong> That is an art-historical judgement, based on signatures, dates, seals and the literature. The concordance records the judgement; you make it.</li>
+<li><strong>When a name changed.</strong> Knowing that Shunrō became Hokusai is one question. Knowing when, and so which prints fall on which side, is a separate one, and scholars disagree about it.</li>
+<li><strong>What was never recorded.</strong> If no source names the block cutter, the block cutter is missing from your analysis too, and the gap can look like a fact about Edo publishing.</li>
+<li><strong>Which source to trust.</strong> When two records disagree, the concordance makes you choose, and you are the one who has to justify the choice.</li>
 </ul>
-<p>What you have at the end is a list that a computer can count, plus a written record of every decision that made it countable. The second half is the part that lets someone else check your work.</p>
+<p>At the end you have two things: a list a computer can count, and a written record of every decision that made it countable. The record is what allows someone else to check your work.</p>
+
 <h2 id="own">Use your own materials</h2>
 <ol>
-<li>Replace the example file with your own export. Any CSV with a name column will do.</li>
-<li>Run steps 1 and 2 unchanged. The variant count is usually the moment the scale of the problem becomes clear.</li>
-<li>Write your own concordance, starting from the variants the count returns. Include the third column from the first line.</li>
+<li>Use your own export. Any spreadsheet or CSV file with a name column will do.</li>
+<li>Do steps 1 and 2 first. Counting the spellings usually shows how large the task is.</li>
+<li>Write your concordance from the spellings you counted, with the evidence column from the first line.</li>
 </ol>
-<p>Keep the concordance in your project as a file in its own right. It is reusable across every later project on the same material, and it is publishable: a documented concordance for a body of names is a contribution other people can cite.</p>
+<p>Keep the concordance as a file of its own. You can reuse it in every later project on the same material, and you can publish it: a documented concordance is a contribution others can cite.</p>
 <div class="box box-close">
 <span class="box-label">What you should now be able to do</span>
 <ul>
-<li>Open a file whose encoding you do not know, and diagnose it when the text arrives wrong.</li>
-<li>Count variants and tell apart the four kinds: typographic, script, romanisation, and different-name.</li>
-<li>Normalise into a new column, choosing how far to go and saying why.</li>
-<li>Write a concordance that records the basis of each equivalence, so that a reader can argue with one line.</li>
+<li>Open a file in an unknown encoding, and recognise the problem when the text arrives garbled.</li>
+<li>Count the spellings of a name and sort them into four kinds: typing, script, romanisation, and different names.</li>
+<li>Standardise into a new column, and say how far you went and why.</li>
+<li>Write a concordance that records the evidence for each match, so that a reader can question a single line.</li>
 </ul>
 </div>
 <nav class="pager">
-<a href="../index.html#modules"><span class="nav-label">Up</span>← All modules</a>
-<a href="../glossary.html"><span class="nav-label">Reference</span>Glossary</a>
-<a href="02-images-and-metadata.html"><span class="nav-label">Next</span>02. Images and metadata →</a>
+<a href="/#modules"><span class="nav-label">Up</span>← All modules</a>
+<a href="/glossary.html"><span class="nav-label">Reference</span>Glossary</a>
+<a href="/modules/02-images-and-metadata.html"><span class="nav-label">Next</span>02. Images and metadata →</a>
 </nav>
 </main>
 
